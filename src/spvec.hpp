@@ -7,6 +7,8 @@
 #include <iostream>
 #include <stdexcept>
 
+#include "arraytools.hpp"
+
 
 template <typename INDEX, typename SCALAR>
 class spvec
@@ -47,17 +49,10 @@ class spvec
 template <typename INDEX, typename SCALAR>
 spvec<INDEX, SCALAR>::spvec(int len_)
 {
-  I = (INDEX*) std::malloc(len_*sizeof(INDEX));
-  X = (SCALAR*) std::malloc(len_*sizeof(SCALAR));
+  arraytools::zero_alloc(len_, &I);
+  arraytools::zero_alloc(len_, &X);
   
-  if (I == NULL || X == NULL)
-  {
-    cleanup();
-    throw std::bad_alloc();
-  }
-  
-  std::memset(I, 0, len_*sizeof(INDEX));
-  std::memset(X, 0, len_*sizeof(SCALAR));
+  arraytools::check_allocs(I, X);
   
   nnz = 0;
   len = len_;
@@ -76,19 +71,19 @@ spvec<INDEX, SCALAR>::~spvec()
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::resize(int len_)
 {
-  void *realloc_I = realloc(I, len_*sizeof(INDEX));
-  void *realloc_X = realloc(X, len_*sizeof(SCALAR));
+  if (len == len_)
+    return;
   
-  if (realloc_I == NULL || realloc_X == NULL)
+  arraytools::realloc(len_, &I);
+  arraytools::realloc(len_, &X);
+  
+  arraytools::check_allocs(I, X);
+  
+  if (len_ > len)
   {
-    if (realloc_I) free(realloc_I);
-    if (realloc_X) free(realloc_X);
-    cleanup();
-    throw std::bad_alloc();
+    arraytools::zero(len_-len, I+len);
+    arraytools::zero(len_-len, X+len);
   }
-  
-  I = (INDEX*) realloc_I;
-  X = (SCALAR*) realloc_X;
   
   len = len_;
 }
@@ -102,12 +97,13 @@ void spvec<INDEX, SCALAR>::set(int nnz_, INDEX *I_, SCALAR *X_)
     resize(nnz_);
   else if (nnz > nnz_)
   {
-    std::memset(I + nnz_, 0, (nnz - nnz_)*sizeof(INDEX));
-    std::memset(X + nnz_, 0, (nnz - nnz_)*sizeof(SCALAR));
+    arraytools::zero(nnz-nnz_, I+nnz_);
+    arraytools::zero(nnz-nnz_, X+nnz_);
   }
   
-  std::memcpy(I, I_, nnz_*sizeof(INDEX));
-  std::memcpy(X, X_, nnz_*sizeof(SCALAR));
+  arraytools::copy(nnz_, I_, I);
+  arraytools::copy(nnz_, X_, X);
+  
   nnz = nnz_;
 }
 
@@ -116,9 +112,13 @@ void spvec<INDEX, SCALAR>::set(int nnz_, INDEX *I_, SCALAR *X_)
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::zero()
 {
-  std::memset(I, 0, nnz*sizeof(INDEX));
-  std::memset(X, 0, nnz*sizeof(SCALAR));
-  nnz = 0;
+  if (nnz > 0)
+  {
+    arraytools::zero(nnz, I);
+    arraytools::zero(nnz, X);
+    
+    nnz = 0;
+  }
 }
 
 
@@ -137,6 +137,7 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
     printf("\nX: ");
     for (int ind=0; ind<len; ind++)
       std::cout << X[ind] << " ";
+    
     putchar('\n');
   }
   else
@@ -265,10 +266,11 @@ int spvec<INDEX, SCALAR>::add(const SCALAR *x, const int xlen)
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::cleanup()
 {
-  if (I)
-    std::free(I);
-  if (X)
-    std::free(X);
+  arraytools::free(I);
+  I = NULL;
+  
+  arraytools::free(X);
+  X = NULL;
   
   nnz = 0;
   len = 0;
@@ -288,6 +290,7 @@ void spvec<INDEX, SCALAR>::insert_from_ind(const int insertion_ind,
   
   I[insertion_ind] = i;
   X[insertion_ind] = s;
+  
   nnz++;
 }
 
