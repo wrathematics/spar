@@ -1,10 +1,9 @@
-#ifndef SPVEC_H
-#define SPVEC_H
+#ifndef SPVEC_CLASS_H
+#define SPVEC_CLASS_H
 
 
 #include <cstdlib>
 #include <cstring>
-
 #include <iostream>
 #include <stdexcept>
 
