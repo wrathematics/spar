@@ -13,7 +13,7 @@ OBJS=$(SRCS:.cpp=.o )
 
 %.o: %.cpp 
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) -c $< -o $@
-
+ 
 spvec: $(OBJS)
 	$(CXX) $(OBJS) -o spvec $(OMPFLAGS)
 
@@ -21,7 +21,7 @@ run: spvec
 	( ./spvec )
 
 miniclean:
-	rm -rf spvec basics.o
+	( ls *.o | grep -v test-main | xargs rm -f )
 
 clean:
 	rm -rf *.o spvec
