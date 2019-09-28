@@ -15,7 +15,7 @@ OBJS=$(SRCS:.cpp=.o )
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) -c $< -o $@
 
 spvec: $(OBJS)
-	$(CXX) test-main.o basics.o -o spvec $(OMPFLAGS)
+	$(CXX) $(OBJS) -o spvec $(OMPFLAGS)
 
 run: spvec
 	( ./spvec )
