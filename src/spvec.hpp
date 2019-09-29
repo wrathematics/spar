@@ -2,10 +2,7 @@
 #define SPVEC_CLASS_H
 
 
-#include <cstdlib>
-#include <cstring>
 #include <iostream>
-#include <stdexcept>
 
 #include "arraytools.hpp"
 
