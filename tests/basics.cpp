@@ -89,3 +89,38 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spvec, (
   REQUIRE( X[0] == 1 );
   REQUIRE( X[1] == 0 );
 }
+
+
+
+TEMPLATE_PRODUCT_TEST_CASE("set", "[spvec]", spvec, (
+  (int, int),      (int, uint32_t),      (int, double),
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+))
+{
+  const int len = 5;
+  TestType x(len);
+  
+  x.insert(3, 1);
+  REQUIRE( x.get_len() == len );
+  REQUIRE( x.get_nnz() == 1 );
+  
+  const int setlen = 2;
+  decltype(+*x.index_ptr()) I_set[setlen] = {0, 4};
+  decltype(+*x.data_ptr()) X_set[setlen] = {1, 1};
+  x.set(setlen, I_set, X_set);
+  
+  REQUIRE( x.get_len() == len );
+  REQUIRE( x.get_nnz() == setlen );
+  
+  auto *I = x.index_ptr();
+  for (int i=0; i<setlen; i++)
+    REQUIRE( I[i] == I_set[i] );
+  for (int i=setlen; i<len; i++)
+    REQUIRE( I[i] == 0 );
+  
+  auto *X = x.data_ptr();
+  for (int i=0; i<setlen; i++)
+    REQUIRE( X[i] == X_set[i] );
+  for (int i=setlen; i<len; i++)
+    REQUIRE( X[i] == 0 );
+}
