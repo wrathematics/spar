@@ -190,7 +190,7 @@ int spvec<INDEX, SCALAR>::add(const spvec &x)
   int num_inserted = 0;
   for (int xind=0; xind<x.get_nnz(); xind++)
   {
-    const int xi = xI[xind];
+    const INDEX xi = xI[xind];
     while (I[ind] < xi)
       ind++;
     
@@ -205,7 +205,7 @@ int spvec<INDEX, SCALAR>::add(const spvec &x)
   ind = 0;
   for (int xind=0; xind<x.get_nnz(); xind++)
   {
-    const int xi = xI[xind];
+    const INDEX xi = xI[xind];
     while (ind < nnz && I[ind] < xi)
       ind++;
     
