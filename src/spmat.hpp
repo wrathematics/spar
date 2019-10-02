@@ -153,6 +153,37 @@ void spmat<INDEX, SCALAR>::print(bool actual)
 
 
 template <typename INDEX, typename SCALAR>
+int spmat<INDEX, SCALAR>::insert(const int col, const spvec<INDEX, SCALAR> &x)
+{
+  // check if a re-alloc is necessary
+  if (x.get_nnz() > len - nnz)
+    return x.get_nnz() - (len - nnz);
+  
+  // add the vector to the matrix
+  const INDEX *xI = x.index_ptr();
+  const SCALAR *xX = x.data_ptr();
+  
+  int ind = P[col];
+  const int xnnz = x.get_nnz();
+  for (int xind=0; xind<xnnz; xind++)
+  {
+    I[ind] = xI[xind];
+    X[ind] = xX[xind];
+    
+    ind++;
+  }
+  
+  for (int ind=col+1; ind<plen; ind++)
+    P[ind] += xnnz;
+  
+  nnz += xnnz;
+  
+  return 0;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::cleanup()
 {
   arraytools::free(I);
