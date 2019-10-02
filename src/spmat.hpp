@@ -43,7 +43,7 @@ class spmat
   
   private:
     void cleanup();
-    void insert_from_ind(const int insertion_ind, const INDEX i, const SCALAR s);
+    INDEX* csc2coo();
 };
 
 
@@ -92,6 +92,41 @@ void spvec<INDEX, SCALAR>::cleanup()
   
   nnz = 0;
   len = 0;
+}
+
+
+
+// convert "column pointer" P into column index
+template <typename INDEX, typename SCALAR>
+INDEX* spmat<INDEX, SCALAR>::csc2coo()
+{
+  int j = 0;
+  int ind = 0;
+  
+  INDEX* CI;
+  arraytools::alloc(len, &CI);
+  if (CI == NULL)
+  {
+    cleanup();
+    throw std::bad_alloc();
+  }
+  
+  for (int c=0; c<plen; c++)
+  {
+    int diff = P[c+1] - P[c];
+    
+    while (diff > 0)
+    {
+      CI[ind] = j;
+      
+      ind++;
+      diff--;
+    }
+    
+    j++;
+  }
+  
+  return CI;
 }
 
 
