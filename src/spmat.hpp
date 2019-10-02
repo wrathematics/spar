@@ -76,6 +76,19 @@ spmat<INDEX, SCALAR>::~spmat()
 
 
 template <typename INDEX, typename SCALAR>
+void spmat<INDEX, SCALAR>::resize(int len_)
+{
+  arraytools::realloc(len_, &I);
+  arraytools::realloc(len_, &X);
+  
+  arraytools::check_allocs(I, P, X);
+  
+  len = len_;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::print(bool actual)
 {
   printf("## %dx%d sparse matrix with nnz=%d\n", m, n, nnz);
