@@ -36,6 +36,7 @@ class spmat
     int n;
     int nnz;
     int len;
+    int plen;
     INDEX *I;
     INDEX *P;
     SCALAR *X;
@@ -48,16 +49,20 @@ class spmat
 
 
 template <typename INDEX, typename SCALAR>
-spvec<INDEX, SCALAR>::spmat(int nrows_, int ncols_, int len_)
+spmat<INDEX, SCALAR>::spmat(int nrows_, int ncols_, int len_)
 {
   arraytools::zero_alloc(len_, &I);
-  arraytools::zero_alloc(ncols_, &P);
+  arraytools::zero_alloc(ncols_+1, &P);
   arraytools::zero_alloc(len_, &X);
   
   arraytools::check_allocs(I, P, X);
   
+  m = nrows_;
+  n = ncols_;
+  
   nnz = 0;
   len = len_;
+  plen = ncols_ + 1;
 }
 
 
