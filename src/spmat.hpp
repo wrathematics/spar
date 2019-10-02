@@ -17,7 +17,7 @@ class spmat
     
     void resize(int len_);
     
-    void print(bool actual=false) const;
+    void print(bool actual=false);
     int insert(const int col, const spvec<INDEX, SCALAR> &x);
     
     int nrows() const {return m;};
@@ -76,7 +76,71 @@ spmat<INDEX, SCALAR>::~spmat()
 
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::cleanup()
+void spmat<INDEX, SCALAR>::print(bool actual)
+{
+  printf("## %dx%d sparse matrix with nnz=%d\n", m, n, nnz);
+  
+  if (actual)
+  {
+    printf("I: ");
+    for (int ind=0; ind<len; ind++)
+      std::cout << I[ind] << " ";
+    
+    printf("\nP: ");
+    for (int ind=0; ind<plen; ind++)
+      std::cout << P[ind] << " ";
+    
+    printf("\nX: ");
+    for (int ind=0; ind<len; ind++)
+      std::cout << X[ind] << " ";
+    
+    putchar('\n');
+  }
+  else
+  {
+    if (nnz == 0)
+    {
+      for (int i=0; i<m; i++)
+      {
+        for (int j=0; j<n; j++)
+          std::cout << (SCALAR) 0 << " ";
+        
+        putchar('\n');
+      }
+    }
+    else
+    {
+      INDEX* CI = csc2coo();
+      for (int i=0; i<m; i++)
+      {
+        int ind = 0;
+        for (int j=0; j<n; j++)
+        {
+          while (I[ind] < i || CI[ind] < j)
+            ind++;
+          
+          if (I[ind] == i && CI[ind] == j)
+            std::cout << X[ind++];
+          else
+            std::cout << (SCALAR) 0;
+          
+          putchar(' ');
+        }
+        
+        putchar('\n');
+      }
+      
+      arraytools::free(CI);
+    }
+  }
+  
+  putchar('\n');
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void spmat<INDEX, SCALAR>::cleanup()
 {
   arraytools::free(I);
   I = NULL;
