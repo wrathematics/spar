@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "arraytools.hpp"
+#include "spvec.hpp"
 
 
 template <typename INDEX, typename SCALAR>
