@@ -227,15 +227,15 @@ int spvec<INDEX, SCALAR>::add(const SCALAR *x, const int xlen)
   
   // pre-scan to see if a re-alloc is necessary
   int num_inserted = 0;
-  for (int xi=0; xi<xlen; xi++)
+  for (INDEX xi=0; xi<xlen; xi++)
   {
     if (x[xi] == (SCALAR)0)
       continue;
     
-    while (I[ind] < xi)
+    while (ind < nnz && I[ind] < xi)
       ind++;
     
-    if (I[ind] > xi)
+    if (ind >= nnz || I[ind] > xi)
       num_inserted++;
   }
   
@@ -244,8 +244,11 @@ int spvec<INDEX, SCALAR>::add(const SCALAR *x, const int xlen)
   
   // add the vectors
   ind = 0;
-  for (int xi=0; xi<xlen; xi++)
+  for (INDEX xi=0; xi<xlen; xi++)
   {
+    if (x[xi] == (SCALAR)0)
+      continue;
+    
     while (ind < nnz && I[ind] < xi)
       ind++;
     
