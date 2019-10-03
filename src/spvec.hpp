@@ -139,18 +139,18 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
   }
   else
   {
-    int ind_s = 0;
-    for (int ind=0; ind<len; ind++)
+    const INDEX topval = I[nnz - 1];
+    
+    int ind = 0;
+    for (INDEX ind_g=0; ind_g<=topval; ind_g++)
     {
-      if (ind_s < nnz && ind == I[ind_s])
+      if (ind < nnz && ind_g == I[ind])
       {
-        std::cout << X[ind_s];
-        ind_s++;
+        std::cout << X[ind] << " ";
+        ind++;
       }
       else
-        std::cout << (SCALAR) 0;
-      
-      std::cout << " ";
+        std::cout << (SCALAR) 0 << " ";
     }
     
     std::cout << std::endl;
