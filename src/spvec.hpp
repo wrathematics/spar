@@ -11,6 +11,7 @@ template <typename INDEX, typename SCALAR>
 class spvec
 {
   public:
+    spvec();
     spvec(int len_);
     ~spvec();
     
@@ -48,6 +49,18 @@ class spvec
 // ----------------------------------------------------------------------------
 // constructor/destructor
 // ----------------------------------------------------------------------------
+
+template <typename INDEX, typename SCALAR>
+spvec<INDEX, SCALAR>::spvec()
+{
+  I = NULL;
+  X = NULL;
+  
+  nnz = 0;
+  len = 0;
+}
+
+
 
 template <typename INDEX, typename SCALAR>
 spvec<INDEX, SCALAR>::spvec(int len_)
