@@ -21,6 +21,7 @@ class spvec
     int insert(const INDEX i, const SCALAR s);
     template <typename INDEX_SRC, typename SCALAR_SRC>
     void set(const int nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
+    void set(dvec<INDEX, SCALAR> &d);
     
     void print(bool actual=false) const;
     
@@ -162,6 +163,31 @@ void spvec<INDEX, SCALAR>::set(const int nnz_, const INDEX_SRC *I_, const SCALAR
   arraytools::copy(nnz_, X_, X);
   
   nnz = nnz_;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void spvec<INDEX, SCALAR>::set(dvec<INDEX, SCALAR> &d)
+{
+  INDEX dnnz = d.get_nnz();
+  if (dnnz > len)
+    resize(dnnz);
+  
+  int pos = 0;
+  SCALAR *d_p = d.data_ptr();
+  for (INDEX i=0; i<d.get_len(); i++)
+  {
+    if (d_p[i])
+    {
+      I[pos] = i;
+      X[pos] = d_p[i];
+      
+      pos++;
+    }
+  }
+  
+  nnz = dnnz;
 }
 
 
