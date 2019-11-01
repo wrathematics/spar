@@ -18,6 +18,7 @@ class dvec
     void resize(int len_);
     void zero();
     void insert(const INDEX i, const SCALAR s);
+    void update_nnz();
     
     INDEX get_nnz() const {return nnz;};
     INDEX get_len() const {return len;};
@@ -111,6 +112,19 @@ void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
     nnz++;
   
   X[i] = s;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void dvec<INDEX, SCALAR>::update_nnz()
+{
+  nnz = 0;
+  for (INDEX i=0; i<len; i++)
+  {
+    if (X[i])
+      nnz++;
+  }
 }
 
 
