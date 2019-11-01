@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "arraytools.hpp"
+#include "dvec.hpp"
 
 
 template <typename INDEX, typename SCALAR>
@@ -25,6 +26,8 @@ class spvec
     
     int add(const spvec &x);
     int add(const SCALAR *x, const int xlen);
+    
+    void densify(dvec<INDEX, SCALAR> &d);
     
     int get_nnz() const {return nnz;};
     int get_len() const {return len;};
@@ -291,6 +294,23 @@ int spvec<INDEX, SCALAR>::add(const SCALAR *x, const int xlen)
   }
   
   return 0;
+}
+
+
+
+// ----------------------------------------------------------------------------
+// converters
+// ----------------------------------------------------------------------------
+
+template <typename INDEX, typename SCALAR>
+void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d)
+{
+  if (I[nnz-1] > d.get_len())
+    throw std::logic_error("dense array not large enough to store sparse vector");
+  
+  d.zero();
+  for (int pos=0; pos<nnz; pos++)
+    d.insert(I[pos], X[pos]);
 }
 
 
