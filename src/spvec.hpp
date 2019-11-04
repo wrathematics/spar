@@ -13,39 +13,39 @@ class spvec
 {
   public:
     spvec();
-    spvec(int len_);
+    spvec(INDEX len_);
     ~spvec();
     
-    void resize(int len_);
+    void resize(INDEX len_);
     void zero();
-    int insert(const INDEX i, const SCALAR s);
+    INDEX insert(const INDEX i, const SCALAR s);
     template <typename INDEX_SRC, typename SCALAR_SRC>
-    void set(const int nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
+    void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
     void set(dvec<INDEX, SCALAR> &d);
     
     void print(bool actual=false) const;
     
-    int add(const spvec &x);
-    int add(const SCALAR *x, const int xlen);
+    INDEX add(const spvec &x);
+    INDEX add(const SCALAR *x, const INDEX xlen);
     
     void densify(dvec<INDEX, SCALAR> &d);
     
-    int get_nnz() const {return nnz;};
-    int get_len() const {return len;};
+    INDEX get_nnz() const {return nnz;};
+    INDEX get_len() const {return len;};
     INDEX* index_ptr() {return I;};
     INDEX* index_ptr() const {return I;};
     SCALAR* data_ptr() {return X;};
     SCALAR* data_ptr() const {return X;};
   
   protected:
-    int nnz;
-    int len;
+    INDEX nnz;
+    INDEX len;
     INDEX *I;
     SCALAR *X;
   
   private:
     void cleanup();
-    void insert_from_ind(const int insertion_ind, const INDEX i, const SCALAR s);
+    void insert_from_ind(const INDEX insertion_ind, const INDEX i, const SCALAR s);
 };
 
 
@@ -67,7 +67,7 @@ spvec<INDEX, SCALAR>::spvec()
 
 
 template <typename INDEX, typename SCALAR>
-spvec<INDEX, SCALAR>::spvec(int len_)
+spvec<INDEX, SCALAR>::spvec(INDEX len_)
 {
   arraytools::zero_alloc(len_, &I);
   arraytools::zero_alloc(len_, &X);
@@ -93,7 +93,7 @@ spvec<INDEX, SCALAR>::~spvec()
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::resize(int len_)
+void spvec<INDEX, SCALAR>::resize(INDEX len_)
 {
   if (len == len_)
     return;
@@ -129,12 +129,12 @@ void spvec<INDEX, SCALAR>::zero()
 
 
 template <typename INDEX, typename SCALAR>
-int spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
+INDEX spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
   if (nnz == len)
     return 1;
   
-  int insertion_ind;
+  INDEX insertion_ind;
   for (insertion_ind=0; insertion_ind<nnz; insertion_ind++)
   {
     if (i < I[insertion_ind])
@@ -149,7 +149,7 @@ int spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 
 template <typename INDEX, typename SCALAR>
 template <typename INDEX_SRC, typename SCALAR_SRC>
-void spvec<INDEX, SCALAR>::set(const int nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
+void spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
 {
   if (len < nnz_)
     resize(nnz_);
@@ -174,7 +174,7 @@ void spvec<INDEX, SCALAR>::set(dvec<INDEX, SCALAR> &d)
   if (dnnz > len)
     resize(dnnz);
   
-  int pos = 0;
+  INDEX pos = 0;
   SCALAR *d_p = d.data_ptr();
   for (INDEX i=0; i<d.get_len(); i++)
   {
@@ -204,11 +204,11 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
   if (actual)
   {
     printf("I: ");
-    for (int ind=0; ind<len; ind++)
+    for (INDEX ind=0; ind<len; ind++)
       std::cout << I[ind] << " ";
     
     printf("\nX: ");
-    for (int ind=0; ind<len; ind++)
+    for (INDEX ind=0; ind<len; ind++)
       std::cout << X[ind] << " ";
     
     putchar('\n');
@@ -217,7 +217,7 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
   {
     const INDEX topval = I[nnz - 1];
     
-    int ind = 0;
+    INDEX ind = 0;
     for (INDEX ind_g=0; ind_g<=topval; ind_g++)
     {
       if (ind < nnz && ind_g == I[ind])
@@ -241,15 +241,15 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
 
 // return needed size of realloc
 template <typename INDEX, typename SCALAR>
-int spvec<INDEX, SCALAR>::add(const spvec &x)
+INDEX spvec<INDEX, SCALAR>::add(const spvec &x)
 {
   const INDEX *xI = x.index_ptr();
   const SCALAR *xX = x.data_ptr();
-  int ind = 0;
+  INDEX ind = 0;
   
   // pre-scan to see if a re-alloc is necessary
-  int num_inserted = 0;
-  for (int xind=0; xind<x.get_nnz(); xind++)
+  INDEX num_inserted = 0;
+  for (INDEX xind=0; xind<x.get_nnz(); xind++)
   {
     const INDEX xi = xI[xind];
     while (ind < nnz && I[ind] < xi)
@@ -264,7 +264,7 @@ int spvec<INDEX, SCALAR>::add(const spvec &x)
   
   // add the vectors
   ind = 0;
-  for (int xind=0; xind<x.get_nnz(); xind++)
+  for (INDEX xind=0; xind<x.get_nnz(); xind++)
   {
     const INDEX xi = xI[xind];
     while (ind < nnz && I[ind] < xi)
@@ -282,12 +282,12 @@ int spvec<INDEX, SCALAR>::add(const spvec &x)
 
 
 template <typename INDEX, typename SCALAR>
-int spvec<INDEX, SCALAR>::add(const SCALAR *x, const int xlen)
+INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
 {
-  int ind = 0;
+  INDEX ind = 0;
   
   // pre-scan to see if a re-alloc is necessary
-  int num_inserted = 0;
+  INDEX num_inserted = 0;
   for (INDEX xi=0; xi<xlen; xi++)
   {
     if (x[xi] == (SCALAR)0)
@@ -335,7 +335,7 @@ void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d)
     throw std::logic_error("dense array not large enough to store sparse vector");
   
   d.zero();
-  for (int pos=0; pos<nnz; pos++)
+  for (INDEX pos=0; pos<nnz; pos++)
     d.insert(I[pos], X[pos]);
 }
 
@@ -361,10 +361,10 @@ void spvec<INDEX, SCALAR>::cleanup()
 
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::insert_from_ind(const int insertion_ind,
+void spvec<INDEX, SCALAR>::insert_from_ind(const INDEX insertion_ind,
   const INDEX i, const SCALAR s)
 {
-  for (int ind=nnz; ind>insertion_ind; ind--)
+  for (INDEX ind=nnz; ind>insertion_ind; ind--)
   {
     I[ind] = I[ind-1];
     X[ind] = X[ind-1];
