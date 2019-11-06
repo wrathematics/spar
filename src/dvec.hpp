@@ -114,6 +114,8 @@ void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
   if (X[i] == 0)
     nnz++;
+  else if (s == 0)
+    nnz--;
   
   X[i] = s;
 }
