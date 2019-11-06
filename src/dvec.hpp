@@ -19,7 +19,7 @@ class dvec
     dvec(INDEX len_);
     ~dvec();
     
-    void resize(int len_);
+    void resize(INDEX len_);
     void zero();
     void insert(const INDEX i, const SCALAR s);
     void update_nnz();
@@ -80,7 +80,7 @@ dvec<INDEX, SCALAR>::~dvec()
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::resize(int len_)
+void dvec<INDEX, SCALAR>::resize(INDEX len_)
 {
   if (len == len_)
     return;
