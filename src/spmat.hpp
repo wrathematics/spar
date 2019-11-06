@@ -16,18 +16,18 @@ template <typename INDEX, typename SCALAR>
 class spmat
 {
   public:
-    spmat(int nrows_, int ncols_, int len_);
+    spmat(INDEX nrows_, INDEX ncols_, INDEX len_);
     ~spmat();
     
-    void resize(int len_);
+    void resize(INDEX len_);
     
     void print(bool actual=false);
-    int insert(const int col, const spvec<INDEX, SCALAR> &x);
+    int insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
     
-    int nrows() const {return m;};
-    int ncols() const {return n;};
-    int get_nnz() const {return nnz;};
-    int get_len() const {return len;};
+    INDEX nrows() const {return m;};
+    INDEX ncols() const {return n;};
+    INDEX get_nnz() const {return nnz;};
+    INDEX get_len() const {return len;};
     INDEX* index_ptr() {return I;};
     INDEX* index_ptr() const {return I;};
     INDEX* col_ptr() {return P;};
@@ -36,11 +36,11 @@ class spmat
     SCALAR* data_ptr() const {return X;};
   
   protected:
-    int m;
-    int n;
-    int nnz;
-    int len;
-    int plen;
+    INDEX m;
+    INDEX n;
+    INDEX nnz;
+    INDEX len;
+    INDEX plen;
     INDEX *I;
     INDEX *P;
     SCALAR *X;
@@ -53,7 +53,7 @@ class spmat
 
 
 template <typename INDEX, typename SCALAR>
-spmat<INDEX, SCALAR>::spmat(int nrows_, int ncols_, int len_)
+spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
 {
   arraytools::zero_alloc(len_, &I);
   arraytools::zero_alloc(ncols_+1, &P);
@@ -80,7 +80,7 @@ spmat<INDEX, SCALAR>::~spmat()
 
 
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::resize(int len_)
+void spmat<INDEX, SCALAR>::resize(INDEX len_)
 {
   arraytools::realloc(len_, &I);
   arraytools::realloc(len_, &X);
@@ -100,15 +100,15 @@ void spmat<INDEX, SCALAR>::print(bool actual)
   if (actual)
   {
     printf("I: ");
-    for (int ind=0; ind<len; ind++)
+    for (INDEX ind=0; ind<len; ind++)
       std::cout << I[ind] << " ";
     
     printf("\nP: ");
-    for (int ind=0; ind<plen; ind++)
+    for (INDEX ind=0; ind<plen; ind++)
       std::cout << P[ind] << " ";
     
     printf("\nX: ");
-    for (int ind=0; ind<len; ind++)
+    for (INDEX ind=0; ind<len; ind++)
       std::cout << X[ind] << " ";
     
     putchar('\n');
@@ -117,9 +117,9 @@ void spmat<INDEX, SCALAR>::print(bool actual)
   {
     if (nnz == 0)
     {
-      for (int i=0; i<m; i++)
+      for (INDEX i=0; i<m; i++)
       {
-        for (int j=0; j<n; j++)
+        for (INDEX j=0; j<n; j++)
           std::cout << (SCALAR) 0 << " ";
         
         putchar('\n');
@@ -128,10 +128,10 @@ void spmat<INDEX, SCALAR>::print(bool actual)
     else
     {
       INDEX* CI = csc2coo();
-      for (int i=0; i<m; i++)
+      for (INDEX i=0; i<m; i++)
       {
-        int ind = 0;
-        for (int j=0; j<n; j++)
+        INDEX ind = 0;
+        for (INDEX j=0; j<n; j++)
         {
           while (I[ind] < i || CI[ind] < j)
             ind++;
@@ -157,7 +157,7 @@ void spmat<INDEX, SCALAR>::print(bool actual)
 
 
 template <typename INDEX, typename SCALAR>
-int spmat<INDEX, SCALAR>::insert(const int col, const spvec<INDEX, SCALAR> &x)
+int spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
 {
   // check if a re-alloc is necessary
   if (x.get_nnz() > len - nnz)
@@ -167,9 +167,9 @@ int spmat<INDEX, SCALAR>::insert(const int col, const spvec<INDEX, SCALAR> &x)
   const INDEX *xI = x.index_ptr();
   const SCALAR *xX = x.data_ptr();
   
-  int ind = P[col];
-  const int xnnz = x.get_nnz();
-  for (int xind=0; xind<xnnz; xind++)
+  INDEX ind = P[col];
+  const INDEX xnnz = x.get_nnz();
+  for (INDEX xind=0; xind<xnnz; xind++)
   {
     I[ind] = xI[xind];
     X[ind] = xX[xind];
@@ -177,7 +177,7 @@ int spmat<INDEX, SCALAR>::insert(const int col, const spvec<INDEX, SCALAR> &x)
     ind++;
   }
   
-  for (int ind=col+1; ind<plen; ind++)
+  for (INDEX ind=col+1; ind<plen; ind++)
     P[ind] += xnnz;
   
   nnz += xnnz;
@@ -212,8 +212,8 @@ void spmat<INDEX, SCALAR>::cleanup()
 template <typename INDEX, typename SCALAR>
 INDEX* spmat<INDEX, SCALAR>::csc2coo()
 {
-  int j = 0;
-  int ind = 0;
+  INDEX j = 0;
+  INDEX ind = 0;
   
   INDEX* CI;
   arraytools::alloc(len, &CI);
@@ -223,9 +223,9 @@ INDEX* spmat<INDEX, SCALAR>::csc2coo()
     throw std::bad_alloc();
   }
   
-  for (int c=0; c<plen; c++)
+  for (INDEX c=0; c<plen; c++)
   {
-    int diff = P[c+1] - P[c];
+    INDEX diff = P[c+1] - P[c];
     
     while (diff > 0)
     {
