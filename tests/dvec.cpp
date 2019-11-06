@@ -12,7 +12,9 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", dvec, (
   const int len = 5;
   TestType x(len);
   
-  REQUIRE( x.get_len() == len );
+  using INDEX = decltype(+x.get_nnz());
+  
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
 }
 
@@ -28,7 +30,9 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[dvec]", dvec, (
   x.insert(3, 1);
   x.insert(1, 2);
   
-  REQUIRE( x.get_len() == len );
+  using INDEX = decltype(+x.get_nnz());
+  
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 2 );
   
   auto *X = x.data_ptr();
@@ -46,15 +50,17 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", dvec, (
   const int len = 5;
   TestType x(len);
   
-  REQUIRE( x.get_len() == len );
+  using INDEX = decltype(+x.get_nnz());
+  
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
   
   x.insert(3, 1);
-  REQUIRE( x.get_len() == len );
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 1 );
   
   x.zero();
-  REQUIRE( x.get_len() == len );
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
 }
 
@@ -68,13 +74,15 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
   int len = 2;
   TestType x(len);
   
+  using INDEX = decltype(+x.get_nnz());
+  
   x.insert(1, 1);
-  REQUIRE( x.get_len() == len );
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 1 );
   
   len = 5;
   x.resize(len);
-  REQUIRE( x.get_len() == len );
+  REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 1 );
   
   auto *X = x.data_ptr();
