@@ -1,6 +1,7 @@
 # spvec
 
 * **Version:** 0.1-0
+* **Status:** [![Build Status](https://travis-ci.org/wrathematics/spvec.png)](https://travis-ci.org/wrathematics/spvec)
 * **License:** [BSL-1.0](http://opensource.org/licenses/BSL-1.0)
 * **Project home**: https://github.com/wrathematics/spvec
 * **Bug reports**: https://github.com/wrathematics/spvec/issues
