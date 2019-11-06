@@ -10,9 +10,9 @@ compiler:
 install:
   - mkdir -p $HOME/.cache/pkgs
   - if [ "$CXX" = "g++" ]; then
-      echo "CXX=g++" > tests/make.inc
+      echo "CXX=g++" > tests/make.inc;
     else 
-      echo "CXX=clang++" > tests/make.inc
+      echo "CXX=clang++" > tests/make.inc;
     fi
 
 script:
