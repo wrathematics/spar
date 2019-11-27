@@ -4,6 +4,7 @@
 
 #ifndef SPMAT_CLASS_H
 #define SPMAT_CLASS_H
+#pragma once
 
 
 #include <iostream>

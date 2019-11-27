@@ -4,6 +4,7 @@
 
 #ifndef SPVEC_CLASS_H
 #define SPVEC_CLASS_H
+#pragma once
 
 
 #include <iostream>

@@ -4,6 +4,7 @@
 
 #ifndef DVEC_CLASS_H
 #define DVEC_CLASS_H
+#pragma once
 
 
 #include <iostream>
