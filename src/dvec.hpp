@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "arraytools.hpp"
+#include "arraytools/src/arraytools.hpp"
 
 
 template <typename INDEX, typename SCALAR>

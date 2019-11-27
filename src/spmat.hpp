@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "arraytools.hpp"
+#include "arraytools/src/arraytools.hpp"
 #include "spvec.hpp"
 
 
