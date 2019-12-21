@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 
-#include <spmat.hpp>
+#include <spvec.hpp>
 
 
 
