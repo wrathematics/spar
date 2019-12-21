@@ -2,8 +2,8 @@
 // License, Version 1.0. See accompanying file LICENSE or copy at
 // https://www.boost.org/LICENSE_1_0.txt
 
-#ifndef DVEC_CLASS_H
-#define DVEC_CLASS_H
+#ifndef SPVEC_CORE_DVEC_H
+#define SPVEC_CORE_DVEC_H
 #pragma once
 
 
