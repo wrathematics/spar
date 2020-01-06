@@ -6,7 +6,7 @@ OMPFLAGS = -fopenmp
 WARNFLAGS = -Wall -pedantic -Wextra
 
 
-all: miniclean spvec run
+all: miniclean spar run
 
 SRCS=$(wildcard *.cpp)
 OBJS=$(SRCS:.cpp=.o )
@@ -14,14 +14,14 @@ OBJS=$(SRCS:.cpp=.o )
 %.o: %.cpp 
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) -c $< -o $@
  
-spvec: $(OBJS)
-	$(CXX) $(OBJS) -o spvec $(OMPFLAGS)
+spar: $(OBJS)
+	$(CXX) $(OBJS) -o spar $(OMPFLAGS)
 
-run: spvec
-	( ./spvec )
+run: spar
+	( ./spar )
 
 miniclean:
 	( ls *.o | grep -v test-main | xargs rm -f )
 
 clean:
-	rm -rf *.o spvec
+	rm -rf *.o spar
