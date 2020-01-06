@@ -1,27 +1,21 @@
--include make.inc
+all: miniclean make run
 
-CPPFLAGS = -I../src
-CXXFLAGS = -std=c++17 -O2 -march=native
-OMPFLAGS = -fopenmp 
-WARNFLAGS = -Wall -pedantic -Wextra
+make: core_make
+run: core_run
+miniclean: core_miniclean
+clean: core_clean
 
 
-all: miniclean spar run
+core: core_miniclean core_make core_run
 
-SRCS=$(wildcard *.cpp)
-OBJS=$(SRCS:.cpp=.o )
+core_make:
+	( cd core; make )
 
-%.o: %.cpp 
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) -c $< -o $@
- 
-spar: $(OBJS)
-	$(CXX) $(OBJS) -o spar $(OMPFLAGS)
+core_run:
+	( cd core; ./core )
 
-run: spar
-	( ./spar )
+core_miniclean:
+	( cd core; make miniclean; )
 
-miniclean:
-	( ls *.o | grep -v test-main | xargs rm -f )
-
-clean:
-	rm -rf *.o spar
+core_clean:
+	( cd core; make clean; )

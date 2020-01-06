@@ -1,10 +1,8 @@
-#include "catch/catch.hpp"
-
+#include <catch.hpp>
 #include <spar.hpp>
 
 
-
-TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("construct", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
 ))
@@ -12,7 +10,7 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", dvec, (
   const int len = 5;
   TestType x(len);
   
-  using INDEX = decltype(+x.get_nnz());
+  using INDEX = decltype(+*x.index_ptr());
   
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
@@ -20,7 +18,7 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", dvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("insert", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
 ))
@@ -30,19 +28,23 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[dvec]", dvec, (
   x.insert(3, 1);
   x.insert(1, 2);
   
-  using INDEX = decltype(+x.get_nnz());
+  using INDEX = decltype(+*x.index_ptr());
   
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 2 );
   
+  auto *I = x.index_ptr();
+  REQUIRE( I[0] == 1 );
+  REQUIRE( I[1] == 3 );
+  
   auto *X = x.data_ptr();
-  REQUIRE( X[1] == 2 );
-  REQUIRE( X[3] == 1 );
+  REQUIRE( X[0] == 2 );
+  REQUIRE( X[1] == 1 );
 }
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
 ))
@@ -50,7 +52,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", dvec, (
   const int len = 5;
   TestType x(len);
   
-  using INDEX = decltype(+x.get_nnz());
+  using INDEX = decltype(+*x.index_ptr());
   
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
@@ -66,7 +68,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", dvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
 ))
@@ -74,9 +76,9 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
   int len = 2;
   TestType x(len);
   
-  using INDEX = decltype(+x.get_nnz());
+  using INDEX = decltype(+*x.index_ptr());
   
-  x.insert(1, 1);
+  x.insert(3, 1);
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 1 );
   
@@ -85,14 +87,18 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 1 );
   
+  auto *I = x.index_ptr();
+  REQUIRE( I[0] == 3 );
+  REQUIRE( I[1] == 0 );
+  
   auto *X = x.data_ptr();
-  REQUIRE( X[4] == 0 );
-  REQUIRE( X[1] == 1 );
+  REQUIRE( X[0] == 1 );
+  REQUIRE( X[1] == 0 );
 }
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("set", "[dpvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("set", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
 ))
@@ -100,32 +106,29 @@ TEMPLATE_PRODUCT_TEST_CASE("set", "[dpvec]", dvec, (
   const int len = 5;
   TestType x(len);
   
-  using INDEX = decltype(+x.get_nnz());
-  using SCALAR = decltype(+*x.data_ptr());
+  using INDEX = decltype(+*x.index_ptr());
   
-  spvec<INDEX, SCALAR> s(3);
-  s.insert(1, 1);
-  s.insert(3, 1);
+  x.insert(3, 1);
+  REQUIRE( x.get_len() == (INDEX)len );
+  REQUIRE( x.get_nnz() == 1 );
+  
+  const int setlen = 2;
+  decltype(+*x.index_ptr()) I_set[setlen] = {0, 4};
+  decltype(+*x.data_ptr()) X_set[setlen] = {1, 1};
+  x.set(setlen, I_set, X_set);
   
   REQUIRE( x.get_len() == (INDEX)len );
-  REQUIRE( x.get_nnz() == 0 );
+  REQUIRE( x.get_nnz() == (INDEX)setlen );
   
-  x.set(s);
+  auto *I = x.index_ptr();
+  for (INDEX i=0; i<setlen; i++)
+    REQUIRE( I[i] == I_set[i] );
+  for (INDEX i=setlen; i<len; i++)
+    REQUIRE( I[i] == 0 );
   
-  REQUIRE( x.get_len() == (INDEX)len );
-  REQUIRE( x.get_nnz() == 2 );
-  
-  REQUIRE( x.data_ptr()[0] == 0 );
-  REQUIRE( x.data_ptr()[1] == 1 );
-  REQUIRE( x.data_ptr()[2] == 0 );
-  REQUIRE( x.data_ptr()[3] == 1 );
-  
-  s.insert(7, 1);
-  x.set(s);
-  
-  REQUIRE( x.get_len() == (INDEX)8 );
-  REQUIRE( x.get_nnz() == 3 );
-  
-  REQUIRE( x.data_ptr()[6] == 0 );
-  REQUIRE( x.data_ptr()[7] == 1 );
+  auto *X = x.data_ptr();
+  for (INDEX i=0; i<setlen; i++)
+    REQUIRE( X[i] == X_set[i] );
+  for (INDEX i=setlen; i<len; i++)
+    REQUIRE( X[i] == 0 );
 }

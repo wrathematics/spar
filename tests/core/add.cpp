@@ -1,7 +1,5 @@
-#include "catch/catch.hpp"
-
+#include <catch.hpp>
 #include <spar.hpp>
-
 
 
 TEMPLATE_PRODUCT_TEST_CASE("add sparse-sparse", "[spvec]", spvec, (
