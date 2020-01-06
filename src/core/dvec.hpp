@@ -31,6 +31,8 @@ class dvec
     void set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
     void set(const spvec<INDEX, SCALAR> &x);
     
+    void print() const;
+    
     INDEX get_nnz() const {return nnz;};
     INDEX get_len() const {return len;};
     SCALAR* data_ptr() {return X;};
@@ -162,6 +164,20 @@ template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
 {
   set(x.get_nnz(), x.index_ptr(), x.data_ptr());
+}
+
+
+
+// ----------------------------------------------------------------------------
+// printer
+// ----------------------------------------------------------------------------
+
+template <typename INDEX, typename SCALAR>
+void dvec<INDEX, SCALAR>::print() const
+{
+  printf("## Length %d dense vector with nnz=%d\n", len, nnz);
+  for (INDEX i=0; i<len; i++)
+    printf("%f\n", (float) X[i]);
 }
 
 
