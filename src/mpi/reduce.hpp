@@ -13,6 +13,7 @@
 #include "../converters/s4.hpp"
 #include "defs.hpp"
 #include "err.hpp"
+#include "utils.hpp"
 
 
 namespace spar
