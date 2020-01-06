@@ -61,7 +61,7 @@ namespace spar
         spar::conv::s4col_to_spvec(j, send_data, a);
         a.densify(d);
         
-        if (root == spvec::mpi::defs::REDUCE_TO_ALL)
+        if (root == spar::mpi::defs::REDUCE_TO_ALL)
           mpi_ret = MPI_Allreduce(MPI_IN_PLACE, d.data_ptr(), m, reduce_type, MPI_SUM, comm);
         else
           mpi_ret = MPI_Reduce(MPI_IN_PLACE, d.data_ptr(), m, reduce_type, MPI_SUM, root, comm);
