@@ -20,7 +20,7 @@ namespace spvec
 {
   namespace mpi
   {
-    namespace
+    namespace err
     {
       static inline void check_MPI_ret(int ret)
       {
@@ -65,7 +65,7 @@ namespace spvec
         else
           mpi_ret = MPI_Reduce(MPI_IN_PLACE, d.data_ptr(), m, reduce_type, MPI_SUM, root, comm);
         
-        check_MPI_ret(mpi_ret);
+        err::check_MPI_ret(mpi_ret);
         
         d.update_nnz();
         a.set(d);
