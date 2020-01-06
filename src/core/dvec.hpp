@@ -27,6 +27,9 @@ class dvec
     void zero();
     void insert(const INDEX i, const SCALAR s);
     void update_nnz();
+    template <typename INDEX_SRC, typename SCALAR_SRC>
+    void set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
+    void set(const spvec<INDEX, SCALAR> &x);
     
     INDEX get_nnz() const {return nnz;};
     INDEX get_len() const {return len;};
@@ -135,6 +138,30 @@ void dvec<INDEX, SCALAR>::update_nnz()
     if (X[i])
       nnz++;
   }
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+template <typename INDEX_SRC, typename SCALAR_SRC>
+void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
+{
+  zero();
+  
+  INDEX_SRC top = I_[nnz_-1];
+  if (top > len)
+    resize(top + 1);
+  
+  for (INDEX_SRC i=0; i<nnz_; i++)
+    X[I_[i]] = X_[i];
+  
+  nnz = nnz_;
+}
+
+template <typename INDEX, typename SCALAR>
+void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
+{
+  set(x.get_nnz(), x.index_ptr(), x.data_ptr());
 }
 
 
