@@ -17,7 +17,7 @@
 #include "../core/spvec.hpp"
 
 
-namesace spvec
+namespace spvec
 {
   namespace conv
   {
@@ -30,7 +30,7 @@ namesace spvec
     
     
     template <typename INDEX, typename SCALAR>
-    static inline spmat spmat_to_eigen(const spmat<INDEX, SCALAR> &x)
+    static inline eigen_t<INDEX, SCALAR> spmat_to_eigen(const spmat<INDEX, SCALAR> &x)
     {
       const INDEX m = x.nrows();
       const INDEX n = x.ncols();
@@ -50,7 +50,7 @@ namesace spvec
     
     
     template <typename INDEX, typename SCALAR>
-    static inline SEXP spmat_to_s4(const eigen_t<INDEX, SCALAR> &s)
+    static inline spmat<INDEX, SCALAR> spmat_to_s4(const eigen_t<INDEX, SCALAR> &s)
     {
       const INDEX m = s.rows();
       const INDEX n = s.cols();
@@ -69,7 +69,7 @@ namesace spvec
     
     
     template <typename INDEX, typename SCALAR>
-    static inline dvec eigen_to_dvec(const INDEX col, const eigen_t<INDEX, SCALAR> &s)
+    static inline dvec<INDEX, SCALAR> eigen_to_dvec(const INDEX col, const eigen_t<INDEX, SCALAR> &s)
     {
       const INDEX m = s.rows();
       const INDEX n = s.cols();
