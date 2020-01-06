@@ -7,37 +7,18 @@
 #pragma once
 
 
-#define OMPI_SKIP_MPICXX 1
-#include <mpi.h>
-
 #include <stdexcept>
 
-#include "defs.hpp"
 #include "../spar.hpp"
 #include "../converters/s4.hpp"
+#include "defs.hpp"
+#include "err.hpp"
 
 
 namespace spar
 {
   namespace mpi
   {
-    namespace err
-    {
-      static inline void check_MPI_ret(int ret)
-      {
-        if (ret != MPI_SUCCESS)
-        {
-          int slen;
-          char s[MPI_MAX_ERROR_STRING];
-          
-          MPI_Error_string(ret, s, &slen);
-          throw std::runtime_error(s);
-        }
-      }
-    }
-    
-    
-    
     template <typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> reduce_densevec(const int root, SEXP send_data, MPI_Comm comm)
     {
