@@ -74,9 +74,11 @@ namespace spar
           return MPI_UINT32_T;
         else if (typeid(T) == typeid(uint64_t))
           return MPI_UINT64_T;
-        
         else
-          return MPI_DATATYPE_NULL;
+        {
+          // return MPI_DATATYPE_NULL;
+          throw std::runtime_error("unknown reducer type");
+        }
       }
     }
   }
