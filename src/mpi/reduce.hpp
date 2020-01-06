@@ -51,7 +51,7 @@ namespace spar
       spmat<INDEX, SCALAR> s(m, n, n*len);
       dvec<INDEX, SCALAR> d(m);
       
-      const MPI_Datatype reduce_type = mpi_type_lookup(*d.data_ptr());
+      const MPI_Datatype reduce_type = utils::mpi_type_lookup(*d.data_ptr());
       if (reduce_type == MPI_DATATYPE_NULL)
         throw std::runtime_error("unknown reducer type");
       
