@@ -13,7 +13,7 @@
 #include <stdexcept>
 
 #include "defs.hpp"
-#include "../spvec.hpp"
+#include "../spar.hpp"
 
 
 namespace spar

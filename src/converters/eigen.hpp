@@ -12,7 +12,7 @@
 #include <Eigen/SparseCore>
 
 #include "../arraytools/src/arraytools.hpp"
-#include "../spvec.hpp"
+#include "../spar.hpp"
 
 
 namespace spar
