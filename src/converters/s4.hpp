@@ -1,19 +1,19 @@
-// This file is part of spvec which is released under the Boost Software
+// This file is part of spar which is released under the Boost Software
 // License, Version 1.0. See accompanying file LICENSE or copy at
 // https://www.boost.org/LICENSE_1_0.txt
 
-#ifndef SPVEC_CONVERTERS_S4_H
-#define SPVEC_CONVERTERS_S4_H
+#ifndef SPAR_CONVERTERS_S4_H
+#define SPAR_CONVERTERS_S4_H
 #pragma once
 
 
 #include <Rdefines.h>
 #include <Rinternals.h>
 
-#include "../spvec.hpp"
+#include "../spar.hpp"
 
 
-namespace spvec
+namespace spar
 {
   namespace constants
   {
