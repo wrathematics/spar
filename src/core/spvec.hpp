@@ -10,8 +10,10 @@
 #include <iostream>
 
 #include "arraytools/src/arraytools.hpp"
-#include "dvec.hpp"
 
+
+template <typename INDEX, typename SCALAR>
+class dvec;
 
 template <typename INDEX, typename SCALAR>
 class spvec

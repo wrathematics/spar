@@ -13,6 +13,9 @@
 
 
 template <typename INDEX, typename SCALAR>
+class spvec;
+
+template <typename INDEX, typename SCALAR>
 class dvec
 {
   public:

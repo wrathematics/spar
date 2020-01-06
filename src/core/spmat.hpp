@@ -10,8 +10,10 @@
 #include <iostream>
 
 #include "arraytools/src/arraytools.hpp"
-#include "spvec.hpp"
 
+
+template <typename INDEX, typename SCALAR>
+class spvec;
 
 template <typename INDEX, typename SCALAR>
 class spmat
