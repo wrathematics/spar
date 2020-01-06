@@ -89,3 +89,43 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
   REQUIRE( X[4] == 0 );
   REQUIRE( X[1] == 1 );
 }
+
+
+
+TEMPLATE_PRODUCT_TEST_CASE("set", "[dpvec]", dvec, (
+  (int, int),      (int, uint32_t),      (int, double),
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+))
+{
+  const int len = 5;
+  TestType x(len);
+  
+  using INDEX = decltype(+x.get_nnz());
+  using SCALAR = decltype(+*x.data_ptr());
+  
+  spvec<INDEX, SCALAR> s(3);
+  s.insert(1, 1);
+  s.insert(3, 1);
+  
+  REQUIRE( x.get_len() == (INDEX)len );
+  REQUIRE( x.get_nnz() == 0 );
+  
+  x.set(s);
+  
+  REQUIRE( x.get_len() == (INDEX)len );
+  REQUIRE( x.get_nnz() == 2 );
+  
+  REQUIRE( x.data_ptr()[0] == 0 );
+  REQUIRE( x.data_ptr()[1] == 1 );
+  REQUIRE( x.data_ptr()[2] == 0 );
+  REQUIRE( x.data_ptr()[3] == 1 );
+  
+  s.insert(7, 1);
+  x.set(s);
+  
+  REQUIRE( x.get_len() == (INDEX)8 );
+  REQUIRE( x.get_nnz() == 3 );
+  
+  REQUIRE( x.data_ptr()[6] == 0 );
+  REQUIRE( x.data_ptr()[7] == 1 );
+}
