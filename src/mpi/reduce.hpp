@@ -58,7 +58,7 @@ namespace spar
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
       {
-        spar::s4col_to_spvec(j, send_data, a);
+        spar::conv::s4col_to_spvec(j, send_data, a);
         a.densify(d);
         
         if (root == spvec::mpi::defs::REDUCE_TO_ALL)
