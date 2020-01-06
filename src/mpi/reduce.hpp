@@ -14,6 +14,7 @@
 
 #include "defs.hpp"
 #include "../spar.hpp"
+#include "../converters/s4.hpp"
 
 
 namespace spar
@@ -42,10 +43,10 @@ namespace spar
     {
       int mpi_ret;
       int m, n;
-      sparsehelpers::sexp::get_dim_from_s4(send_data, &m, &n);
+      spar::sexp::get_dim_from_s4(send_data, &m, &n);
       
       // setup
-      const int len = sparsehelpers::sexp::get_col_len_from_s4(0, sparsehelpers::sexp::get_p_from_s4(send_data)) * sparsehelpers::constants::MEM_FUDGE_ELT_FAC;
+      const int len = spar::sexp::get_col_len_from_s4(0, spar::sexp::get_p_from_s4(send_data)) * spar::constants::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
       spmat<INDEX, SCALAR> s(m, n, n*len);
       dvec<INDEX, SCALAR> d(m);
@@ -57,7 +58,7 @@ namespace spar
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
       {
-        sparsehelpers::s4col_to_spvec(j, send_data, a);
+        spar::s4col_to_spvec(j, send_data, a);
         a.densify(d);
         
         if (root == spvec::mpi::defs::REDUCE_TO_ALL)
@@ -73,7 +74,7 @@ namespace spar
         int needed_space = s.insert(j, a);
         if (needed_space > 0)
         {
-          s.resize((s.get_len() + needed_space) * sparsehelpers::constants::MEM_FUDGE_ELT_FAC);
+          s.resize((s.get_len() + needed_space) * spar::constants::MEM_FUDGE_ELT_FAC);
           s.insert(j, a);
         }
       }
