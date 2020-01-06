@@ -12,9 +12,7 @@
 #include <Eigen/SparseCore>
 
 #include "../arraytools/src/arraytools.hpp"
-#include "../core/dvec.hpp"
-#include "../core/spmat.hpp"
-#include "../core/spvec.hpp"
+#include "../spvec.hpp"
 
 
 namespace spvec

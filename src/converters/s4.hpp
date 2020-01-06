@@ -10,8 +10,7 @@
 #include <Rdefines.h>
 #include <Rinternals.h>
 
-#include "../core/spmat.hpp"
-#include "../core/spvec.hpp"
+#include "../spvec.hpp"
 
 
 namespace spvec

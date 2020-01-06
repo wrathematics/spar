@@ -13,10 +13,7 @@
 #include <stdexcept>
 
 #include "defs.hpp"
-
-#include "../core/dvec.hpp"
-#include "../core/spvec.hpp"
-#include "../core/spmat.hpp"
+#include "../spvec.hpp"
 
 
 namespace spvec
