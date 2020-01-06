@@ -28,7 +28,7 @@ class spvec
     INDEX insert(const INDEX i, const SCALAR s);
     template <typename INDEX_SRC, typename SCALAR_SRC>
     void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
-    void set(dvec<INDEX, SCALAR> &d);
+    void set(const dvec<INDEX, SCALAR> &d);
     
     void print(bool actual=false) const;
     
@@ -175,7 +175,7 @@ void spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCAL
 
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::set(dvec<INDEX, SCALAR> &d)
+void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
 {
   INDEX dnnz = d.get_nnz();
   if (dnnz > len)
