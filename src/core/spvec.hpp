@@ -29,6 +29,7 @@ class spvec
     template <typename INDEX_SRC, typename SCALAR_SRC>
     void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
     void set(const dvec<INDEX, SCALAR> &d);
+    SCALAR get(const INDEX ind) const;
     
     void print(bool actual=false) const;
     
@@ -195,6 +196,25 @@ void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
   }
   
   nnz = dnnz;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
+{
+  SCALAR val = 0;
+  
+  for (INDEX pos=0; pos<nnz; pos++)
+  {
+    if (I[pos] == ind)
+    {
+      val = X[pos];
+      break;
+    }
+  }
+  
+  return val;
 }
 
 
