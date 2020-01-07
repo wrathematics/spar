@@ -36,7 +36,7 @@ class spvec
     INDEX add(const spvec &x);
     INDEX add(const SCALAR *x, const INDEX xlen);
     
-    void densify(dvec<INDEX, SCALAR> &d);
+    void densify(dvec<INDEX, SCALAR> &d) const;
     
     INDEX get_nnz() const {return nnz;};
     INDEX get_len() const {return len;};
@@ -356,7 +356,7 @@ INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d)
+void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
 {
   if (I[nnz-1] > d.get_len())
     throw std::logic_error("dense array not large enough to store sparse vector");
