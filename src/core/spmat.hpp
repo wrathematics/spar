@@ -25,9 +25,9 @@ class spmat
     void resize(INDEX len_);
     void zero();
     int insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
-    void get_col(const INDEX col, spvec<INDEX, SCALAR> &x);
+    void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
-    void print(bool actual=false);
+    void print(bool actual=false) const;
     
     INDEX nrows() const {return m;};
     INDEX ncols() const {return n;};
@@ -149,7 +149,7 @@ int spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
 
 
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x)
+void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const
 {
   const INDEX ind = P[col];
   if (P[col + 1] == ind)
@@ -169,7 +169,7 @@ void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x)
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::print(bool actual)
+void spmat<INDEX, SCALAR>::print(bool actual) const
 {
   printf("## %dx%d sparse matrix with nnz=%d\n", m, n, nnz);
   
