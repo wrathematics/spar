@@ -28,6 +28,7 @@ class spmat
     void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
     void print(bool actual=false) const;
+    void info() const;
     
     INDEX nrows() const {return m;};
     INDEX ncols() const {return n;};
@@ -228,6 +229,19 @@ void spmat<INDEX, SCALAR>::print(bool actual) const
   }
   
   putchar('\n');
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void spmat<INDEX, SCALAR>::info() const
+{
+  printf("# spmat");
+  printf(" %dx%d", m, n);
+  printf(" with nnz=%d", nnz);
+  printf(" and storage=%d", len);
+  printf(" (index=%s scalar=%s)", typeid(INDEX).name(), typeid(SCALAR).name());
+  printf("\n");
 }
 
 
