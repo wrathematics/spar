@@ -44,6 +44,26 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
 
 
 
+TEMPLATE_PRODUCT_TEST_CASE("get", "[spvec]", spvec, (
+  (int, int),      (int, uint32_t),      (int, double),
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+))
+{
+  const int len = 5;
+  TestType x(len);
+  x.insert(3, 1);
+  x.insert(1, 2);
+  
+  using SCALAR = decltype(+*x.data_ptr());
+  
+  REQUIRE( x.get(0) == (SCALAR) 0 );
+  REQUIRE( x.get(1) == (SCALAR) 2 );
+  REQUIRE( x.get(2) == (SCALAR) 0 );
+  REQUIRE( x.get(3) == (SCALAR) 1 );
+}
+
+
+
 TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
