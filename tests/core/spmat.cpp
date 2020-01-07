@@ -107,3 +107,56 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 1 );
 }
+
+
+
+TEMPLATE_PRODUCT_TEST_CASE("get_col", "[spmat]", spmat, (
+  (int, int),      (int, uint32_t),      (int, double),
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+))
+{
+  const int m = 10;
+  const int n = 8;
+  TestType x(m, n, 20);
+  
+  using INDEX = decltype(+*x.index_ptr());
+  using SCALAR = decltype(+*x.data_ptr());
+  
+  spvec<INDEX, SCALAR> s(8);
+  
+  s.insert(1, 1);
+  s.insert(4, 2);
+  x.insert(0, s);
+  
+  s.zero();
+  s.insert(3, 1);
+  s.insert(5, 2);
+  s.insert(6, 3);
+  x.insert(2, s);
+  
+  s.zero();
+  s.insert(4, 1);
+  s.insert(6, 2);
+  s.insert(7, 3);
+  s.insert(9, 4);
+  x.insert(6, s);
+  
+  s.zero();
+  s.insert(2, 1);
+  x.insert(7, s);
+  
+  x.get_col(0, s);
+  REQUIRE( s.get_nnz() == 2 );
+  
+  x.get_col(1, s);
+  REQUIRE( s.get_nnz() == 0 );
+  
+  x.get_col(2, s);
+  REQUIRE( s.get_nnz() == 3 );
+  
+  x.get_col(5, s);
+  REQUIRE( s.get_nnz() == 0 );
+  
+  x.get_col(7, s);
+  REQUIRE( s.get_nnz() == 1 );
+}

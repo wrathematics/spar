@@ -25,6 +25,7 @@ class spmat
     void resize(INDEX len_);
     void zero();
     int insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
+    void get_col(const INDEX col, spvec<INDEX, SCALAR> &x);
     
     void print(bool actual=false);
     
@@ -143,6 +144,22 @@ int spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
   nnz += xnnz;
   
   return 0;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x)
+{
+  const INDEX ind = P[col];
+  if (P[col + 1] == ind)
+  {
+    x.zero();
+    return;
+  }
+  
+  const INDEX col_nnz = P[col + 1] - ind;
+  x.set(col_nnz, I + ind, X + ind);
 }
 
 
