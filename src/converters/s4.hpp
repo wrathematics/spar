@@ -15,14 +15,6 @@
 
 namespace spar
 {
-  namespace constants
-  {
-    const static float MEM_FUDGE_ELT_FAC = 1.675;
-    const static int MIN_LEN = 1;
-  }
-  
-  
-  
   namespace sexp
   {
     namespace
