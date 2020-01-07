@@ -2,7 +2,8 @@
 -include common.inc
 CPPFLAGS = -I../../src -I../
 
-all: miniclean core run
+
+all: core
 
 SRCS=$(wildcard *.cpp)
 OBJS=$(SRCS:.cpp=.o )
