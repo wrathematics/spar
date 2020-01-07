@@ -10,7 +10,6 @@
 #include <stdexcept>
 
 #include "../spar.hpp"
-#include "../converters/s4.hpp"
 #include "defs.hpp"
 #include "err.hpp"
 #include "utils.hpp"
@@ -20,27 +19,25 @@ namespace spar
 {
   namespace mpi
   {
-    template <typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> reduce_densevec(const int root, SEXP send_data, MPI_Comm comm)
+    template <class SPMAT, typename INDEX, typename SCALAR>
+    static inline spmat<INDEX, SCALAR> reduce_densevec(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
       int mpi_ret;
-      int m, n;
-      spar::sexp::get_dim_from_s4(send_data, &m, &n);
+      INDEX m, n;
+      spar::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const int len = spar::sexp::get_col_len_from_s4(0, spar::sexp::get_p_from_s4(send_data)) * spar::constants::MEM_FUDGE_ELT_FAC;
+      const INDEX len = spar::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
       spmat<INDEX, SCALAR> s(m, n, n*len);
       dvec<INDEX, SCALAR> d(m);
       
       const MPI_Datatype reduce_type = utils::mpi_type_lookup(*d.data_ptr());
-      if (reduce_type == MPI_DATATYPE_NULL)
-        throw std::runtime_error("unknown reducer type");
       
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
       {
-        spar::conv::s4col_to_spvec(j, send_data, a);
+        spar::get::col<INDEX, SCALAR>(j, x, a);
         a.densify(d);
         
         if (root == spar::mpi::defs::REDUCE_TO_ALL)
@@ -53,10 +50,10 @@ namespace spar
         d.update_nnz();
         a.set(d);
         
-        int needed_space = s.insert(j, a);
+        INDEX needed_space = s.insert(j, a);
         if (needed_space > 0)
         {
-          s.resize((s.get_len() + needed_space) * spar::constants::MEM_FUDGE_ELT_FAC);
+          s.resize((s.get_len() + needed_space) * spar::defs::MEM_FUDGE_ELT_FAC);
           s.insert(j, a);
         }
       }

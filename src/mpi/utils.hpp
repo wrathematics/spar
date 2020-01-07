@@ -15,7 +15,6 @@
 
 #include "defs.hpp"
 #include "../spar.hpp"
-#include "../converters/s4.hpp"
 
 
 namespace spar
