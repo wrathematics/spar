@@ -1,5 +1,5 @@
--include make.inc
--include common.inc
+-include ../make.inc
+-include ../common.inc
 CPPFLAGS = -I../../src -I../
 
 

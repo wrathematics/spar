@@ -4,7 +4,9 @@
 
 TEMPLATE_PRODUCT_TEST_CASE("construct", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int m = 10;
@@ -24,7 +26,9 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[spmat]", spmat, (
 
 TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int m = 10;
@@ -32,7 +36,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
   const int len = 5;
   TestType x(m, n, len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
   spvec<INDEX, SCALAR> s(3);
@@ -52,7 +56,9 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
 
 TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int m = 10;
@@ -60,7 +66,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
   const int len = 5;
   TestType x(m, n, len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
   spvec<INDEX, SCALAR> s(3);
@@ -84,7 +90,9 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
 
 TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int m = 10;
@@ -92,7 +100,7 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
   int len = 2;
   TestType x(m, n, len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
   spvec<INDEX, SCALAR> s(3);
@@ -112,14 +120,16 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
 
 TEMPLATE_PRODUCT_TEST_CASE("get_col", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int m = 10;
   const int n = 8;
   TestType x(m, n, 20);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
   spvec<INDEX, SCALAR> s(8);
