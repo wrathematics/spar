@@ -88,7 +88,7 @@ namespace spar
       SEXP s4_P = sexp::get_p_from_s4(s4);
       const int col_len = sexp::get_col_len_from_s4(col_ind, s4_P);
       
-      spvec<INDEX, SCALAR> s(col_len * constants::MEM_FUDGE_ELT_FAC);
+      spvec<INDEX, SCALAR> s(col_len * spar::defs::MEM_FUDGE_ELT_FAC);
       s4col_to_spvec(col_ind, s4, s);
       return s;
     }
@@ -136,6 +136,44 @@ namespace spar
       
       UNPROTECT(8);
       return s4;
+    }
+  }
+  
+  
+  
+  namespace get
+  {
+    template <typename INDEX, typename SCALAR>
+    static inline void dim(const SEXP x, INDEX *m, INDEX *n)
+    {
+      spar::sexp::get_dim_from_s4(x, &m, &n);
+    }
+    
+    
+    
+    template <typename INDEX, typename SCALAR>
+    static inline void col(const INDEX j, const SEXP x, spvec<INDEX, SCALAR> &s)
+    {
+      spar::conv::s4col_to_spvec(j, x, s);
+    }
+    
+    
+    
+    template <typename INDEX, typename SCALAR>
+    static inline INDEX max_col_nnz(const SEXP x)
+    {
+      SEXP P = spar::sexp::get_p_from_s4(x);
+      
+      INDEX max_nnz = 0;
+      const INDEX n = TODO;
+      for (INDEX col=0; col<n+1; i++)
+      {
+        INDEX col_nnz = spar::sexp::get_col_len_from_s4(col, P);
+        if (col_nnz > max_nnz)
+          max_nnz = col_nnz;
+      }
+      
+      return max_nnz;
     }
   }
 }
