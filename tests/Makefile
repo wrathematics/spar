@@ -1,4 +1,4 @@
-all: miniclean make run
+all: core
 
 make: core_make
 run: core_run
@@ -8,10 +8,10 @@ clean: core_clean
 
 core: core_miniclean core_make core_run
 
-core_make:
+core_make: core_miniclean
 	( cd core; make )
 
-core_run:
+core_run: core_make
 	( cd core; ./core )
 
 core_miniclean:
