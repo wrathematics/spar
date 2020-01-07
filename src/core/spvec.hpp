@@ -358,7 +358,7 @@ INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
 {
-  if (I[nnz-1] > d.get_len())
+  if (nnz && I[nnz-1] > d.get_len())
     throw std::logic_error("dense array not large enough to store sparse vector");
   
   d.zero();
