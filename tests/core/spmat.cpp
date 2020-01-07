@@ -50,6 +50,38 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
 
 
 
+TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
+  (int, int),      (int, uint32_t),      (int, double),
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+))
+{
+  const int m = 10;
+  const int n = 8;
+  const int len = 5;
+  TestType x(m, n, len);
+  
+  using INDEX = decltype(+*x.index_ptr());
+  using SCALAR = decltype(+*x.data_ptr());
+  
+  spvec<INDEX, SCALAR> s(3);
+  s.insert(3, 1);
+  s.insert(1, 2);
+  
+  REQUIRE( x.get_len() == (INDEX)len );
+  REQUIRE( x.get_nnz() == 0 );
+  
+  x.insert(2, s);
+  
+  REQUIRE( x.get_len() == (INDEX)len );
+  REQUIRE( x.get_nnz() == 2 );
+  
+  x.zero();
+  REQUIRE( x.get_len() == (INDEX)len );
+  REQUIRE( x.get_nnz() == 0 );
+}
+
+
+
 TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
