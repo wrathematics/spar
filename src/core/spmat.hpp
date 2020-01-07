@@ -27,7 +27,7 @@ class spmat
     int insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
     void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
-    void print(bool actual=false) const;
+    void print(bool actual=false);
     void info() const;
     
     INDEX nrows() const {return m;};
@@ -169,8 +169,9 @@ void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) con
 // printer
 // ----------------------------------------------------------------------------
 
+// NOTE to self: don't set this method const
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::print(bool actual) const
+void spmat<INDEX, SCALAR>::print(bool actual)
 {
   printf("## %dx%d sparse matrix with nnz=%d\n", m, n, nnz);
   
