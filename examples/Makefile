@@ -6,7 +6,10 @@ OMPFLAGS = -fopenmp
 WARNFLAGS = -Wall -pedantic -Wextra
 
 
-all: clean spmat spvec
+all: clean gen spmat spvec
+
+gen: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) gen.cpp -o gen
 
 spmat: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) spmat.cpp -o spmat
@@ -15,4 +18,4 @@ spvec: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) spvec.cpp -o spvec
 
 clean:
-	rm -rf spmat spvec
+	rm -rf gen spmat spvec
