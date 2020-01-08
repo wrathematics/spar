@@ -2,6 +2,12 @@ os: linux
 sudo: false
 dist: bionic
 
+addons:
+  apt:
+    packages:
+      - libopenmpi-dev
+      - openmpi-bin
+
 language: cpp
 compiler:
   - gcc
