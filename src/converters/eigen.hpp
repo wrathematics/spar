@@ -48,7 +48,7 @@ namespace spar
     
     
     template <typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> spmat_to_s4(const eigen_t<INDEX, SCALAR> &s)
+    static inline spmat<INDEX, SCALAR> eigen_to_spmat(const eigen_t<INDEX, SCALAR> &s)
     {
       const INDEX m = s.rows();
       const INDEX n = s.cols();
@@ -85,6 +85,59 @@ namespace spar
         d[ I[i] ] = X[i];
       
       return d;
+    }
+  }
+  
+  
+  
+  
+  
+  
+  namespace get
+  {
+    template <typename INDEX, typename SCALAR>
+    static inline void dim(const eigen_t<INDEX, SCALAR> &x, INDEX *m, INDEX *n)
+    {
+      *m = (INDEX) x.rows();
+      *n = (INDEX) x.cols();
+    }
+    
+    
+    
+    template <typename INDEX, typename SCALAR>
+    static inline void col(const INDEX j, const eigen_t<INDEX, SCALAR> &x, spvec<INDEX, SCALAR> &s)
+    {
+      const INDEX *I = x.innerIndexPtr();
+      const INDEX *P = x.outerIndexPtr();
+      
+      const INDEX ind = P[j];
+      if (P[j + 1] == ind)
+      {
+        s.zero();
+        return;
+      }
+      
+      const INDEX col_nnz = P[j + 1] - ind;
+      s.set(col_nnz, I + ind, X + ind);
+    }
+    
+    
+    
+    template <typename INDEX, typename SCALAR>
+    static inline INDEX max_col_nnz(const eigen_t<INDEX, SCALAR> &x)
+    {
+      const INDEX n = x.cols();
+      const INDEX *P = x.outerIndexPtr();
+      
+      INDEX max_nnz = 0;
+      for (INDEX col=0; col<n; col++)
+      {
+        INDEX col_nnz = P[col + 1] - P[col];
+        if (col_nnz > max_nnz)
+          max_nnz = col_nnz;
+      }
+      
+      return max_nnz;
     }
   }
 }
