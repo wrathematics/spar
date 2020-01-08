@@ -29,7 +29,7 @@ mpi_make: mpi_miniclean
 	( cd mpi; make -j )
 
 mpi_run: mpi_make
-	( cd mpi; ./mpi )
+	( cd mpi; mpirun -np 2 ./mpi )
 
 mpi_miniclean:
 	( cd mpi; make miniclean; )
