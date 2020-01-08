@@ -6,6 +6,9 @@
 extern int rank;
 extern int size;
 
+#include "gen.hpp"
+
+
 
 TEMPLATE_PRODUCT_TEST_CASE("reduce_densevec", "[spmat]", spmat, (
   (int, int),      (int, uint32_t),      (int, double),
@@ -22,32 +25,17 @@ TEMPLATE_PRODUCT_TEST_CASE("reduce_densevec", "[spmat]", spmat, (
   using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
-  spvec<INDEX, SCALAR> s(3);
-  
-  s.zero();
-  s.insert(0, 1);
-  s.insert(5, 1);
-  s.insert(9, 1);
-  x.insert(0, s);
-  
-  s.zero();
-  s.insert(1, 2);
-  s.insert(3, 1);
-  x.insert(2, s);
-  
-  s.zero();
-  s.insert(2, 2);
-  s.insert(4, 1);
-  x.insert(6, s);
-  
-  REQUIRE( x.get_len() == (INDEX)len );
-  REQUIRE( x.get_nnz() == 7 );
+  fill_sparse_mat(x);
   
   auto y = spar::mpi::reduce_densevec<spmat<INDEX, SCALAR>, INDEX, SCALAR>(spar::mpi::defs::REDUCE_TO_ALL, x);
   REQUIRE( y.nrows() == m );
   REQUIRE( y.ncols() == n );
   
+  spvec<INDEX, SCALAR> s(3);
   y.get_col(2, s);
   REQUIRE( s.get(1) == (SCALAR)2*size );
   REQUIRE( s.get(3) == (SCALAR)1*size );
+  
+  y.get_col(5, s);
+  REQUIRE( s.get(5) == (SCALAR) 1*(size-1) );
 }
