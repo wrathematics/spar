@@ -25,6 +25,7 @@ class dvec
     
     void resize(INDEX len_);
     void zero();
+    SCALAR sum() const;
     void insert(const INDEX i, const SCALAR s);
     void update_nnz();
     template <typename INDEX_SRC, typename SCALAR_SRC>
@@ -114,6 +115,19 @@ void dvec<INDEX, SCALAR>::zero()
     
     nnz = 0;
   }
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+SCALAR dvec<INDEX, SCALAR>::sum() const
+{
+  SCALAR s = 0;
+  #pragma omp simd reduction(+:s)
+  for (INDEX i=0; i<len; i++)
+    s += X[i];
+  
+  return s;
 }
 
 
