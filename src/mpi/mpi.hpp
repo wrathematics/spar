@@ -16,14 +16,14 @@ namespace spar
 {
   namespace mpi
   {
-    static inline int get_rank(MPI_Comm comm)
+    static inline int get_rank(MPI_Comm comm=MPI_COMM_WORLD)
     {
       int r;
       MPI_Comm_rank(comm, &r);
       return r;
     }
     
-    static inline int get_size(MPI_Comm comm)
+    static inline int get_size(MPI_Comm comm=MPI_COMM_WORLD)
     {
       int s;
       MPI_Comm_size(comm, &s);
@@ -33,7 +33,8 @@ namespace spar
     
     
     template <typename T>
-    void reduce(int root, void *sendbuf, T *recvbuf, int count, MPI_Op op, MPI_Comm comm)
+    void reduce(int root, void *sendbuf, T *recvbuf, int count, MPI_Op op,
+      MPI_Comm comm=MPI_COMM_WORLD)
     {
       int ret;
       
@@ -51,7 +52,7 @@ namespace spar
     
     template <typename S, typename T>
     void gatherv(int root, const S *sendbuf, int sendcount, T *recvbuf,
-      const int *recvcounts, const int *displs, MPI_Comm comm)
+      const int *recvcounts, const int *displs, MPI_Comm comm=MPI_COMM_WORLD)
     {
       int ret;
       
@@ -59,9 +60,15 @@ namespace spar
       const MPI_Datatype mpi_type_recv = utils::mpi_type_lookup(*recvbuf);
       
       if (root == defs::REDUCE_TO_ALL)
-        ret = MPI_Allgatherv(sendbuf, sendcount, mpi_type_send, recvbuf, recvcounts, displs, mpi_type_recv, comm);
+      {
+        ret = MPI_Allgatherv(sendbuf, sendcount, mpi_type_send, recvbuf,
+          recvcounts, displs, mpi_type_recv, comm);
+      }
       else
-        ret = MPI_Gatherv(sendbuf, sendcount, mpi_type_send, recvbuf, recvcounts, displs, mpi_type_recv, root, comm);
+      {
+        ret = MPI_Gatherv(sendbuf, sendcount, mpi_type_send, recvbuf,
+          recvcounts, displs, mpi_type_recv, root, comm);
+      }
       
       err::check_MPI_ret(ret);
     }
@@ -70,7 +77,7 @@ namespace spar
     
     template <typename S, typename T>
     void gather(int root, const S *sendbuf, int sendcount, T *recvbuf,
-      int recvcount, MPI_Comm comm)
+      int recvcount, MPI_Comm comm=MPI_COMM_WORLD)
     {
       int ret;
       
@@ -78,9 +85,15 @@ namespace spar
       const MPI_Datatype mpi_type_recv = utils::mpi_type_lookup(*recvbuf);
       
       if (root == defs::REDUCE_TO_ALL)
-        ret = MPI_Allgather(sendbuf, sendcount, mpi_type_send, recvbuf, recvcount, mpi_type_recv, comm);
+      {
+        ret = MPI_Allgather(sendbuf, sendcount, mpi_type_send, recvbuf,
+          recvcount, mpi_type_recv, comm);
+      }
       else
-        ret = MPI_Gather(sendbuf, sendcount, mpi_type_send, recvbuf, recvcount, mpi_type_recv, root, comm);
+      {
+        ret = MPI_Gather(sendbuf, sendcount, mpi_type_send, recvbuf,
+          recvcount, mpi_type_recv, root, comm);
+      }
       
       err::check_MPI_ret(ret);
     }
