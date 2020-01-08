@@ -10,9 +10,7 @@
 #include <stdexcept>
 
 #include "../spar.hpp"
-#include "defs.hpp"
-#include "err.hpp"
-#include "utils.hpp"
+#include "mpi.hpp"
 
 
 namespace spar
@@ -22,7 +20,6 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> reduce_densevec(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
-      int mpi_ret;
       INDEX m, n;
       spar::get::dim<INDEX, SCALAR>(x, &m, &n);
       
@@ -32,20 +29,13 @@ namespace spar
       spmat<INDEX, SCALAR> s(m, n, n*len);
       dvec<INDEX, SCALAR> d(m);
       
-      const MPI_Datatype reduce_type = utils::mpi_type_lookup(*d.data_ptr());
-      
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
       {
         spar::get::col<INDEX, SCALAR>(j, x, a);
         a.densify(d);
         
-        if (root == spar::mpi::defs::REDUCE_TO_ALL)
-          mpi_ret = MPI_Allreduce(MPI_IN_PLACE, d.data_ptr(), m, reduce_type, MPI_SUM, comm);
-        else
-          mpi_ret = MPI_Reduce(MPI_IN_PLACE, d.data_ptr(), m, reduce_type, MPI_SUM, root, comm);
-        
-        err::check_MPI_ret(mpi_ret);
+        reduce(root, MPI_IN_PLACE, d.data_ptr(), m, MPI_SUM, comm);
         
         d.update_nnz();
         a.set(d);
