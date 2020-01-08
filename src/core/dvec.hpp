@@ -34,6 +34,9 @@ class dvec
     
     void print() const;
     
+    const SCALAR operator[](INDEX i) const; // getter
+    SCALAR& operator[](INDEX i); // setter
+    
     INDEX get_nnz() const {return nnz;};
     INDEX get_len() const {return len;};
     SCALAR* data_ptr() {return X;};
@@ -192,6 +195,24 @@ void dvec<INDEX, SCALAR>::print() const
   printf("## Length %d dense vector with nnz=%d\n", len, nnz);
   for (INDEX i=0; i<len; i++)
     printf("%f\n", (float) X[i]);
+}
+
+
+
+// ----------------------------------------------------------------------------
+// setter/getter
+// ----------------------------------------------------------------------------
+
+template <typename INDEX, typename SCALAR>
+const SCALAR dvec<INDEX, SCALAR>::operator[](INDEX i) const
+{
+  return X[i];
+}
+
+template <typename INDEX, typename SCALAR>
+SCALAR& dvec<INDEX, SCALAR>::operator[](INDEX i)
+{
+  return X[i];
 }
 
 
