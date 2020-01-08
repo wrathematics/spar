@@ -4,7 +4,9 @@
 
 TEMPLATE_PRODUCT_TEST_CASE("add sparse-sparse", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 10;
@@ -32,7 +34,9 @@ TEMPLATE_PRODUCT_TEST_CASE("add sparse-sparse", "[spvec]", spvec, (
 
 TEMPLATE_PRODUCT_TEST_CASE("add sparse-dense", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 10;

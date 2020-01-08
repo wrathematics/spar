@@ -4,13 +4,15 @@
 
 TEMPLATE_PRODUCT_TEST_CASE("construct", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 5;
   TestType x(len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
@@ -20,7 +22,9 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[spvec]", spvec, (
 
 TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 5;
@@ -28,7 +32,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
   x.insert(3, 1);
   x.insert(1, 2);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 2 );
@@ -46,7 +50,9 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
 
 TEMPLATE_PRODUCT_TEST_CASE("get", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 5;
@@ -66,13 +72,15 @@ TEMPLATE_PRODUCT_TEST_CASE("get", "[spvec]", spvec, (
 
 TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 5;
   TestType x(len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   
   REQUIRE( x.get_len() == (INDEX)len );
   REQUIRE( x.get_nnz() == 0 );
@@ -90,13 +98,15 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spvec, (
 
 TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   int len = 2;
   TestType x(len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   
   x.insert(3, 1);
   REQUIRE( x.get_len() == (INDEX)len );
@@ -120,13 +130,15 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spvec, (
 
 TEMPLATE_PRODUCT_TEST_CASE("set", "[spvec]", spvec, (
   (int, int),      (int, uint32_t),      (int, double),
-  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double)
+  (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
+  (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
+  (uint16_t, int), (uint16_t, uint32_t), (uint16_t, double)
 ))
 {
   const int len = 5;
   TestType x(len);
   
-  using INDEX = decltype(+*x.index_ptr());
+  using INDEX = decltype(x.get_nnz());
   
   x.insert(3, 1);
   REQUIRE( x.get_len() == (INDEX)len );
