@@ -13,9 +13,6 @@
 #include <cstdint>
 #include <typeinfo>
 
-#include "defs.hpp"
-#include "../spar.hpp"
-
 
 namespace spar
 {
