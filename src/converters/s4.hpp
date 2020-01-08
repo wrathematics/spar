@@ -10,6 +10,9 @@
 #include <Rdefines.h>
 #include <Rinternals.h>
 
+#undef nrows
+#undef ncols
+
 #include "../spar.hpp"
 
 
@@ -146,7 +149,7 @@ namespace spar
     template <typename INDEX, typename SCALAR>
     static inline void dim(const SEXP x, INDEX *m, INDEX *n)
     {
-      spar::sexp::get_dim_from_s4(x, &m, &n);
+      spar::sexp::get_dim_from_s4(x, m, n);
     }
     
     
@@ -162,11 +165,13 @@ namespace spar
     template <typename INDEX, typename SCALAR>
     static inline INDEX max_col_nnz(const SEXP x)
     {
+      INDEX m, n;
+      spar::sexp::get_dim_from_s4(x, &m, &n);
+      
       SEXP P = spar::sexp::get_p_from_s4(x);
       
       INDEX max_nnz = 0;
-      const INDEX n = TODO;
-      for (INDEX col=0; col<n+1; i++)
+      for (INDEX col=0; col<n+1; col++)
       {
         INDEX col_nnz = spar::sexp::get_col_len_from_s4(col, P);
         if (col_nnz > max_nnz)
