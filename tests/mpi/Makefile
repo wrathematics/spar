@@ -17,7 +17,7 @@ mpi: $(OBJS)
 	$(MPICXX) $(OBJS) -o mpi $(OMPFLAGS)
 
 run: mpi
-	( ./mpi )
+	( mpirun -np 2 ./mpi )
 
 miniclean:
 	( ls *.o | grep -v test-main | xargs rm -f )
