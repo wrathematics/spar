@@ -2,23 +2,23 @@
 // License, Version 1.0. See accompanying file LICENSE or copy at
 // https://www.boost.org/LICENSE_1_0.txt
 
-#ifndef SPAR_MPI_REDUCE_H
-#define SPAR_MPI_REDUCE_H
+#ifndef SPAR_REDUCE_H
+#define SPAR_REDUCE_H
 #pragma once
 
 
 #include <vector>
 
-#include "../spar.hpp"
-#include "mpi.hpp"
+#include "spar.hpp"
+#include "mpi/mpi.hpp"
 
 
 namespace spar
 {
-  namespace mpi
+  namespace reduce
   {
     template <class SPMAT, typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> reduce_densevec(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
+    static inline spmat<INDEX, SCALAR> dense(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
       INDEX m, n;
       spar::get::dim<INDEX, SCALAR>(x, &m, &n);
@@ -35,7 +35,7 @@ namespace spar
         spar::get::col<INDEX, SCALAR>(j, x, a);
         a.densify(d);
         
-        reduce(root, MPI_IN_PLACE, d.data_ptr(), m, MPI_SUM, comm);
+        mpi::reduce(root, MPI_IN_PLACE, d.data_ptr(), m, MPI_SUM, comm);
         
         d.update_nnz();
         a.set(d);
@@ -54,7 +54,7 @@ namespace spar
     
     
     template <class SPMAT, typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> reduce_gather(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
+    static inline spmat<INDEX, SCALAR> gather(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
       INDEX m, n;
       spar::get::dim<INDEX, SCALAR>(x, &m, &n);
@@ -64,7 +64,7 @@ namespace spar
       spvec<INDEX, SCALAR> a(len);
       spmat<INDEX, SCALAR> s(m, n, n*len);
       
-      int size = get_size(comm);
+      int size = mpi::get_size(comm);
       
       dvec<int, int> counts(size);
       dvec<int, int> displs(size);
@@ -85,7 +85,7 @@ namespace spar
         spar::get::col<INDEX, SCALAR>(j, x, a);
         
         INDEX count_local = a.get_nnz();
-        gather(defs::REDUCE_TO_ALL, &count_local, 1, counts.data_ptr(), 1, comm);
+        mpi::gather(mpi::defs::REDUCE_TO_ALL, &count_local, 1, counts.data_ptr(), 1, comm);
         
         unsigned int count = counts.sum();
         
@@ -101,8 +101,8 @@ namespace spar
         for (int i=1; i<displs.get_len(); i++)
           displs[i] = displs[i-1] + counts[i-1];
         
-        gatherv(root, a.index_ptr(), a.get_nnz(), indices.data(), counts.data_ptr(), displs.data_ptr(), comm);
-        gatherv(root, a.data_ptr(),  a.get_nnz(), values.data(),  counts.data_ptr(), displs.data_ptr(), comm);
+        mpi::gatherv(root, a.index_ptr(), a.get_nnz(), indices.data(), counts.data_ptr(), displs.data_ptr(), comm);
+        mpi::gatherv(root, a.data_ptr(),  a.get_nnz(), values.data(),  counts.data_ptr(), displs.data_ptr(), comm);
         
         // add all the vectors
         for (unsigned int i=0; i<count; i++)

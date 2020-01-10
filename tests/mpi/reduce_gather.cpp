@@ -1,7 +1,6 @@
 #include <catch.hpp>
 #include <spar.hpp>
-#include <mpi/reduce.hpp>
-#include <gen/gen.hpp>
+#include <reduce.hpp>
 
 extern int rank;
 extern int size;
@@ -27,7 +26,7 @@ TEMPLATE_PRODUCT_TEST_CASE("reduce_gather", "[spmat]", spmat, (
   
   fill_sparse_mat(x);
   
-  auto y = spar::mpi::reduce_gather<spmat<INDEX, SCALAR>, INDEX, SCALAR>(spar::mpi::defs::REDUCE_TO_ALL, x);
+  auto y = spar::reduce::gather<spmat<INDEX, SCALAR>, INDEX, SCALAR>(spar::mpi::defs::REDUCE_TO_ALL, x);
   REQUIRE( y.nrows() == m );
   REQUIRE( y.ncols() == n );
   
