@@ -10,6 +10,7 @@
 #include <iostream>
 
 #include "../arraytools/src/arraytools.hpp"
+#include "defs.hpp"
 
 
 template <typename INDEX, typename SCALAR>
@@ -24,7 +25,8 @@ class spmat
     
     void resize(INDEX len_);
     void zero();
-    int insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
+    void insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
+    int insert_norealloc(const INDEX col, const spvec<INDEX, SCALAR> &x);
     void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
     void print(bool actual=false);
@@ -54,6 +56,7 @@ class spmat
   private:
     void cleanup();
     INDEX* csc2coo();
+    void insert_spvec(const INDEX col, const spvec<INDEX, SCALAR> &x);
 };
 
 
@@ -119,31 +122,24 @@ void spmat<INDEX, SCALAR>::zero()
 
 
 template <typename INDEX, typename SCALAR>
-int spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
+void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
 {
-  // check if a re-alloc is necessary
+  INDEX needed_space = len - nnz;
+  if (x.get_nnz() > needed_space)
+    resize((len + needed_space) * spar::defs::MEM_FUDGE_ELT_FAC);
+  
+  insert_spvec(col, x);
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+int spmat<INDEX, SCALAR>::insert_norealloc(const INDEX col, const spvec<INDEX, SCALAR> &x)
+{
   if (x.get_nnz() > len - nnz)
     return x.get_nnz() - (len - nnz);
   
-  // add the vector to the matrix
-  const INDEX *xI = x.index_ptr();
-  const SCALAR *xX = x.data_ptr();
-  
-  INDEX ind = P[col];
-  const INDEX xnnz = x.get_nnz();
-  for (INDEX xind=0; xind<xnnz; xind++)
-  {
-    I[ind] = xI[xind];
-    X[ind] = xX[xind];
-    
-    ind++;
-  }
-  
-  for (INDEX ind=col+1; ind<plen; ind++)
-    P[ind] += xnnz;
-  
-  nnz += xnnz;
-  
+  insert_spvec(col, x);
   return 0;
 }
 
@@ -303,6 +299,30 @@ INDEX* spmat<INDEX, SCALAR>::csc2coo()
   }
   
   return CI;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void spmat<INDEX, SCALAR>::insert_spvec(const INDEX col, const spvec<INDEX, SCALAR> &x)
+{
+  const INDEX *xI = x.index_ptr();
+  const SCALAR *xX = x.data_ptr();
+  
+  INDEX ind = P[col];
+  const INDEX xnnz = x.get_nnz();
+  for (INDEX xind=0; xind<xnnz; xind++)
+  {
+    I[ind] = xI[xind];
+    X[ind] = xX[xind];
+    
+    ind++;
+  }
+  
+  for (INDEX ind=col+1; ind<plen; ind++)
+    P[ind] += xnnz;
+  
+  nnz += xnnz;
 }
 
 
