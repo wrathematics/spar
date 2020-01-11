@@ -79,12 +79,7 @@ namespace spar
         d.update_nnz();
         a.set(d);
         
-        INDEX needed_space = s.insert(j, a);
-        if (needed_space > 0)
-        {
-          s.resize((s.get_len() + needed_space) * spar::defs::MEM_FUDGE_ELT_FAC);
-          s.insert(j, a);
-        }
+        s.insert(j, a);
       }
       
       return s;
@@ -168,12 +163,7 @@ namespace spar
         // put summed column into the return
         a.set(nnz+1, indices.data(), values.data());
         
-        INDEX needed_space = s.insert(j, a);
-        if (needed_space > 0)
-        {
-          s.resize((s.get_len() + needed_space) * spar::defs::MEM_FUDGE_ELT_FAC);
-          s.insert(j, a);
-        }
+        s.insert(j, a);
       }
       
       return s;
