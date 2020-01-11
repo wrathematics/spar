@@ -101,27 +101,36 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> gather(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
+      const bool receiving = (root == mpi::defs::REDUCE_TO_ALL || root == mpi::get_rank(comm));
+      
       INDEX m, n;
       spar::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
       const INDEX len = spar::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
-      spmat<INDEX, SCALAR> s(m, n, n*len);
+      spmat<INDEX, SCALAR> s(m, n, 0);
+      
       
       int size = mpi::get_size(comm);
-      
       dvec<int, int> counts(size);
       dvec<int, int> displs(size);
       displs[0] = 0;
       
       // we need vectors of indices and values for the Allgatherv, and a vector
       // of pairs for the sort/merge
-      std::vector<INDEX> indices(len);
-      std::vector<SCALAR> values(len);
+      std::vector<INDEX> indices;
+      std::vector<SCALAR> values;
+      std::vector<std::pair<INDEX, SCALAR>> v;
       
-      typedef std::pair<INDEX, SCALAR> pmsv; // poor man's sparse vector
-      std::vector<pmsv> v;
+      if (receiving)
+      {
+        s.resize(n*len);
+        
+        indices.resize(len);
+        values.resize(len);
+        v.resize(len);
+      }
       
       
       // allreduce column-by-column
@@ -137,7 +146,7 @@ namespace spar
         
         if (count == 0)
           continue;
-        else if (indices.capacity() < count)
+        else if (receiving && indices.capacity() < count)
         {
           indices.resize(count);
           values.resize(count);
@@ -152,31 +161,33 @@ namespace spar
         mpi::gatherv(root, a.data_ptr(),  a.get_nnz(), values.data(),  counts.data_ptr(), displs.data_ptr(), comm);
         
         // add all the vectors
-        for (unsigned int i=0; i<count; i++)
-          v[i] = std::make_pair(indices[i], values[i]);
-        
-        std::sort(v.begin(), v.begin()+count);
-        
-        INDEX nnz = 0;
-        indices[0] = v[0].first;
-        values[0] = v[0].second;
-        for (unsigned int i=1; i<count; i++)
+        if (receiving)
         {
-          if (v[i].first == indices[nnz])
-            values[nnz] += v[i].second;
-          else
+          for (unsigned int i=0; i<count; i++)
+            v[i] = std::make_pair(indices[i], values[i]);
+          
+          std::sort(v.begin(), v.begin()+count);
+          
+          INDEX nnz = 0;
+          indices[0] = v[0].first;
+          values[0] = v[0].second;
+          for (unsigned int i=1; i<count; i++)
           {
-            nnz++;
-            
-            indices[nnz] = v[i].first;
-            values[nnz] = v[i].second;
+            if (v[i].first == indices[nnz])
+              values[nnz] += v[i].second;
+            else
+            {
+              nnz++;
+              
+              indices[nnz] = v[i].first;
+              values[nnz] = v[i].second;
+            }
           }
+          
+          // put summed column into the return
+          a.set(nnz+1, indices.data(), values.data());
+          s.insert(j, a);
         }
-        
-        // put summed column into the return
-        a.set(nnz+1, indices.data(), values.data());
-        
-        s.insert(j, a);
       }
       
       return s;
