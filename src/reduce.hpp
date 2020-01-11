@@ -118,6 +118,7 @@ namespace spar
       {
         spar::get::col<INDEX, SCALAR>(j, x, a);
         
+        // get the displacements
         INDEX count_local = a.get_nnz();
         mpi::gather(mpi::defs::REDUCE_TO_ALL, &count_local, 1, counts.data_ptr(), 1, comm);
         
@@ -135,6 +136,7 @@ namespace spar
         for (int i=1; i<displs.get_len(); i++)
           displs[i] = displs[i-1] + counts[i-1];
         
+        // get all the indices/values
         mpi::gatherv(root, a.index_ptr(), a.get_nnz(), indices.data(), counts.data_ptr(), displs.data_ptr(), comm);
         mpi::gatherv(root, a.data_ptr(),  a.get_nnz(), values.data(),  counts.data_ptr(), displs.data_ptr(), comm);
         
