@@ -59,14 +59,20 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> dense(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
+      const bool receiving = (root == mpi::defs::REDUCE_TO_ALL || root == mpi::get_rank(comm));
+      
       INDEX m, n;
       spar::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
       const INDEX len = spar::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
-      spmat<INDEX, SCALAR> s(m, n, n*len);
       dvec<INDEX, SCALAR> d(m);
+      
+      spmat<INDEX, SCALAR> s(m, n, 0);
+      if (receiving)
+        s.resize(n*len);
+      
       
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
@@ -74,12 +80,17 @@ namespace spar
         spar::get::col<INDEX, SCALAR>(j, x, a);
         a.densify(d);
         
-        mpi::reduce(root, MPI_IN_PLACE, d.data_ptr(), m, MPI_SUM, comm);
+        if (receiving)
+          mpi::reduce(root, MPI_IN_PLACE, d.data_ptr(), m, MPI_SUM, comm);
+        else
+          mpi::reduce(root, d.data_ptr(), d.data_ptr(), m, MPI_SUM, comm);
         
-        d.update_nnz();
-        a.set(d);
-        
-        s.insert(j, a);
+        if (receiving)
+        {
+          d.update_nnz();
+          a.set(d);
+          s.insert(j, a);
+        }
       }
       
       return s;
