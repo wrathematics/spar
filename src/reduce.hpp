@@ -15,8 +15,47 @@
 
 namespace spar
 {
+  /// @brief Reducers
   namespace reduce
   {
+    /**
+      @brief Computes a sparse matrix (all)reduce column-by-column, where each
+      column is summed via a dense vector (all)reduce.
+      
+      @param[in] root The number of the receiving process in the case of a
+      reduce, or `mpi::defs::REDUCE_TO_ALL` for an allreduce.
+      @param[in] x A supported sparse matrix in CSC format.
+      @param[in] comm MPI communicator.
+      
+      @return An spmat object. You can convert it to an Eigen or R sparse matrix
+      using the library's included converters.
+      
+      @comm If the input matrix has `m` rows and `n` columns, there are `n`
+      (all)reduces each of length `m`.
+      
+      @allocs Several temporary objects are constructed:
+        1. A dense vector of the same fundamental type as template parameter
+        `SCALAR`, with as many elements as the number of rows of the input `x`.
+        2. A sparse vector (class `spvec`) with the same indexing and value
+        types as the template parameters `INDEX` and `SCALAR`, respectively,
+        with as many elements as the largest number of non-zero elements
+        across all the columns.
+        3. The return sparse matrix, initially with as many elements as the
+        number of columns of the input times the maximum length described in
+        item 2 above.
+      The internal sparse vector and the return sparse matrix will resize
+      themselves as needed during the reduce process.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown. If something goes wrong with any of the MPI operations, a
+      `runtime_error` exception will be thrown.
+      
+      @tparam SPMAT should be of type `spmat` (included in spar),
+      `Eigen::SparseMatrix`, or R's `dgCMatrix`.
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> dense(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
