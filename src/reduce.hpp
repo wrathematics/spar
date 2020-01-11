@@ -23,7 +23,7 @@ namespace spar
       column is summed via a dense vector (all)reduce.
       
       @param[in] root The number of the receiving process in the case of a
-      reduce, or `mpi::defs::REDUCE_TO_ALL` for an allreduce.
+      reduce, or `spar::mpi::defs::REDUCE_TO_ALL` for an allreduce.
       @param[in] x A supported sparse matrix in CSC format.
       @param[in] comm MPI communicator.
       
