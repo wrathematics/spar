@@ -37,4 +37,19 @@ TEMPLATE_PRODUCT_TEST_CASE("reduce_gather", "[spmat]", spmat, (
   
   y.get_col(5, s);
   REQUIRE( s.get(5) == (SCALAR) 1*(size-1) );
+  
+  // reduce to rank 0
+  auto z = spar::reduce::gather<TestType, INDEX, SCALAR>(0, x);
+  REQUIRE( z.nrows() == m );
+  REQUIRE( z.ncols() == n );
+  
+  if (rank == 0)
+  {
+    z.get_col(2, s);
+    REQUIRE( s.get(1) == (SCALAR)2*size );
+    REQUIRE( s.get(3) == (SCALAR)1*size );
+    
+    z.get_col(5, s);
+    REQUIRE( s.get(5) == (SCALAR) 1*(size-1) );
+  }
 }
