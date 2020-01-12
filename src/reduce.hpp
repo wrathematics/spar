@@ -33,16 +33,15 @@ namespace spar
       @comm If the input matrix has `m` rows and `n` columns, there are `n`
       (all)reduces each of length `m`.
       
-      @allocs Several temporary objects are constructed:
-        1. A dense vector of the same fundamental type as template parameter
-        `SCALAR`, with as many elements as the number of rows of the input `x`.
-        2. A sparse vector (class `spvec`) with the same indexing and value
-        types as the template parameters `INDEX` and `SCALAR`, respectively,
-        with as many elements as the largest number of non-zero elements
-        across all the columns.
-        3. The return sparse matrix, initially with as many elements as the
-        number of columns of the input times the maximum length described in
-        item 2 above.
+      @allocs Several temporary objects are constructed. Throughout, let `m`
+      denote the number of rows and `n` the number of columns of the input
+      sparse matrix.
+        1. (all processes) `dvec<INDEX, SCALAR>` of length `m`.
+        2. (all processes) `spvec<INDEX, SCALAR>`, with initial length equal to
+        the largest number of non-zero elements across all the columns (called
+        `len`).
+        3. (root process) The return `spmat<INDEX, SCALAR>`, with initial length
+        `n*len`.
       The internal sparse vector and the return sparse matrix will resize
       themselves as needed during the reduce process.
       
@@ -50,7 +49,7 @@ namespace spar
       thrown. If something goes wrong with any of the MPI operations, a
       `runtime_error` exception will be thrown.
       
-      @tparam SPMAT should be of type `spmat` (included in spar),
+      @tparam SPMAT should be of type `spmat<INDEX, SCALAR>`,
       `Eigen::SparseMatrix`, or R's `dgCMatrix`.
       @tparam INDEX should be some kind of fundamental indexing type, like `int`
       or `uint16_t`.
@@ -98,6 +97,48 @@ namespace spar
     
     
     
+    /**
+      @brief Computes a sparse matrix (all)reduce column-by-column, where each
+      sum is computed locally after an index (all)gather and a scalar
+      (all)gather.
+      
+      @param[in] root The number of the receiving process in the case of a
+      reduce, or `spar::mpi::defs::REDUCE_TO_ALL` for an allreduce.
+      @param[in] x A supported sparse matrix in CSC format.
+      @param[in] comm MPI communicator.
+      
+      @return An spmat object. You can convert it to an Eigen or R sparse matrix
+      using the library's included converters.
+      
+      @comm If the input matrix has `n` columns, there are `n` iterations of
+        1. allgather the number of non-zero elements
+        2. if not all of the above numbers are zero, (all)gatherv the indices
+        and values
+      
+      @allocs Several temporary objects are constructed:
+        1. (all processes) `spvec<INDEX, SCALAR>`, with initial length equal to
+        the largest number of non-zero elements across all the columns (called
+        `len`).
+        2. (all processes) Two `dvec<int, int>` vectors, each with as many
+        elements as the number of MPI ranks (denot this value as `size`). 
+        3. (root process) A `std::vector<INDEX>` and a `std::vector<SCALAR>`,
+        and a `std::vector<std::pair<INDEX, SCALAR>>`. All three have initial
+        length `len`.
+        4. (root process) The return `spmat<INDEX, SCALAR>`, with initial length
+        `n*len`.
+      The internal sparse vector, the three `std::vector`'s, and the return
+      sparse matrix will resize themselves as needed during the reduce process.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown. If something goes wrong with any of the MPI operations, a
+      `runtime_error` exception will be thrown.
+      
+      @tparam SPMAT should be of type `spmat<INDEX, SCALAR>`,
+      `Eigen::SparseMatrix`, or R's `dgCMatrix`.
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> gather(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
