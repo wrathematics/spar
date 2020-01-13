@@ -1,21 +1,24 @@
--include make.inc
+all: core mpi
 
-CPPFLAGS = -I../src
-CXXFLAGS = -std=c++17 -O2 -march=native
-OMPFLAGS = -fopenmp 
-WARNFLAGS = -Wall -pedantic -Wextra
+make: core_make mpi_make
+clean: core_clean mpi_clean
 
 
-all: clean gen spmat spvec
 
-gen: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) gen.cpp -o gen
+core: core_clean core_make
 
-spmat: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) spmat.cpp -o spmat
+core_make: core_clean
+	( cd core; make -j )
 
-spvec: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) spvec.cpp -o spvec
+core_clean:
+	( cd core; make clean; )
 
-clean:
-	rm -rf gen spmat spvec
+
+
+mpi: mpi_clean mpi_make
+
+mpi_make: mpi_clean
+	( cd mpi; make -j )
+
+mpi_clean:
+	( cd mpi; make clean; )
