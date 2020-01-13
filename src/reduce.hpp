@@ -45,9 +45,10 @@ namespace spar
       The internal sparse vector and the return sparse matrix will resize
       themselves as needed during the reduce process.
       
-      @except If a memory allocation fails, a `bad_alloc` exception will be
-      thrown. If something goes wrong with any of the MPI operations, a
-      `runtime_error` exception will be thrown.
+      @except If there is only one MPI rank, the function will throw a
+      `runtime_error` exception. If a memory allocation fails, a `bad_alloc`
+      exception will be thrown. If something goes wrong with any of the MPI
+      operations, a `runtime_error` exception will be thrown.
       
       @tparam SPMAT should be of type `spmat<INDEX, SCALAR>`,
       `Eigen::SparseMatrix`, or R's `dgCMatrix`.
@@ -58,6 +59,7 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> dense(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
+      mpi::err::check_size(comm);
       const bool receiving = (root == mpi::REDUCE_TO_ALL || root == mpi::get_rank(comm));
       
       INDEX m, n;
@@ -129,9 +131,10 @@ namespace spar
       The internal sparse vector, the three `std::vector`'s, and the return
       sparse matrix will resize themselves as needed during the reduce process.
       
-      @except If a memory allocation fails, a `bad_alloc` exception will be
-      thrown. If something goes wrong with any of the MPI operations, a
-      `runtime_error` exception will be thrown.
+      @except If there is only one MPI rank, the function will throw a
+      `runtime_error` exception. If a memory allocation fails, a `bad_alloc`
+      exception will be thrown. If something goes wrong with any of the MPI
+      operations, a `runtime_error` exception will be thrown.
       
       @tparam SPMAT should be of type `spmat<INDEX, SCALAR>`,
       `Eigen::SparseMatrix`, or R's `dgCMatrix`.
@@ -142,6 +145,7 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> gather(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
+      mpi::err::check_size(comm);
       const bool receiving = (root == mpi::REDUCE_TO_ALL || root == mpi::get_rank(comm));
       
       INDEX m, n;

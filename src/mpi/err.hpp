@@ -18,6 +18,10 @@ namespace spar
 {
   namespace mpi
   {
+    static inline int get_size(MPI_Comm comm);
+    
+    
+    
     namespace err
     {
       static inline void check_ret(int ret)
@@ -30,6 +34,14 @@ namespace spar
           MPI_Error_string(ret, s, &slen);
           throw std::runtime_error(s);
         }
+      }
+      
+      
+      
+      static inline void check_size(MPI_Comm comm)
+      {
+        if (spar::mpi::get_size(comm) < 2)
+          throw std::runtime_error("reducer requires more than 1 MPI rank");
       }
     }
   }
