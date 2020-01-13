@@ -12,8 +12,15 @@
 #include <Eigen/SparseCore>
 
 #include "../arraytools/src/arraytools.hpp"
-#include "../spar.hpp"
 
+template <typename INDEX, typename SCALAR>
+class dvec;
+
+template <typename INDEX, typename SCALAR>
+class spvec;
+
+template <typename INDEX, typename SCALAR>
+class spmat;
 
 namespace spar
 {
@@ -92,7 +99,7 @@ namespace spar
     namespace get
     {
       template <typename INDEX, typename SCALAR>
-      static inline void dim(const eigen_t<INDEX, SCALAR> &x, INDEX *m, INDEX *n)
+      static inline void dim(const conv::eigen_t<INDEX, SCALAR> &x, INDEX *m, INDEX *n)
       {
         *m = (INDEX) x.rows();
         *n = (INDEX) x.cols();
@@ -101,10 +108,11 @@ namespace spar
       
       
       template <typename INDEX, typename SCALAR>
-      static inline void col(const INDEX j, const eigen_t<INDEX, SCALAR> &x, spvec<INDEX, SCALAR> &s)
+      static inline void col(const INDEX j, const conv::eigen_t<INDEX, SCALAR> &x, spvec<INDEX, SCALAR> &s)
       {
         const INDEX *I = x.innerIndexPtr();
         const INDEX *P = x.outerIndexPtr();
+        const SCALAR *X = x.valuePtr();
         
         const INDEX ind = P[j];
         if (P[j + 1] == ind)
@@ -120,7 +128,7 @@ namespace spar
       
       
       template <typename INDEX, typename SCALAR>
-      static inline INDEX max_col_nnz(const eigen_t<INDEX, SCALAR> &x)
+      static inline INDEX max_col_nnz(const conv::eigen_t<INDEX, SCALAR> &x)
       {
         const INDEX n = x.cols();
         const INDEX *P = x.outerIndexPtr();
