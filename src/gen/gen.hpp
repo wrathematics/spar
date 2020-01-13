@@ -13,8 +13,12 @@
 #include <stdexcept>
 
 #include "rand.hpp"
-#include "../spar.hpp"
 
+template <typename INDEX, typename SCALAR>
+class spvec;
+
+template <typename INDEX, typename SCALAR>
+class spmat;
 
 namespace spar
 {
