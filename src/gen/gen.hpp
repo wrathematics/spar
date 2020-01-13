@@ -20,7 +20,7 @@ namespace spar
 {
   namespace gen
   {
-    namespace
+    namespace internals
     {
       template <typename INDEX>
       static inline float fudge(const INDEX i, const INDEX j, const INDEX n)
@@ -47,7 +47,7 @@ namespace spar
         
         for (INDEX i=0; i<nrows; i++)
         {
-          const float p = fudge(i, j, nrows);
+          const float p = internals::fudge(i, j, nrows);
           std::binomial_distribution<int> dist(1, p);
           
           SCALAR d = dist(mt);
