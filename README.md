@@ -19,3 +19,5 @@ A sparse allreduce is different from the addition of two distributed, sparse mat
 There are no external dependencies. Tests use [catch2](https://github.com/catchorg/Catch2), a copy of which is included under `tests/catch`.
 
 To build the tests, modify `tests/make.inc` as appropriate and type `make`.
+
+To use the library with Eigen, you will need a copy of [the Eigen headers](http://eigen.tuxfamily.org/index.php?title=Main_Page). You may find the [eigen example](examples/mpi/eigen.cpp) helpful.
