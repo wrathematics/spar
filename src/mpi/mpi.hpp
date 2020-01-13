@@ -55,7 +55,7 @@ namespace spar
       else
         ret = MPI_Reduce(sendbuf, recvbuf, count, mpi_type, op, root, comm);
       
-      err::check_MPI_ret(ret);
+      err::check_ret(ret);
     }
     
     
@@ -80,7 +80,7 @@ namespace spar
           recvcounts, displs, mpi_type_recv, root, comm);
       }
       
-      err::check_MPI_ret(ret);
+      err::check_ret(ret);
     }
     
     
@@ -105,7 +105,7 @@ namespace spar
           recvcount, mpi_type_recv, root, comm);
       }
       
-      err::check_MPI_ret(ret);
+      err::check_ret(ret);
     }
   }
 }

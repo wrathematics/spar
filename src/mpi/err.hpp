@@ -20,7 +20,7 @@ namespace spar
   {
     namespace err
     {
-      static inline void check_MPI_ret(int ret)
+      static inline void check_ret(int ret)
       {
         if (ret != MPI_SUCCESS)
         {
