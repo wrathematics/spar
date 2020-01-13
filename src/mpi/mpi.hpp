@@ -16,6 +16,16 @@ namespace spar
 {
   namespace mpi
   {
+    static inline void init()
+    {
+      MPI_Init(NULL, NULL);
+    }
+    
+    static inline void finalize()
+    {
+      MPI_Finalize();
+    }
+    
     static inline int get_rank(MPI_Comm comm=MPI_COMM_WORLD)
     {
       int r;
