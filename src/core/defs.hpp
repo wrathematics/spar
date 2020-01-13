@@ -9,10 +9,12 @@
 
 namespace spar
 {
-  namespace defs
+  namespace internal
   {
-    const static float MEM_FUDGE_ELT_FAC = 1.675;
-    const static int MIN_LEN = 1;
+    namespace defs
+    {
+      const static float MEM_FUDGE_ELT_FAC = 1.675;
+    }
   }
 }
 

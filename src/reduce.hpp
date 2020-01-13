@@ -64,7 +64,7 @@ namespace spar
       internal::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
+      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::internal::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
       dvec<INDEX, SCALAR> d(m);
       
@@ -148,7 +148,7 @@ namespace spar
       internal::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
+      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::internal::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
       spmat<INDEX, SCALAR> s(m, n, 0);
       

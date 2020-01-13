@@ -89,7 +89,7 @@ namespace spar
       SEXP s4_P = internal::sexp::get_p_from_s4(s4);
       const int col_len = internal::sexp::get_col_len_from_s4(col_ind, s4_P);
       
-      spvec<INDEX, SCALAR> s(col_len * spar::defs::MEM_FUDGE_ELT_FAC);
+      spvec<INDEX, SCALAR> s(col_len * spar::internal::defs::MEM_FUDGE_ELT_FAC);
       s4col_to_spvec(col_ind, s4, s);
       return s;
     }

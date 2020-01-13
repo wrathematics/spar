@@ -126,7 +126,7 @@ void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x
 {
   INDEX needed_space = len - nnz;
   if (x.get_nnz() > needed_space)
-    resize((len + needed_space) * spar::defs::MEM_FUDGE_ELT_FAC);
+    resize((len + needed_space) * spar::internal::defs::MEM_FUDGE_ELT_FAC);
   
   insert_spvec(col, x);
 }
