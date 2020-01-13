@@ -27,7 +27,7 @@ TEMPLATE_PRODUCT_TEST_CASE("reduce_densevec", "[spmat]", spmat, (
   fill_sparse_mat(x);
   
   // allreduce
-  auto y = spar::reduce::dense<TestType, INDEX, SCALAR>(spar::mpi::defs::REDUCE_TO_ALL, x);
+  auto y = spar::reduce::dense<TestType, INDEX, SCALAR>(spar::mpi::REDUCE_TO_ALL, x);
   REQUIRE( y.nrows() == m );
   REQUIRE( y.ncols() == n );
   

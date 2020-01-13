@@ -23,7 +23,7 @@ namespace spar
       column is summed via a dense vector (all)reduce.
       
       @param[in] root The number of the receiving process in the case of a
-      reduce, or `spar::mpi::defs::REDUCE_TO_ALL` for an allreduce.
+      reduce, or `spar::mpi::REDUCE_TO_ALL` for an allreduce.
       @param[in] x A supported sparse matrix in CSC format.
       @param[in] comm MPI communicator.
       
@@ -58,7 +58,7 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> dense(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
-      const bool receiving = (root == mpi::defs::REDUCE_TO_ALL || root == mpi::get_rank(comm));
+      const bool receiving = (root == mpi::REDUCE_TO_ALL || root == mpi::get_rank(comm));
       
       INDEX m, n;
       internal::get::dim<INDEX, SCALAR>(x, &m, &n);
@@ -103,7 +103,7 @@ namespace spar
       (all)gather.
       
       @param[in] root The number of the receiving process in the case of a
-      reduce, or `spar::mpi::defs::REDUCE_TO_ALL` for an allreduce.
+      reduce, or `spar::mpi::REDUCE_TO_ALL` for an allreduce.
       @param[in] x A supported sparse matrix in CSC format.
       @param[in] comm MPI communicator.
       
@@ -142,7 +142,7 @@ namespace spar
     template <class SPMAT, typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> gather(const int root, const SPMAT &x, MPI_Comm comm=MPI_COMM_WORLD)
     {
-      const bool receiving = (root == mpi::defs::REDUCE_TO_ALL || root == mpi::get_rank(comm));
+      const bool receiving = (root == mpi::REDUCE_TO_ALL || root == mpi::get_rank(comm));
       
       INDEX m, n;
       internal::get::dim<INDEX, SCALAR>(x, &m, &n);
@@ -181,7 +181,7 @@ namespace spar
         
         // get the displacements
         INDEX count_local = a.get_nnz();
-        mpi::gather(mpi::defs::REDUCE_TO_ALL, &count_local, 1, counts.data_ptr(), 1, comm);
+        mpi::gather(mpi::REDUCE_TO_ALL, &count_local, 1, counts.data_ptr(), 1, comm);
         
         unsigned int count = counts.sum();
         

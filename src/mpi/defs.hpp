@@ -11,10 +11,7 @@ namespace spar
 {
   namespace mpi
   {
-    namespace defs
-    {
-      static const int REDUCE_TO_ALL = -1;
-    }
+    static const int REDUCE_TO_ALL = -1;
   }
 }
 

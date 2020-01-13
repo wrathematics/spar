@@ -40,7 +40,7 @@ namespace spar
       
       const MPI_Datatype mpi_type = utils::mpi_type_lookup(*recvbuf);
       
-      if (root == defs::REDUCE_TO_ALL)
+      if (root == REDUCE_TO_ALL)
         ret = MPI_Allreduce(sendbuf, recvbuf, count, mpi_type, op, comm);
       else
         ret = MPI_Reduce(sendbuf, recvbuf, count, mpi_type, op, root, comm);
@@ -59,7 +59,7 @@ namespace spar
       const MPI_Datatype mpi_type_send = utils::mpi_type_lookup(*sendbuf);
       const MPI_Datatype mpi_type_recv = utils::mpi_type_lookup(*recvbuf);
       
-      if (root == defs::REDUCE_TO_ALL)
+      if (root == REDUCE_TO_ALL)
       {
         ret = MPI_Allgatherv(sendbuf, sendcount, mpi_type_send, recvbuf,
           recvcounts, displs, mpi_type_recv, comm);
@@ -84,7 +84,7 @@ namespace spar
       const MPI_Datatype mpi_type_send = utils::mpi_type_lookup(*sendbuf);
       const MPI_Datatype mpi_type_recv = utils::mpi_type_lookup(*recvbuf);
       
-      if (root == defs::REDUCE_TO_ALL)
+      if (root == REDUCE_TO_ALL)
       {
         ret = MPI_Allgather(sendbuf, sendcount, mpi_type_send, recvbuf,
           recvcount, mpi_type_recv, comm);
