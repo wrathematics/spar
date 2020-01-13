@@ -19,11 +19,8 @@ namespace spar
 {
   namespace conv
   {
-    namespace
-    {
-      template <typename INDEX, typename SCALAR>
-      using eigen_t = Eigen::SparseMatrix<SCALAR, Eigen::StorageOptions::ColMajor, INDEX>;
-    }
+    template <typename INDEX, typename SCALAR>
+    using eigen_t = Eigen::SparseMatrix<SCALAR, Eigen::StorageOptions::ColMajor, INDEX>;
     
     
     
@@ -90,54 +87,54 @@ namespace spar
   
   
   
-  
-  
-  
-  namespace get
+  namespace internal
   {
-    template <typename INDEX, typename SCALAR>
-    static inline void dim(const eigen_t<INDEX, SCALAR> &x, INDEX *m, INDEX *n)
+    namespace get
     {
-      *m = (INDEX) x.rows();
-      *n = (INDEX) x.cols();
-    }
-    
-    
-    
-    template <typename INDEX, typename SCALAR>
-    static inline void col(const INDEX j, const eigen_t<INDEX, SCALAR> &x, spvec<INDEX, SCALAR> &s)
-    {
-      const INDEX *I = x.innerIndexPtr();
-      const INDEX *P = x.outerIndexPtr();
-      
-      const INDEX ind = P[j];
-      if (P[j + 1] == ind)
+      template <typename INDEX, typename SCALAR>
+      static inline void dim(const eigen_t<INDEX, SCALAR> &x, INDEX *m, INDEX *n)
       {
-        s.zero();
-        return;
+        *m = (INDEX) x.rows();
+        *n = (INDEX) x.cols();
       }
       
-      const INDEX col_nnz = P[j + 1] - ind;
-      s.set(col_nnz, I + ind, X + ind);
-    }
-    
-    
-    
-    template <typename INDEX, typename SCALAR>
-    static inline INDEX max_col_nnz(const eigen_t<INDEX, SCALAR> &x)
-    {
-      const INDEX n = x.cols();
-      const INDEX *P = x.outerIndexPtr();
       
-      INDEX max_nnz = 0;
-      for (INDEX col=0; col<n; col++)
+      
+      template <typename INDEX, typename SCALAR>
+      static inline void col(const INDEX j, const eigen_t<INDEX, SCALAR> &x, spvec<INDEX, SCALAR> &s)
       {
-        INDEX col_nnz = P[col + 1] - P[col];
-        if (col_nnz > max_nnz)
-          max_nnz = col_nnz;
+        const INDEX *I = x.innerIndexPtr();
+        const INDEX *P = x.outerIndexPtr();
+        
+        const INDEX ind = P[j];
+        if (P[j + 1] == ind)
+        {
+          s.zero();
+          return;
+        }
+        
+        const INDEX col_nnz = P[j + 1] - ind;
+        s.set(col_nnz, I + ind, X + ind);
       }
       
-      return max_nnz;
+      
+      
+      template <typename INDEX, typename SCALAR>
+      static inline INDEX max_col_nnz(const eigen_t<INDEX, SCALAR> &x)
+      {
+        const INDEX n = x.cols();
+        const INDEX *P = x.outerIndexPtr();
+        
+        INDEX max_nnz = 0;
+        for (INDEX col=0; col<n; col++)
+        {
+          INDEX col_nnz = P[col + 1] - P[col];
+          if (col_nnz > max_nnz)
+            max_nnz = col_nnz;
+        }
+        
+        return max_nnz;
+      }
     }
   }
 }

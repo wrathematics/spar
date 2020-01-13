@@ -9,49 +9,9 @@
 
 #include "core/defs.hpp"
 #include "core/dvec.hpp"
+#include "core/get.hpp"
 #include "core/spmat.hpp"
 #include "core/spvec.hpp"
-
-
-namespace spar
-{
-  namespace get
-  {
-    template <typename INDEX, typename SCALAR>
-    static inline void dim(const spmat<INDEX, SCALAR> &x, INDEX *m, INDEX *n)
-    {
-      *m = x.nrows();
-      *n = x.ncols();
-    }
-    
-    
-    
-    template <typename INDEX, typename SCALAR>
-    static inline void col(const INDEX j, const spmat<INDEX, SCALAR> &x, spvec<INDEX, SCALAR> &s)
-    {
-      x.get_col(j, s);
-    }
-    
-    
-    
-    template <typename INDEX, typename SCALAR>
-    static inline INDEX max_col_nnz(const spmat<INDEX, SCALAR> &x)
-    {
-      INDEX max_nnz = 0;
-      
-      const INDEX *P = x.col_ptr();
-      const INDEX n = x.ncols();
-      for (INDEX col=0; col<n; col++)
-      {
-        INDEX col_nnz = P[col + 1] - P[col];
-        if (col_nnz > max_nnz)
-          max_nnz = col_nnz;
-      }
-      
-      return max_nnz;
-    }
-  }
-}
 
 
 #endif

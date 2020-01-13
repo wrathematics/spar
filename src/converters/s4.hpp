@@ -18,53 +18,51 @@
 
 namespace spar
 {
-  namespace sexp
+  namespace internal
   {
-    namespace
+    namespace sexp
     {
       static inline SEXP get_obj_from_s4(SEXP s4, const char *obj)
       {
         return GET_SLOT(s4, install(obj));
       }
-    }
-    
-    
-    
-    static inline SEXP get_x_from_s4(SEXP s4)
-    {
-      return get_obj_from_s4(s4, "x");
-    }
-    
-    static inline SEXP get_i_from_s4(SEXP s4)
-    {
-      return get_obj_from_s4(s4, "i");
-    }
-    
-    static inline SEXP get_p_from_s4(SEXP s4)
-    {
-      return get_obj_from_s4(s4, "p");
-    }
-    
-    static inline void get_dim_from_s4(SEXP s4, int *m, int *n)
-    {
-      SEXP dim = get_obj_from_s4(s4, "Dim");
-      *m = INTEGER(dim)[0];
-      *n = INTEGER(dim)[1];
-    }
-    
-    static inline int get_nnz_from_s4(SEXP s4_I)
-    {
-      return LENGTH(s4_I);
-    }
-    
-    static inline int get_plen_from_s4(SEXP s4_P)
-    {
-      return LENGTH(s4_P);
-    }
-    
-    static inline int get_col_len_from_s4(int col_ind, SEXP s4_P)
-    {
-      return INTEGER(s4_P)[col_ind+1] - INTEGER(s4_P)[col_ind];
+      
+      static inline SEXP get_x_from_s4(SEXP s4)
+      {
+        return get_obj_from_s4(s4, "x");
+      }
+      
+      static inline SEXP get_i_from_s4(SEXP s4)
+      {
+        return get_obj_from_s4(s4, "i");
+      }
+      
+      static inline SEXP get_p_from_s4(SEXP s4)
+      {
+        return get_obj_from_s4(s4, "p");
+      }
+      
+      static inline void get_dim_from_s4(SEXP s4, int *m, int *n)
+      {
+        SEXP dim = get_obj_from_s4(s4, "Dim");
+        *m = INTEGER(dim)[0];
+        *n = INTEGER(dim)[1];
+      }
+      
+      static inline int get_nnz_from_s4(SEXP s4_I)
+      {
+        return LENGTH(s4_I);
+      }
+      
+      static inline int get_plen_from_s4(SEXP s4_P)
+      {
+        return LENGTH(s4_P);
+      }
+      
+      static inline int get_col_len_from_s4(int col_ind, SEXP s4_P)
+      {
+        return INTEGER(s4_P)[col_ind+1] - INTEGER(s4_P)[col_ind];
+      }
     }
   }
   
@@ -75,9 +73,9 @@ namespace spar
     template <typename INDEX, typename SCALAR>
     static inline void s4col_to_spvec(const int col_ind, SEXP s4, spvec<INDEX, SCALAR> &s)
     {
-      SEXP s4_X = sexp::get_x_from_s4(s4);
-      SEXP s4_I = sexp::get_i_from_s4(s4); // len == nnz
-      SEXP s4_P = sexp::get_p_from_s4(s4);
+      SEXP s4_X = internal::sexp::get_x_from_s4(s4);
+      SEXP s4_I = internal::sexp::get_i_from_s4(s4); // len == nnz
+      SEXP s4_P = internal::sexp::get_p_from_s4(s4);
       
       const int start_ind = INTEGER(s4_P)[col_ind];
       const int col_len = INTEGER(s4_P)[col_ind+1] - start_ind;
@@ -88,8 +86,8 @@ namespace spar
     template <typename INDEX, typename SCALAR>
     static inline spvec<INDEX, SCALAR> s4col_to_spvec(const int col_ind, SEXP s4)
     {
-      SEXP s4_P = sexp::get_p_from_s4(s4);
-      const int col_len = sexp::get_col_len_from_s4(col_ind, s4_P);
+      SEXP s4_P = internal::sexp::get_p_from_s4(s4);
+      const int col_len = internal::sexp::get_col_len_from_s4(col_ind, s4_P);
       
       spvec<INDEX, SCALAR> s(col_len * spar::defs::MEM_FUDGE_ELT_FAC);
       s4col_to_spvec(col_ind, s4, s);
@@ -144,41 +142,44 @@ namespace spar
   
   
   
-  namespace get
+  namespace internal
   {
-    template <typename INDEX, typename SCALAR>
-    static inline void dim(const SEXP x, INDEX *m, INDEX *n)
+    namespace get
     {
-      spar::sexp::get_dim_from_s4(x, m, n);
-    }
-    
-    
-    
-    template <typename INDEX, typename SCALAR>
-    static inline void col(const INDEX j, const SEXP x, spvec<INDEX, SCALAR> &s)
-    {
-      spar::conv::s4col_to_spvec(j, x, s);
-    }
-    
-    
-    
-    template <typename INDEX, typename SCALAR>
-    static inline INDEX max_col_nnz(const SEXP x)
-    {
-      INDEX m, n;
-      spar::sexp::get_dim_from_s4(x, &m, &n);
-      
-      SEXP P = spar::sexp::get_p_from_s4(x);
-      
-      INDEX max_nnz = 0;
-      for (INDEX col=0; col<n+1; col++)
+      template <typename INDEX, typename SCALAR>
+      static inline void dim(const SEXP x, INDEX *m, INDEX *n)
       {
-        INDEX col_nnz = spar::sexp::get_col_len_from_s4(col, P);
-        if (col_nnz > max_nnz)
-          max_nnz = col_nnz;
+        spar::internal::sexp::get_dim_from_s4(x, m, n);
       }
       
-      return max_nnz;
+      
+      
+      template <typename INDEX, typename SCALAR>
+      static inline void col(const INDEX j, const SEXP x, spvec<INDEX, SCALAR> &s)
+      {
+        spar::conv::s4col_to_spvec(j, x, s);
+      }
+      
+      
+      
+      template <typename INDEX, typename SCALAR>
+      static inline INDEX max_col_nnz(const SEXP x)
+      {
+        INDEX m, n;
+        spar::internal::sexp::get_dim_from_s4(x, &m, &n);
+        
+        SEXP P = spar::internal::sexp::get_p_from_s4(x);
+        
+        INDEX max_nnz = 0;
+        for (INDEX col=0; col<n+1; col++)
+        {
+          INDEX col_nnz = spar::internal::sexp::get_col_len_from_s4(col, P);
+          if (col_nnz > max_nnz)
+            max_nnz = col_nnz;
+        }
+        
+        return max_nnz;
+      }
     }
   }
 }

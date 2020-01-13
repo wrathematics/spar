@@ -61,10 +61,10 @@ namespace spar
       const bool receiving = (root == mpi::defs::REDUCE_TO_ALL || root == mpi::get_rank(comm));
       
       INDEX m, n;
-      spar::get::dim<INDEX, SCALAR>(x, &m, &n);
+      internal::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const INDEX len = spar::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
+      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
       dvec<INDEX, SCALAR> d(m);
       
@@ -76,7 +76,7 @@ namespace spar
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
       {
-        spar::get::col<INDEX, SCALAR>(j, x, a);
+        internal::get::col<INDEX, SCALAR>(j, x, a);
         a.densify(d);
         
         if (receiving)
@@ -145,10 +145,10 @@ namespace spar
       const bool receiving = (root == mpi::defs::REDUCE_TO_ALL || root == mpi::get_rank(comm));
       
       INDEX m, n;
-      spar::get::dim<INDEX, SCALAR>(x, &m, &n);
+      internal::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const INDEX len = spar::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
+      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::defs::MEM_FUDGE_ELT_FAC;
       spvec<INDEX, SCALAR> a(len);
       spmat<INDEX, SCALAR> s(m, n, 0);
       
@@ -177,7 +177,7 @@ namespace spar
       // allreduce column-by-column
       for (INDEX j=0; j<n; j++)
       {
-        spar::get::col<INDEX, SCALAR>(j, x, a);
+        internal::get::col<INDEX, SCALAR>(j, x, a);
         
         // get the displacements
         INDEX count_local = a.get_nnz();
