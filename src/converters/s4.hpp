@@ -71,8 +71,27 @@ namespace spar
   
   
   
+  /// Converters.
   namespace conv
   {
+    /**
+      @brief Convert a column of a `dgCMatrix` object into an `spvec` sparse
+      vector.
+      
+      @param[in] col_ind Zero-based index of the desired column.
+      @param[in] s4 The input `dgCMatrix` object.
+      @param[out] s The return sparse matrix.
+      
+      @allocs The passed sparse vector `s` will resize itself as needed during
+      function execution.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown.
+      
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <typename INDEX, typename SCALAR>
     static inline void s4col_to_spvec(const int col_ind, SEXP s4, spvec<INDEX, SCALAR> &s)
     {
@@ -86,6 +105,7 @@ namespace spar
       s.set(col_len, INTEGER(s4_I) + start_ind, REAL(s4_X) + start_ind);
     }
     
+    /// \overload
     template <typename INDEX, typename SCALAR>
     static inline spvec<INDEX, SCALAR> s4col_to_spvec(const int col_ind, SEXP s4)
     {
@@ -99,6 +119,23 @@ namespace spar
     
     
     
+    /**
+      @brief Convert an `spmat` object into a `dgCMatrix` sparse matrix.
+      
+      @param[in] s The input `spmat` object.
+      
+      @return The return sparse matrix.
+      
+      @allocs The return object is roughly of size:
+      `sizeof(int)*(2 + nnz + (n+1)) + sizeof(double)*nnz`.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown.
+      
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <typename INDEX, typename SCALAR>
     static inline SEXP spmat_to_s4(const spmat<INDEX, SCALAR> &s)
     {
