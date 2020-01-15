@@ -157,11 +157,14 @@ void spmat<INDEX, SCALAR>::resize(INDEX len_)
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::zero()
 {
-  arraytools::zero(len, I);
-  arraytools::zero(n+1, P);
-  arraytools::zero(len, X);
-  
-  nnz = 0;
+  if (nnz > 0)
+  {
+    arraytools::zero(len, I);
+    arraytools::zero(n+1, P);
+    arraytools::zero(len, X);
+    
+    nnz = 0;
+  }
 }
 
 
