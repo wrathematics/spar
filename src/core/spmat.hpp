@@ -241,6 +241,11 @@ void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) con
 // utils
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Return the proportion of sparsity.
+  
+  @return The non-zero elements divided by the matrix dimensions.
+ */
 template <typename INDEX, typename SCALAR>
 float spmat<INDEX, SCALAR>::sparsity() const
 {
@@ -249,6 +254,12 @@ float spmat<INDEX, SCALAR>::sparsity() const
 
 
 
+/**
+  @brief Return the proportion of density.
+  
+  @return The complement of the number of non-zero elements divided by the
+  matrix dimensions from one (i.e., 1 minus the sparsity).
+ */
 template <typename INDEX, typename SCALAR>
 float spmat<INDEX, SCALAR>::density() const
 {
