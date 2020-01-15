@@ -341,8 +341,8 @@ void spmat<INDEX, SCALAR>::info() const
 {
   printf("# spmat");
   printf(" %dx%d", m, n);
-  printf(" with nnz=%d", nnz);
-  printf(" and storage=%d", len);
+  printf(" with nnz=%d (%.2f%% sparse)", nnz, sparsity()*100.f);
+  printf(" and len=%d", len);
   printf(" (index=%s scalar=%s)", typeid(INDEX).name(), typeid(SCALAR).name());
   printf("\n");
 }
