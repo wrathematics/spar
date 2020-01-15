@@ -140,6 +140,9 @@ spmat<INDEX, SCALAR>::~spmat()
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::resize(INDEX len_)
 {
+  if (len == len_)
+    return;
+  
   arraytools::realloc(len_, &I);
   arraytools::realloc(len_, &X);
   
