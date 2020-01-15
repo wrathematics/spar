@@ -32,6 +32,9 @@ class spmat
     void print(bool actual=false);
     void info() const;
     
+    float sparsity() const;
+    float density() const;
+    
     INDEX nrows() const {return m;};
     INDEX ncols() const {return n;};
     INDEX get_nnz() const {return nnz;};
@@ -162,15 +165,32 @@ void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) con
 
 
 // ----------------------------------------------------------------------------
+// utils
+// ----------------------------------------------------------------------------
+
+template <typename INDEX, typename SCALAR>
+float spmat<INDEX, SCALAR>::sparsity() const
+{
+  return (float)nnz/m/n;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+float spmat<INDEX, SCALAR>::density() const
+{
+  return 1.f - sparsity();
+}
+
+
+
+// ----------------------------------------------------------------------------
 // printer
 // ----------------------------------------------------------------------------
 
-// NOTE to self: don't set this method const
-template <typename INDEX, typename SCALAR>
+template <typename INDEX, typename SCALAR> // NOTE to self: don't set this method const
 void spmat<INDEX, SCALAR>::print(bool actual)
 {
-  printf("## %dx%d sparse matrix with nnz=%d\n", m, n, nnz);
-  
   if (actual)
   {
     printf("I: ");
