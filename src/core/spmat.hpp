@@ -32,8 +32,8 @@ class spmat
     
     void resize(INDEX len_);
     void zero();
+    int insertable(const spvec<INDEX, SCALAR> &x);
     void insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
-    int insert_norealloc(const INDEX col, const spvec<INDEX, SCALAR> &x);
     void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
     void print(bool actual=false);
@@ -142,6 +142,17 @@ void spmat<INDEX, SCALAR>::zero()
 
 
 template <typename INDEX, typename SCALAR>
+int spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
+{
+  if (x.get_nnz() > len - nnz)
+    return x.get_nnz() - (len - nnz);
+  else
+    return 0;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
 {
   INDEX needed_space = len - nnz;
@@ -149,18 +160,6 @@ void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x
     resize((len + needed_space) * spar::internal::defs::MEM_FUDGE_ELT_FAC);
   
   insert_spvec(col, x);
-}
-
-
-
-template <typename INDEX, typename SCALAR>
-int spmat<INDEX, SCALAR>::insert_norealloc(const INDEX col, const spvec<INDEX, SCALAR> &x)
-{
-  if (x.get_nnz() > len - nnz)
-    return x.get_nnz() - (len - nnz);
-  
-  insert_spvec(col, x);
-  return 0;
 }
 
 
