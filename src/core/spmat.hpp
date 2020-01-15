@@ -16,6 +16,13 @@
 template <typename INDEX, typename SCALAR>
 class spvec;
 
+/**
+  @brief Basic sparse matrix class in CSC format.
+  
+  @tparam INDEX should be some kind of fundamental indexing type, like `int`
+  or `uint16_t`.
+  @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+ */
 template <typename INDEX, typename SCALAR>
 class spmat
 {
@@ -35,15 +42,25 @@ class spmat
     float sparsity() const;
     float density() const;
     
+    /// Number of rows.
     INDEX nrows() const {return m;};
+    /// Number of columns.
     INDEX ncols() const {return n;};
+    /// Number of non-zero elements.
     INDEX get_nnz() const {return nnz;};
+    /// Length of the index and data arrays.
     INDEX get_len() const {return len;};
+    /// Return a pointer to the index array `I`.
     INDEX* index_ptr() {return I;};
+    /// \overload
     INDEX* index_ptr() const {return I;};
+    /// Return a pointer to the column array `P`.
     INDEX* col_ptr() {return P;};
+    /// \overload
     INDEX* col_ptr() const {return P;};
+    /// Return a pointer to the data array `X`.
     SCALAR* data_ptr() {return X;};
+    /// \overload
     SCALAR* data_ptr() const {return X;};
   
   protected:
