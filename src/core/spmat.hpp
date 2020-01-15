@@ -85,6 +85,17 @@ class spmat
 // constructor/destructor
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Constructor.
+  
+  @param[in] nrows_,ncols_ The dimension of the matrix.
+  @param[in] len_ The amount of storage to initially allocate (elements, not
+  bytes).
+  
+  @allocs Three internal arrays are allocated.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
 {
@@ -116,6 +127,16 @@ spmat<INDEX, SCALAR>::~spmat()
 // object management
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Constructor.
+  
+  @param[in] len_ The new amount of internal storage to use (elements, not
+  bytes).
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::resize(INDEX len_)
 {
@@ -129,6 +150,7 @@ void spmat<INDEX, SCALAR>::resize(INDEX len_)
 
 
 
+/// Zero all data in the sparse matrix. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::zero()
 {
@@ -141,6 +163,15 @@ void spmat<INDEX, SCALAR>::zero()
 
 
 
+/**
+  @brief Check if the matrix has enough storage capacity to hold the given
+  sparse vector.
+  
+  @param[in] x The input column.
+  
+  @return The number of elements needed that exceed the current matrix storage
+  capacity (0 if the vector fits).
+ */
 template <typename INDEX, typename SCALAR>
 int spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
 {
@@ -152,6 +183,16 @@ int spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
 
 
 
+/**
+  @brief Insert a sparse vector into the specified column.
+  
+  @param[in] col The column index.
+  @param[in] x The input column.
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
 {
@@ -164,6 +205,16 @@ void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x
 
 
 
+/**
+  @brief Retrieve the specified column as a sparse vector.
+  
+  @param[in] col The column index.
+  @param[out] x The input column.
+  
+  @allocs The return vector `x` will be resized as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const
 {
@@ -204,6 +255,18 @@ float spmat<INDEX, SCALAR>::density() const
 // printer
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Print the matrix.
+  
+  @param[in] actual Should the actual/literal storage (some arrays) be printed?
+  Otherwise, the conceptual dense matrix will be printed.
+  
+  @allocs If not printing the actual values, a temporary storage array is needed
+  so as to convert the matrix from CSC to COO. It is of length
+  `len*sizeof(INDEX)`.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR> // NOTE to self: don't set this method const
 void spmat<INDEX, SCALAR>::print(bool actual)
 {
@@ -266,6 +329,7 @@ void spmat<INDEX, SCALAR>::print(bool actual)
 
 
 
+/// Print some quick info about the sparse matrix.
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::info() const
 {
