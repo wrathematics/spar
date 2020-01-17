@@ -5,6 +5,7 @@
 * **License:** [BSL-1.0](http://opensource.org/licenses/BSL-1.0)
 * **Project home**: https://github.com/wrathematics/spar
 * **Bug reports**: https://github.com/wrathematics/spar/issues
+* **Documentation**: http://librestats.com/spar/html/index.html
 
 <img align="right" src="./docs/logo/spar_med.png" />
 

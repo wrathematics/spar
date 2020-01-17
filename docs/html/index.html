@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>spar: Main Page</title>
+<title>spar: spar</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -89,10 +89,27 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">spar Documentation</div>  </div>
+<div class="title">spar </div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><ul>
+<li><b>Version:</b> 0.1-0</li>
+<li><b>Status:</b> <a href="https://travis-ci.org/wrathematics/spar"></a></li>
+<li><b>License:</b> <a href="http://opensource.org/licenses/BSL-1.0">BSL-1.0</a></li>
+<li><b>Project home</b>: <a href="https://github.com/wrathematics/spar">https://github.com/wrathematics/spar</a></li>
+<li><b>Bug reports</b>: <a href="https://github.com/wrathematics/spar/issues">https://github.com/wrathematics/spar/issues</a></li>
+<li><b>Documentation</b>: <a href="http://librestats.com/spar/html/index.html">http://librestats.com/spar/html/index.html</a></li>
+</ul>
+<div class="image">
+<img src="./docs/logo/spar_med.png" align="right"/>
+</div>
+<p>spar is the Sparse Allreduce library, a header-only C++14 framework. Its purpose is to enable the addition of many sparse matrices in CSC format, with the matrices spread across multiple processors.</p>
+<p>A sparse allreduce is different from the addition of two distributed, sparse matrices. In that case, every process contains a piece of each of the two distributed matrices. After the sum each process contains a piece of the new distributed matrix, whose entries are the sum of the two. In a sparse allreduce, each of the, say, <code>p</code> processes has a sparse matrix, all of the <code>p</code> matrices are added, and afterwards, one or all processes contain the sum.</p>
+<h2>Dependencies and Tests</h2>
+<p>If you want to use the actual reducers, you will need an installation of MPI.</p>
+<p>Tests use <a href="https://github.com/catchorg/Catch2">catch2</a>, a copy of which is included under <code>tests/catch</code>. To build the tests, modify <code>tests/make.inc</code> as appropriate and type <code>make</code>.</p>
+<p>To use the library with Eigen, you will need a copy of <a href="http://eigen.tuxfamily.org/index.php?title=Main_Page">the Eigen headers</a>. You may find the <a href="examples/mpi/eigen.cpp">eigen example</a> helpful. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
