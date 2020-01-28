@@ -68,7 +68,7 @@ namespace spar
     template <typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> gen(const INDEX nrows, const INDEX ncols)
     {
-      const uint32_t seed = spar::rand::get_seed();
+      const uint32_t seed = spar::internals::rand::get_seed();
       return gen<INDEX, SCALAR>(seed, nrows, ncols);
     }
   }
