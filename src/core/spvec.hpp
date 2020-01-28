@@ -34,9 +34,6 @@ class spvec
     void zero();
     INDEX insertable() const;
     void insert(const INDEX i, const SCALAR s);
-    template <typename INDEX_SRC, typename SCALAR_SRC>
-    void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
-    void set(const dvec<INDEX, SCALAR> &d);
     SCALAR get(const INDEX ind) const;
     
     void print(bool actual=false) const;
@@ -46,6 +43,9 @@ class spvec
     INDEX add(const SCALAR *x, const INDEX xlen);
     
     void densify(dvec<INDEX, SCALAR> &d) const;
+    template <typename INDEX_SRC, typename SCALAR_SRC>
+    void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
+    void set(const dvec<INDEX, SCALAR> &d);
     
     /// Number of non-zero elements.
     INDEX get_nnz() const {return nnz;};
@@ -77,9 +77,6 @@ class spvec
 // constructor/destructor
 // ----------------------------------------------------------------------------
 
-/**
-  @brief Default constructor.
- */
 template <typename INDEX, typename SCALAR>
 spvec<INDEX, SCALAR>::spvec()
 {
@@ -221,51 +218,6 @@ void spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 
 
 
-template <typename INDEX, typename SCALAR>
-template <typename INDEX_SRC, typename SCALAR_SRC>
-void spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
-{
-  if (len < nnz_)
-    resize(nnz_);
-  else if (nnz > nnz_)
-  {
-    arraytools::zero(nnz-nnz_, I+nnz_);
-    arraytools::zero(nnz-nnz_, X+nnz_);
-  }
-  
-  arraytools::copy(nnz_, I_, I);
-  arraytools::copy(nnz_, X_, X);
-  
-  nnz = nnz_;
-}
-
-
-
-template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
-{
-  INDEX dnnz = d.get_nnz();
-  if (dnnz > len)
-    resize(dnnz);
-  
-  INDEX pos = 0;
-  SCALAR *d_p = d.data_ptr();
-  for (INDEX i=0; i<d.get_len(); i++)
-  {
-    if (d_p[i])
-    {
-      I[pos] = i;
-      X[pos] = d_p[i];
-      
-      pos++;
-    }
-  }
-  
-  nnz = dnnz;
-}
-
-
-
 /**
   @brief Retrieve the specified column as a sparse vector.
   
@@ -356,7 +308,13 @@ void spvec<INDEX, SCALAR>::info() const
 // adders
 // ----------------------------------------------------------------------------
 
-// return needed size of realloc
+/**
+  @brief Add the input to the sparse vector.
+  
+  @param[in] x Input to adder.
+  
+  @return Returns the needed size of realloc.
+ */
 template <typename INDEX, typename SCALAR>
 INDEX spvec<INDEX, SCALAR>::add(const spvec &x)
 {
@@ -398,6 +356,7 @@ INDEX spvec<INDEX, SCALAR>::add(const spvec &x)
 
 
 
+/// \overload
 template <typename INDEX, typename SCALAR>
 INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
 {
@@ -445,6 +404,15 @@ INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
 // converters
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Convert the sparse vector into a dense vector.
+  
+  @param[in] d The output dense array.
+  
+  @allocs The output (dense vector) will be resized as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
 {
@@ -454,6 +422,63 @@ void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
   d.zero();
   for (INDEX pos=0; pos<nnz; pos++)
     d.insert(I[pos], X[pos]);
+}
+
+
+
+/**
+  @brief Set the vector to the values in the input.
+  
+  @param[in] nnz_ Length of the input index/scalar arrays.
+  @param[in] I_ Index array.
+  @param[in] X_ Scalar array.
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
+template <typename INDEX, typename SCALAR>
+template <typename INDEX_SRC, typename SCALAR_SRC>
+void spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
+{
+  if (len < nnz_)
+    resize(nnz_);
+  else if (nnz > nnz_)
+  {
+    arraytools::zero(nnz-nnz_, I+nnz_);
+    arraytools::zero(nnz-nnz_, X+nnz_);
+  }
+  
+  arraytools::copy(nnz_, I_, I);
+  arraytools::copy(nnz_, X_, X);
+  
+  nnz = nnz_;
+}
+
+
+
+/// \overload
+template <typename INDEX, typename SCALAR>
+void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
+{
+  INDEX dnnz = d.get_nnz();
+  if (dnnz > len)
+    resize(dnnz);
+  
+  INDEX pos = 0;
+  SCALAR *d_p = d.data_ptr();
+  for (INDEX i=0; i<d.get_len(); i++)
+  {
+    if (d_p[i])
+    {
+      I[pos] = i;
+      X[pos] = d_p[i];
+      
+      pos++;
+    }
+  }
+  
+  nnz = dnnz;
 }
 
 
