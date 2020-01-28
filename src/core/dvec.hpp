@@ -29,6 +29,7 @@ class dvec
     void update_nnz();
     
     void print() const;
+    void info() const;
     
     SCALAR sum() const;
     const SCALAR operator[](INDEX i) const; // getter
@@ -73,6 +74,15 @@ dvec<INDEX, SCALAR>::dvec()
 
 
 
+/**
+  @brief Constructor.
+  
+  @param[in] len_ Length of the vector (elements, not bytes).
+  
+  @allocs One internal array is allocated.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 dvec<INDEX, SCALAR>::dvec(INDEX len_)
 {
@@ -97,6 +107,16 @@ dvec<INDEX, SCALAR>::~dvec()
 // object management
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Resize the internal storage.
+  
+  @param[in] len_ The new amount of internal storage to use (elements, not
+  bytes).
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::resize(INDEX len_)
 {
@@ -114,6 +134,7 @@ void dvec<INDEX, SCALAR>::resize(INDEX len_)
 
 
 
+/// Zero all data in the dense vector. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::zero()
 {
@@ -127,6 +148,12 @@ void dvec<INDEX, SCALAR>::zero()
 
 
 
+/**
+  @brief Insert a value at the specified index.
+  
+  @param[in] i The index.
+  @param[in] s The input value.
+ */
 template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
@@ -140,6 +167,10 @@ void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 
 
 
+/**
+  @brief Updates the internal "number non-zero" count. Useful if operating
+  directly on the array.
+ */
 template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::update_nnz()
 {
@@ -157,12 +188,25 @@ void dvec<INDEX, SCALAR>::update_nnz()
 // printer
 // ----------------------------------------------------------------------------
 
+/// Print the vector.
 template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::print() const
 {
-  printf("## Length %d dense vector with nnz=%d\n", len, nnz);
   for (INDEX i=0; i<len; i++)
     printf("%f\n", (float) X[i]);
+}
+
+
+
+/// Print some quick info about the sparse vector.
+template <typename INDEX, typename SCALAR>
+void dvec<INDEX, SCALAR>::info() const
+{
+  printf("# dvec");
+  printf(" %d", len);
+  printf(" with nnz=%d", nnz);
+  printf(" (index=%s scalar=%s)", typeid(INDEX).name(), typeid(SCALAR).name());
+  printf("\n");
 }
 
 
@@ -171,6 +215,11 @@ void dvec<INDEX, SCALAR>::print() const
 // setter/getter
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Sum the vector elements.
+  
+  @return The sum of the vector elements.
+ */
 template <typename INDEX, typename SCALAR>
 SCALAR dvec<INDEX, SCALAR>::sum() const
 {
@@ -184,6 +233,13 @@ SCALAR dvec<INDEX, SCALAR>::sum() const
 
 
 
+/**
+  @brief Getter.
+  
+  @param[in] i Desired index.
+  
+  @return Returns the scalar at index `i`.
+ */
 template <typename INDEX, typename SCALAR>
 const SCALAR dvec<INDEX, SCALAR>::operator[](INDEX i) const
 {
@@ -192,6 +248,11 @@ const SCALAR dvec<INDEX, SCALAR>::operator[](INDEX i) const
 
 
 
+/**
+  @brief Setter. The RHS is the scalar value to set the vector at index `i`.
+  
+  @param[in] i Desired index.
+ */
 template <typename INDEX, typename SCALAR>
 SCALAR& dvec<INDEX, SCALAR>::operator[](INDEX i)
 {
@@ -204,6 +265,17 @@ SCALAR& dvec<INDEX, SCALAR>::operator[](INDEX i)
 // converters
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Set the vector to the values in the input.
+  
+  @param[in] nnz_ Length of the input index/scalar arrays.
+  @param[in] I_ Index array.
+  @param[in] X_ Scalar array.
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 template <typename INDEX_SRC, typename SCALAR_SRC>
 void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
@@ -222,6 +294,7 @@ void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const S
 
 
 
+/// \overload
 template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
 {
