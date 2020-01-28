@@ -35,8 +35,22 @@ namespace spar
     }
     
     
+    
+    /**
+      @brief Generate a banded-like matrix. Non-zero values are generated at
+      random with decreasing probability the farther from the diagonal they are.
+      
+      @param[in] seed Random seed.
+      @param[in] nrows,ncols The dimensions of the return.
+      
+      @return A sparse matrix.
+      
+      @allocs The return matrix is allocated/resized as necessary.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+     */
     template <typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> gen(const uint32_t seed, const INDEX nrows, const INDEX ncols)
+    static inline spmat<INDEX, SCALAR> bandish(const uint32_t seed, const INDEX nrows, const INDEX ncols)
     {
       const INDEX slen = (INDEX) nrows/2;
       spvec<INDEX, SCALAR> s(slen);
@@ -65,11 +79,12 @@ namespace spar
       return x;
     }
     
+    /// \overload
     template <typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> gen(const INDEX nrows, const INDEX ncols)
+    static inline spmat<INDEX, SCALAR> bandish(const INDEX nrows, const INDEX ncols)
     {
       const uint32_t seed = spar::internals::rand::get_seed();
-      return gen<INDEX, SCALAR>(seed, nrows, ncols);
+      return bandish<INDEX, SCALAR>(seed, nrows, ncols);
     }
   }
 }
