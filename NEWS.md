@@ -1,3 +1,12 @@
+Release 0.1-1 (//):
+New: None
+API Changes: None
+Bug Fixes: None
+Documentation:
+  * Fixed documentation generation for spar::gen.
+  * Fixed some minor discrepancies in spvec documentation.
+
+
 Release 0.1-0 (1/28/2020):
 New:
   * Created spmat, spvec, and dvec classes

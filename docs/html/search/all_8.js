@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['print',['print',['../classdvec.html#ae00da526ab6d88c5f32d2758f48949d7',1,'dvec::print()'],['../classspmat.html#aa9aae930350522d2de69a6d277c54a48',1,'spmat::print()'],['../classspvec.html#a6d73deb87ca46b8d79fdcfa6fef38fa6',1,'spvec::print()']]]
+  ['operator_5b_5d',['operator[]',['../classdvec.html#ad5fb77bc3cdc0fea4aa92e78680b1174',1,'dvec::operator[](INDEX i) const'],['../classdvec.html#a6c8200852a7890215ad3f74910c3fceb',1,'dvec::operator[](INDEX i)']]]
 ];

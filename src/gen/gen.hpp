@@ -22,6 +22,7 @@ class spmat;
 
 namespace spar
 {
+  /// @brief Random generators.
   namespace gen
   {
     namespace internals

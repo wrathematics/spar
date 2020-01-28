@@ -249,10 +249,10 @@ SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
 // ----------------------------------------------------------------------------
 
 /**
-  @brief Print the matrix.
+  @brief Print the vector.
   
   @param[in] actual Should the actual/literal storage (some arrays) be printed?
-  Otherwise, the conceptual dense matrix will be printed.
+  Otherwise, the conceptual dense vector will be printed.
  */
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::print(bool actual) const

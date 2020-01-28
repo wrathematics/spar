@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['index_5fptr',['index_ptr',['../classspmat.html#ad37a960e81637ca816143079e71ab6cf',1,'spmat::index_ptr()'],['../classspmat.html#ab55eab1e51f9a73b66c718ae20eb3ad8',1,'spmat::index_ptr() const'],['../classspvec.html#aedb4efe97f069b3f51683b961f72607e',1,'spvec::index_ptr()'],['../classspvec.html#a8d327f4ab4e659f09fff874d88842961',1,'spvec::index_ptr() const']]],
-  ['info',['info',['../classdvec.html#aa095940206e95504abc3242a2e32d830',1,'dvec::info()'],['../classspmat.html#ab448604d27b3aa60ccc066e30a607916',1,'spmat::info()'],['../classspvec.html#aa120d81dc4970ca863c35e93cdc11ea4',1,'spvec::info()']]],
-  ['insert',['insert',['../classdvec.html#aad91c893e0f01cd74a2f48f3230d8db5',1,'dvec::insert()'],['../classspmat.html#aa1929daff981ab6d6fa59626698dced4',1,'spmat::insert()'],['../classspvec.html#a42c71a96ba5c461edd4999793727c2ac',1,'spvec::insert()']]],
-  ['insertable',['insertable',['../classspmat.html#a77b41e04cefbbac88d6ea5a9f2beeeb0',1,'spmat::insertable()'],['../classspvec.html#a902943b553830f87e4cbd39fc78c5688',1,'spvec::insertable()']]]
+  ['gather',['gather',['../namespacespar_1_1reduce.html#ac93e2eff06d9b5f74509ca775eb18826',1,'spar::reduce']]],
+  ['get',['get',['../classspvec.html#a16e031892b446988315239496f806da4',1,'spvec']]],
+  ['get_5fcol',['get_col',['../classspmat.html#a125f906351f38fd862878fc2a375031c',1,'spmat']]],
+  ['get_5flen',['get_len',['../classdvec.html#adf2e106c600c162802339f623a7f579a',1,'dvec::get_len()'],['../classspmat.html#ac7e168b28dca3d59b74427053cd91977',1,'spmat::get_len()'],['../classspvec.html#add6ce4c9ae51d7fff23379b0eb69d0c2',1,'spvec::get_len()']]],
+  ['get_5fnnz',['get_nnz',['../classdvec.html#ae5489cdfd262e14e4fcdaaeb32bf46a9',1,'dvec::get_nnz()'],['../classspmat.html#a31753023508814bbe1f9e119eb46d0a6',1,'spmat::get_nnz()'],['../classspvec.html#a8c74561aeea181c138a6671336fdc4a2',1,'spvec::get_nnz()']]]
 ];
