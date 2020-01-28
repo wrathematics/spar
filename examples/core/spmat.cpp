@@ -21,6 +21,7 @@ int main()
   v.insert(7, 5);
   x.insert(2, v);
   
+  x.info();
   x.print();
   x.print(true);
   
