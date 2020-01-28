@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['spar',['spar',['../index.html',1,'']]]
+  ['news',['NEWS',['../md__n_e_w_s.html',1,'']]]
 ];

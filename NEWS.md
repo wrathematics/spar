@@ -1,4 +1,4 @@
-Release 0.1-0 (//):
+Release 0.1-0 (1/28/2020):
 New:
   * Created spmat, spvec, and dvec classes
   * Added to spar::reduce namespace:

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>spar: src/core/defs.hpp Source File</title>
+<title>spar: NEWS</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,7 +70,7 @@ $(function() {
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('core_2defs_8hpp_source.html','');});
+$(document).ready(function(){initNavTree('md__home_va8_dev_spar__n_e_w_s.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -89,16 +89,41 @@ $(document).ready(function(){initNavTree('core_2defs_8hpp_source.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">defs.hpp</div>  </div>
+<div class="title">NEWS </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// This file is part of spar which is released under the Boost Software</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment">// License, Version 1.0. See accompanying file LICENSE or copy at</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">// https://www.boost.org/LICENSE_1_0.txt</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#ifndef SPAR_CORE_DEFS_H</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#define SPAR_CORE_DEFS_H</span></div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#pragma once</span></div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacespar.html">spar</a></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;  <span class="keyword">namespace </span>internal</div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;  {</div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">namespace </span>defs</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    {</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;      <span class="keyword">const</span> <span class="keyword">static</span> <span class="keywordtype">float</span> MEM_FUDGE_ELT_FAC = 1.675;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    }</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  }</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;}</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div><div class="ttc" id="namespacespar_html"><div class="ttname"><a href="namespacespar.html">spar</a></div><div class="ttdef"><b>Definition:</b> eigen.hpp:25</div></div>
-</div><!-- fragment --></div><!-- contents -->
+<div class="textblock"><p>Release 0.1-0 (1/28/2020): New:</p><ul>
+<li>Created spmat, spvec, and dvec classes</li>
+<li>Added to <a class="el" href="namespacespar_1_1reduce.html" title="Reducers. ">spar::reduce</a> namespace:<ul>
+<li>dense() for sparse matrix (all)reduce with dense column intermediary.</li>
+<li>gather() for sparse matrix (all)reduce with an MPI gather strategy.</li>
+</ul>
+</li>
+<li>Added to <a class="el" href="namespacespar_1_1conv.html" title="Converters. ">spar::conv</a> namespace:<ul>
+<li>Eigen converters:<ul>
+<li>spmat_to_eigen()</li>
+<li>eigen_to_spmat()</li>
+<li>eigen_to_dvec()</li>
+</ul>
+</li>
+<li>R dgCMatrix converters:<ul>
+<li>s4col_to_spvec()</li>
+<li>spmat_to_s4()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Added to spar::gen namespace:<ul>
+<li>bandish() for random sparse matrices that are "nearly" banded API Changes: None Bug Fixes: None Documentation:</li>
+</ul>
+</li>
+<li>Added documentation for all non-internal classes/methods except. </li>
+</ul>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html">core</a></li><li class="navelem"><b>defs.hpp</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

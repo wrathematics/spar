@@ -1,6 +1,7 @@
 var NAVTREE =
 [
   [ "spar", "index.html", [
+    [ "NEWS", "md__n_e_w_s.html", null ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
