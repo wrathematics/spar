@@ -96,60 +96,73 @@ $(document).ready(function(){initNavTree('classspvec.html','');});
 <div class="title">spvec&lt; INDEX, SCALAR &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Basic sparse vector class.  
+ <a href="classspvec.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="spvec_8hpp_source.html">spvec.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac5d0a00b0c3571d89f3073bd7cdc2435"><td class="memItemLeft" align="right" valign="top"><a id="ac5d0a00b0c3571d89f3073bd7cdc2435"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>spvec</b> (INDEX len_)</td></tr>
+<tr class="memitem:ac5d0a00b0c3571d89f3073bd7cdc2435"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#ac5d0a00b0c3571d89f3073bd7cdc2435">spvec</a> (INDEX len_)</td></tr>
+<tr class="memdesc:ac5d0a00b0c3571d89f3073bd7cdc2435"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#ac5d0a00b0c3571d89f3073bd7cdc2435">More...</a><br /></td></tr>
 <tr class="separator:ac5d0a00b0c3571d89f3073bd7cdc2435"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68b3d4e3cde4adac314c770772b17cd2"><td class="memItemLeft" align="right" valign="top"><a id="a68b3d4e3cde4adac314c770772b17cd2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (INDEX len_)</td></tr>
+<tr class="memitem:a68b3d4e3cde4adac314c770772b17cd2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a68b3d4e3cde4adac314c770772b17cd2">resize</a> (INDEX len_)</td></tr>
+<tr class="memdesc:a68b3d4e3cde4adac314c770772b17cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize the internal storage.  <a href="#a68b3d4e3cde4adac314c770772b17cd2">More...</a><br /></td></tr>
 <tr class="separator:a68b3d4e3cde4adac314c770772b17cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ba2767571c7d7554d72254bcbb2aead"><td class="memItemLeft" align="right" valign="top"><a id="a6ba2767571c7d7554d72254bcbb2aead"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>zero</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a6ba2767571c7d7554d72254bcbb2aead">zero</a> ()</td></tr>
+<tr class="memdesc:a6ba2767571c7d7554d72254bcbb2aead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero all data in the sparse vector. Performs no allocations or resizing. <br /></td></tr>
 <tr class="separator:a6ba2767571c7d7554d72254bcbb2aead"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef038c2a203e41767577d82dd2cf7754"><td class="memItemLeft" align="right" valign="top"><a id="aef038c2a203e41767577d82dd2cf7754"></a>
-INDEX&#160;</td><td class="memItemRight" valign="bottom"><b>insert</b> (const INDEX i, const SCALAR s)</td></tr>
-<tr class="separator:aef038c2a203e41767577d82dd2cf7754"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07d3eafa344757bacbb3f4af64941d15"><td class="memTemplParams" colspan="2"><a id="a07d3eafa344757bacbb3f4af64941d15"></a>
-template&lt;typename INDEX_SRC , typename SCALAR_SRC &gt; </td></tr>
-<tr class="memitem:a07d3eafa344757bacbb3f4af64941d15"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>set</b> (const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)</td></tr>
-<tr class="separator:a07d3eafa344757bacbb3f4af64941d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a84c2f415dcf6c3ce9c33d1345d7cee17"><td class="memItemLeft" align="right" valign="top"><a id="a84c2f415dcf6c3ce9c33d1345d7cee17"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set</b> (const <a class="el" href="classdvec.html">dvec</a>&lt; INDEX, SCALAR &gt; &amp;d)</td></tr>
-<tr class="separator:a84c2f415dcf6c3ce9c33d1345d7cee17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16e031892b446988315239496f806da4"><td class="memItemLeft" align="right" valign="top"><a id="a16e031892b446988315239496f806da4"></a>
-SCALAR&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (const INDEX ind) const</td></tr>
+<tr class="memitem:a902943b553830f87e4cbd39fc78c5688"><td class="memItemLeft" align="right" valign="top">INDEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a902943b553830f87e4cbd39fc78c5688">insertable</a> () const</td></tr>
+<tr class="memdesc:a902943b553830f87e4cbd39fc78c5688"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the vector has enough storage capacity to hold an additional scalar.  <a href="#a902943b553830f87e4cbd39fc78c5688">More...</a><br /></td></tr>
+<tr class="separator:a902943b553830f87e4cbd39fc78c5688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42c71a96ba5c461edd4999793727c2ac"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a42c71a96ba5c461edd4999793727c2ac">insert</a> (const INDEX i, const SCALAR s)</td></tr>
+<tr class="memdesc:a42c71a96ba5c461edd4999793727c2ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a value at the specified index.  <a href="#a42c71a96ba5c461edd4999793727c2ac">More...</a><br /></td></tr>
+<tr class="separator:a42c71a96ba5c461edd4999793727c2ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16e031892b446988315239496f806da4"><td class="memItemLeft" align="right" valign="top">SCALAR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a16e031892b446988315239496f806da4">get</a> (const INDEX ind) const</td></tr>
+<tr class="memdesc:a16e031892b446988315239496f806da4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the specified column as a sparse vector.  <a href="#a16e031892b446988315239496f806da4">More...</a><br /></td></tr>
 <tr class="separator:a16e031892b446988315239496f806da4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d73deb87ca46b8d79fdcfa6fef38fa6"><td class="memItemLeft" align="right" valign="top"><a id="a6d73deb87ca46b8d79fdcfa6fef38fa6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>print</b> (bool actual=false) const</td></tr>
+<tr class="memitem:a6d73deb87ca46b8d79fdcfa6fef38fa6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a6d73deb87ca46b8d79fdcfa6fef38fa6">print</a> (bool actual=false) const</td></tr>
+<tr class="memdesc:a6d73deb87ca46b8d79fdcfa6fef38fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the matrix.  <a href="#a6d73deb87ca46b8d79fdcfa6fef38fa6">More...</a><br /></td></tr>
 <tr class="separator:a6d73deb87ca46b8d79fdcfa6fef38fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a318a85fc009f073711b443fb271f3b12"><td class="memItemLeft" align="right" valign="top"><a id="a318a85fc009f073711b443fb271f3b12"></a>
-INDEX&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const <a class="el" href="classspvec.html">spvec</a> &amp;x)</td></tr>
+<tr class="memitem:aa120d81dc4970ca863c35e93cdc11ea4"><td class="memItemLeft" align="right" valign="top"><a id="aa120d81dc4970ca863c35e93cdc11ea4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#aa120d81dc4970ca863c35e93cdc11ea4">info</a> () const</td></tr>
+<tr class="memdesc:aa120d81dc4970ca863c35e93cdc11ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print some quick info about the sparse vector. <br /></td></tr>
+<tr class="separator:aa120d81dc4970ca863c35e93cdc11ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a318a85fc009f073711b443fb271f3b12"><td class="memItemLeft" align="right" valign="top">INDEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a318a85fc009f073711b443fb271f3b12">add</a> (const <a class="el" href="classspvec.html">spvec</a> &amp;x)</td></tr>
+<tr class="memdesc:a318a85fc009f073711b443fb271f3b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the input to the sparse vector.  <a href="#a318a85fc009f073711b443fb271f3b12">More...</a><br /></td></tr>
 <tr class="separator:a318a85fc009f073711b443fb271f3b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52446393674e6b501f886b0c6a66dcd6"><td class="memItemLeft" align="right" valign="top"><a id="a52446393674e6b501f886b0c6a66dcd6"></a>
-INDEX&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const SCALAR *x, const INDEX xlen)</td></tr>
+<tr class="memitem:a52446393674e6b501f886b0c6a66dcd6"><td class="memItemLeft" align="right" valign="top">INDEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a52446393674e6b501f886b0c6a66dcd6">add</a> (const SCALAR *x, const INDEX xlen)</td></tr>
 <tr class="separator:a52446393674e6b501f886b0c6a66dcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af19f83080ee90c17b6db3b123ef500e2"><td class="memItemLeft" align="right" valign="top"><a id="af19f83080ee90c17b6db3b123ef500e2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>densify</b> (<a class="el" href="classdvec.html">dvec</a>&lt; INDEX, SCALAR &gt; &amp;d) const</td></tr>
+<tr class="memitem:af19f83080ee90c17b6db3b123ef500e2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#af19f83080ee90c17b6db3b123ef500e2">densify</a> (<a class="el" href="classdvec.html">dvec</a>&lt; INDEX, SCALAR &gt; &amp;d) const</td></tr>
+<tr class="memdesc:af19f83080ee90c17b6db3b123ef500e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the sparse vector into a dense vector.  <a href="#af19f83080ee90c17b6db3b123ef500e2">More...</a><br /></td></tr>
 <tr class="separator:af19f83080ee90c17b6db3b123ef500e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d3eafa344757bacbb3f4af64941d15"><td class="memTemplParams" colspan="2">template&lt;typename INDEX_SRC , typename SCALAR_SRC &gt; </td></tr>
+<tr class="memitem:a07d3eafa344757bacbb3f4af64941d15"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classspvec.html#a07d3eafa344757bacbb3f4af64941d15">set</a> (const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)</td></tr>
+<tr class="memdesc:a07d3eafa344757bacbb3f4af64941d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the vector to the values in the input.  <a href="#a07d3eafa344757bacbb3f4af64941d15">More...</a><br /></td></tr>
+<tr class="separator:a07d3eafa344757bacbb3f4af64941d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84c2f415dcf6c3ce9c33d1345d7cee17"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a84c2f415dcf6c3ce9c33d1345d7cee17">set</a> (const <a class="el" href="classdvec.html">dvec</a>&lt; INDEX, SCALAR &gt; &amp;d)</td></tr>
+<tr class="separator:a84c2f415dcf6c3ce9c33d1345d7cee17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c74561aeea181c138a6671336fdc4a2"><td class="memItemLeft" align="right" valign="top"><a id="a8c74561aeea181c138a6671336fdc4a2"></a>
-INDEX&#160;</td><td class="memItemRight" valign="bottom"><b>get_nnz</b> () const</td></tr>
+INDEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a8c74561aeea181c138a6671336fdc4a2">get_nnz</a> () const</td></tr>
+<tr class="memdesc:a8c74561aeea181c138a6671336fdc4a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of non-zero elements. <br /></td></tr>
 <tr class="separator:a8c74561aeea181c138a6671336fdc4a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add6ce4c9ae51d7fff23379b0eb69d0c2"><td class="memItemLeft" align="right" valign="top"><a id="add6ce4c9ae51d7fff23379b0eb69d0c2"></a>
-INDEX&#160;</td><td class="memItemRight" valign="bottom"><b>get_len</b> () const</td></tr>
+INDEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#add6ce4c9ae51d7fff23379b0eb69d0c2">get_len</a> () const</td></tr>
+<tr class="memdesc:add6ce4c9ae51d7fff23379b0eb69d0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Length of the index and data arrays. <br /></td></tr>
 <tr class="separator:add6ce4c9ae51d7fff23379b0eb69d0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aedb4efe97f069b3f51683b961f72607e"><td class="memItemLeft" align="right" valign="top"><a id="aedb4efe97f069b3f51683b961f72607e"></a>
-INDEX *&#160;</td><td class="memItemRight" valign="bottom"><b>index_ptr</b> ()</td></tr>
+INDEX *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#aedb4efe97f069b3f51683b961f72607e">index_ptr</a> ()</td></tr>
+<tr class="memdesc:aedb4efe97f069b3f51683b961f72607e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the index array <code>I</code>. <br /></td></tr>
 <tr class="separator:aedb4efe97f069b3f51683b961f72607e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d327f4ab4e659f09fff874d88842961"><td class="memItemLeft" align="right" valign="top"><a id="a8d327f4ab4e659f09fff874d88842961"></a>
-INDEX *&#160;</td><td class="memItemRight" valign="bottom"><b>index_ptr</b> () const</td></tr>
+<tr class="memitem:a8d327f4ab4e659f09fff874d88842961"><td class="memItemLeft" align="right" valign="top">INDEX *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a8d327f4ab4e659f09fff874d88842961">index_ptr</a> () const</td></tr>
 <tr class="separator:a8d327f4ab4e659f09fff874d88842961"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af45e9a2729a83097b3b22476f951d123"><td class="memItemLeft" align="right" valign="top"><a id="af45e9a2729a83097b3b22476f951d123"></a>
-SCALAR *&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr</b> ()</td></tr>
+SCALAR *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#af45e9a2729a83097b3b22476f951d123">data_ptr</a> ()</td></tr>
+<tr class="memdesc:af45e9a2729a83097b3b22476f951d123"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return a pointer to the data array <code>X</code>. <br /></td></tr>
 <tr class="separator:af45e9a2729a83097b3b22476f951d123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f8a727e3c10b29dca2ed37bad8bdd40"><td class="memItemLeft" align="right" valign="top"><a id="a7f8a727e3c10b29dca2ed37bad8bdd40"></a>
-SCALAR *&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr</b> () const</td></tr>
+<tr class="memitem:a7f8a727e3c10b29dca2ed37bad8bdd40"><td class="memItemLeft" align="right" valign="top">SCALAR *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspvec.html#a7f8a727e3c10b29dca2ed37bad8bdd40">data_ptr</a> () const</td></tr>
 <tr class="separator:a7f8a727e3c10b29dca2ed37bad8bdd40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
@@ -167,9 +180,420 @@ INDEX *&#160;</td><td class="memItemRight" valign="bottom"><b>I</b></td></tr>
 SCALAR *&#160;</td><td class="memItemRight" valign="bottom"><b>X</b></td></tr>
 <tr class="separator:a4fa8a8f8a00ad8222a5eb7c4ce1fe3ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;typename INDEX, typename SCALAR&gt;<br />
+class spvec&lt; INDEX, SCALAR &gt;</h3>
+
+<p>Basic sparse vector class. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">INDEX</td><td>should be some kind of fundamental indexing type, like <code>int</code> or <code>uint16_t</code>. </td></tr>
+    <tr><td class="paramname">SCALAR</td><td>should be a fundamental numeric type like <code>int</code> or <code>float</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac5d0a00b0c3571d89f3073bd7cdc2435"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5d0a00b0c3571d89f3073bd7cdc2435">&#9670;&nbsp;</a></span>spvec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::<a class="el" href="classspvec.html">spvec</a> </td>
+          <td>(</td>
+          <td class="paramtype">INDEX&#160;</td>
+          <td class="paramname"><em>len_</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">len_</td><td>The amount of storage to initially allocate (elements, not bytes).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Memory Allocations</dt><dd>Two internal arrays are allocated.</dd></dl>
+<dl class="section user"><dt>Exceptions</dt><dd>If a memory allocation fails, a <code>bad_alloc</code> exception will be thrown. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a318a85fc009f073711b443fb271f3b12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a318a85fc009f073711b443fb271f3b12">&#9670;&nbsp;</a></span>add() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">INDEX <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::add </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Add the input to the sparse vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x</td><td>Input to adder.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns the needed size of realloc. </dd></dl>
+
+</div>
+</div>
+<a id="a52446393674e6b501f886b0c6a66dcd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52446393674e6b501f886b0c6a66dcd6">&#9670;&nbsp;</a></span>add() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">INDEX <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::add </td>
+          <td>(</td>
+          <td class="paramtype">const SCALAR *&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const INDEX&#160;</td>
+          <td class="paramname"><em>xlen</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+
+</div>
+</div>
+<a id="a7f8a727e3c10b29dca2ed37bad8bdd40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f8a727e3c10b29dca2ed37bad8bdd40">&#9670;&nbsp;</a></span>data_ptr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX, typename SCALAR&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SCALAR* <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::data_ptr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+
+</div>
+</div>
+<a id="af19f83080ee90c17b6db3b123ef500e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19f83080ee90c17b6db3b123ef500e2">&#9670;&nbsp;</a></span>densify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::densify </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classdvec.html">dvec</a>&lt; INDEX, SCALAR &gt; &amp;&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convert the sparse vector into a dense vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">d</td><td>The output dense array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Memory Allocations</dt><dd>The output (dense vector) will be resized as needed.</dd></dl>
+<dl class="section user"><dt>Exceptions</dt><dd>If a memory allocation fails, a <code>bad_alloc</code> exception will be thrown. </dd></dl>
+
+</div>
+</div>
+<a id="a16e031892b446988315239496f806da4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16e031892b446988315239496f806da4">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">SCALAR <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::get </td>
+          <td>(</td>
+          <td class="paramtype">const INDEX&#160;</td>
+          <td class="paramname"><em>ind</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve the specified column as a sparse vector. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ind</td><td>The index. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The scalar value at position <code>ind</code>. Will return 0 if no non-zero value is stored at that index. </dd></dl>
+
+</div>
+</div>
+<a id="a8d327f4ab4e659f09fff874d88842961"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d327f4ab4e659f09fff874d88842961">&#9670;&nbsp;</a></span>index_ptr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX, typename SCALAR&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">INDEX* <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::index_ptr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+
+</div>
+</div>
+<a id="a42c71a96ba5c461edd4999793727c2ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42c71a96ba5c461edd4999793727c2ac">&#9670;&nbsp;</a></span>insert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::insert </td>
+          <td>(</td>
+          <td class="paramtype">const INDEX&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SCALAR&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Insert a value at the specified index. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">i</td><td>The index. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>The input value.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Memory Allocations</dt><dd>The internal arrays will resize themselves as needed.</dd></dl>
+<dl class="section user"><dt>Exceptions</dt><dd>If a memory allocation fails, a <code>bad_alloc</code> exception will be thrown. </dd></dl>
+
+</div>
+</div>
+<a id="a902943b553830f87e4cbd39fc78c5688"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a902943b553830f87e4cbd39fc78c5688">&#9670;&nbsp;</a></span>insertable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">INDEX <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::insertable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check if the vector has enough storage capacity to hold an additional scalar. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of additional elements the internal vector storage needs to store an additional scalar: 0 or 1. </dd></dl>
+
+</div>
+</div>
+<a id="a6d73deb87ca46b8d79fdcfa6fef38fa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d73deb87ca46b8d79fdcfa6fef38fa6">&#9670;&nbsp;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::print </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>actual</em> = <code>false</code></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Print the matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">actual</td><td>Should the actual/literal storage (some arrays) be printed? Otherwise, the conceptual dense matrix will be printed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a68b3d4e3cde4adac314c770772b17cd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68b3d4e3cde4adac314c770772b17cd2">&#9670;&nbsp;</a></span>resize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::resize </td>
+          <td>(</td>
+          <td class="paramtype">INDEX&#160;</td>
+          <td class="paramname"><em>len_</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Resize the internal storage. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">len_</td><td>The new amount of internal storage to use (elements, not bytes).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Memory Allocations</dt><dd>The internal arrays will resize themselves as needed.</dd></dl>
+<dl class="section user"><dt>Exceptions</dt><dd>If a memory allocation fails, a <code>bad_alloc</code> exception will be thrown. </dd></dl>
+
+</div>
+</div>
+<a id="a07d3eafa344757bacbb3f4af64941d15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07d3eafa344757bacbb3f4af64941d15">&#9670;&nbsp;</a></span>set() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+<div class="memtemplate">
+template&lt;typename INDEX_SRC , typename SCALAR_SRC &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype">const INDEX&#160;</td>
+          <td class="paramname"><em>nnz_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const INDEX_SRC *&#160;</td>
+          <td class="paramname"><em>I_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const SCALAR_SRC *&#160;</td>
+          <td class="paramname"><em>X_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the vector to the values in the input. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nnz_</td><td>Length of the input index/scalar arrays. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">I_</td><td>Index array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">X_</td><td>Scalar array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Memory Allocations</dt><dd>The internal arrays will resize themselves as needed.</dd></dl>
+<dl class="section user"><dt>Exceptions</dt><dd>If a memory allocation fails, a <code>bad_alloc</code> exception will be thrown. </dd></dl>
+
+</div>
+</div>
+<a id="a84c2f415dcf6c3ce9c33d1345d7cee17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84c2f415dcf6c3ce9c33d1345d7cee17">&#9670;&nbsp;</a></span>set() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename INDEX , typename SCALAR &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classdvec.html">dvec</a>&lt; INDEX, SCALAR &gt; &amp;&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/iao/sw/dev/spar/src/converters/<a class="el" href="eigen_8hpp_source.html">eigen.hpp</a></li>
-<li>/home/iao/sw/dev/spar/src/core/<a class="el" href="spvec_8hpp_source.html">spvec.hpp</a></li>
+<li>/home/va8/dev/spar/src/converters/<a class="el" href="eigen_8hpp_source.html">eigen.hpp</a></li>
+<li>/home/va8/dev/spar/src/core/<a class="el" href="spvec_8hpp_source.html">spvec.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

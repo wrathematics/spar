@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['data_5fptr',['data_ptr',['../classspmat.html#afcfe36bd9b97cf13b8dc341b94190ac3',1,'spmat::data_ptr()'],['../classspmat.html#a3b0b4b418b137e67e0b8631e94f914d3',1,'spmat::data_ptr() const']]],
-  ['dense',['dense',['../namespacespar_1_1reduce.html#a309615c90bc4233e1d493d3702e8e7f3',1,'spar::reduce']]],
-  ['density',['density',['../classspmat.html#a383c471af6f833467a9d36f62330c690',1,'spmat']]],
-  ['dvec',['dvec',['../classdvec.html',1,'']]]
+  ['col_5fptr',['col_ptr',['../classspmat.html#a783b2254abe88b394cb46b3af50fa86b',1,'spmat::col_ptr()'],['../classspmat.html#a55e0e437101c5a7e23b05dffedf6e6c7',1,'spmat::col_ptr() const']]]
 ];

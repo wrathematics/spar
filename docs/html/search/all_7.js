@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['spar',['spar',['../index.html',1,'']]],
-  ['reduce',['reduce',['../namespacespar_1_1reduce.html',1,'spar']]],
-  ['sparsity',['sparsity',['../classspmat.html#a2c3229d8fe824d3d25f491baf8522221',1,'spmat']]],
-  ['spmat',['spmat',['../classspmat.html',1,'spmat&lt; INDEX, SCALAR &gt;'],['../classspmat.html#a1a0d14768ddb8a07f111d711b8410e42',1,'spmat::spmat()']]],
-  ['spvec',['spvec',['../classspvec.html',1,'']]]
+  ['operator_5b_5d',['operator[]',['../classdvec.html#ad5fb77bc3cdc0fea4aa92e78680b1174',1,'dvec::operator[](INDEX i) const'],['../classdvec.html#a6c8200852a7890215ad3f74910c3fceb',1,'dvec::operator[](INDEX i)']]]
 ];

@@ -14,7 +14,7 @@ var classspmat =
     [ "index_ptr", "classspmat.html#ab55eab1e51f9a73b66c718ae20eb3ad8", null ],
     [ "info", "classspmat.html#ab448604d27b3aa60ccc066e30a607916", null ],
     [ "insert", "classspmat.html#aa1929daff981ab6d6fa59626698dced4", null ],
-    [ "insertable", "classspmat.html#affe1915df5871fa50fb6f075d2c1da2d", null ],
+    [ "insertable", "classspmat.html#a77b41e04cefbbac88d6ea5a9f2beeeb0", null ],
     [ "ncols", "classspmat.html#af5dcebea7b3d907ef1739720956cb01d", null ],
     [ "nrows", "classspmat.html#a9ea0365fbd1be3667dcc72151c0f51c3", null ],
     [ "print", "classspmat.html#aa9aae930350522d2de69a6d277c54a48", null ],

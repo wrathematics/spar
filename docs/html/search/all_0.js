@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['col_5fptr',['col_ptr',['../classspmat.html#a783b2254abe88b394cb46b3af50fa86b',1,'spmat::col_ptr()'],['../classspmat.html#a55e0e437101c5a7e23b05dffedf6e6c7',1,'spmat::col_ptr() const']]]
+  ['add',['add',['../classspvec.html#a318a85fc009f073711b443fb271f3b12',1,'spvec::add(const spvec &amp;x)'],['../classspvec.html#a52446393674e6b501f886b0c6a66dcd6',1,'spvec::add(const SCALAR *x, const INDEX xlen)']]]
 ];

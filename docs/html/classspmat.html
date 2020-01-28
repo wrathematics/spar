@@ -108,15 +108,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1a0d14768ddb8a07f111d711b8410e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a1a0d14768ddb8a07f111d711b8410e42">More...</a><br /></td></tr>
 <tr class="separator:a1a0d14768ddb8a07f111d711b8410e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa549cee6035b128079e080e1121ea8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspmat.html#afa549cee6035b128079e080e1121ea8d">resize</a> (INDEX len_)</td></tr>
-<tr class="memdesc:afa549cee6035b128079e080e1121ea8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#afa549cee6035b128079e080e1121ea8d">More...</a><br /></td></tr>
+<tr class="memdesc:afa549cee6035b128079e080e1121ea8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize the internal storage.  <a href="#afa549cee6035b128079e080e1121ea8d">More...</a><br /></td></tr>
 <tr class="separator:afa549cee6035b128079e080e1121ea8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab08b5cf4e68526e57ccbbafc1d31d72a"><td class="memItemLeft" align="right" valign="top"><a id="ab08b5cf4e68526e57ccbbafc1d31d72a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspmat.html#ab08b5cf4e68526e57ccbbafc1d31d72a">zero</a> ()</td></tr>
 <tr class="memdesc:ab08b5cf4e68526e57ccbbafc1d31d72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Zero all data in the sparse matrix. Performs no allocations or resizing. <br /></td></tr>
 <tr class="separator:ab08b5cf4e68526e57ccbbafc1d31d72a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affe1915df5871fa50fb6f075d2c1da2d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspmat.html#affe1915df5871fa50fb6f075d2c1da2d">insertable</a> (const <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt; &amp;x)</td></tr>
-<tr class="memdesc:affe1915df5871fa50fb6f075d2c1da2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the matrix has enough storage capacity to hold the given sparse vector.  <a href="#affe1915df5871fa50fb6f075d2c1da2d">More...</a><br /></td></tr>
-<tr class="separator:affe1915df5871fa50fb6f075d2c1da2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77b41e04cefbbac88d6ea5a9f2beeeb0"><td class="memItemLeft" align="right" valign="top">INDEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspmat.html#a77b41e04cefbbac88d6ea5a9f2beeeb0">insertable</a> (const <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt; &amp;x)</td></tr>
+<tr class="memdesc:a77b41e04cefbbac88d6ea5a9f2beeeb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if the matrix has enough storage capacity to hold the given sparse vector.  <a href="#a77b41e04cefbbac88d6ea5a9f2beeeb0">More...</a><br /></td></tr>
+<tr class="separator:a77b41e04cefbbac88d6ea5a9f2beeeb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1929daff981ab6d6fa59626698dced4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classspmat.html#aa1929daff981ab6d6fa59626698dced4">insert</a> (const INDEX col, const <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt; &amp;x)</td></tr>
 <tr class="memdesc:aa1929daff981ab6d6fa59626698dced4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert a sparse vector into the specified column.  <a href="#aa1929daff981ab6d6fa59626698dced4">More...</a><br /></td></tr>
 <tr class="separator:aa1929daff981ab6d6fa59626698dced4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -447,8 +447,8 @@ template&lt;typename INDEX , typename SCALAR &gt; </div>
 
 </div>
 </div>
-<a id="affe1915df5871fa50fb6f075d2c1da2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affe1915df5871fa50fb6f075d2c1da2d">&#9670;&nbsp;</a></span>insertable()</h2>
+<a id="a77b41e04cefbbac88d6ea5a9f2beeeb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77b41e04cefbbac88d6ea5a9f2beeeb0">&#9670;&nbsp;</a></span>insertable()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -456,7 +456,7 @@ template&lt;typename INDEX , typename SCALAR &gt; </div>
 template&lt;typename INDEX , typename SCALAR &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="classspmat.html">spmat</a>&lt; INDEX, SCALAR &gt;::insertable </td>
+          <td class="memname">INDEX <a class="el" href="classspmat.html">spmat</a>&lt; INDEX, SCALAR &gt;::insertable </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classspvec.html">spvec</a>&lt; INDEX, SCALAR &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em></td><td>)</td>
@@ -524,7 +524,7 @@ template&lt;typename INDEX , typename SCALAR &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor. </p>
+<p>Resize the internal storage. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">len_</td><td>The new amount of internal storage to use (elements, not bytes).</td></tr>
@@ -559,8 +559,8 @@ template&lt;typename INDEX , typename SCALAR &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/iao/sw/dev/spar/src/converters/<a class="el" href="eigen_8hpp_source.html">eigen.hpp</a></li>
-<li>/home/iao/sw/dev/spar/src/core/<a class="el" href="spmat_8hpp_source.html">spmat.hpp</a></li>
+<li>/home/va8/dev/spar/src/converters/<a class="el" href="eigen_8hpp_source.html">eigen.hpp</a></li>
+<li>/home/va8/dev/spar/src/core/<a class="el" href="spmat_8hpp_source.html">spmat.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

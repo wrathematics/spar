@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['gather',['gather',['../namespacespar_1_1reduce.html#ac93e2eff06d9b5f74509ca775eb18826',1,'spar::reduce']]],
-  ['get_5fcol',['get_col',['../classspmat.html#a125f906351f38fd862878fc2a375031c',1,'spmat']]],
-  ['get_5flen',['get_len',['../classspmat.html#ac7e168b28dca3d59b74427053cd91977',1,'spmat']]],
-  ['get_5fnnz',['get_nnz',['../classspmat.html#a31753023508814bbe1f9e119eb46d0a6',1,'spmat']]]
+  ['data_5fptr',['data_ptr',['../classdvec.html#a11437a8bf52a6699fd208609f9a6cfd5',1,'dvec::data_ptr()'],['../classdvec.html#a74bba6d0631656e3f4d37372521071c1',1,'dvec::data_ptr() const'],['../classspmat.html#afcfe36bd9b97cf13b8dc341b94190ac3',1,'spmat::data_ptr()'],['../classspmat.html#a3b0b4b418b137e67e0b8631e94f914d3',1,'spmat::data_ptr() const'],['../classspvec.html#af45e9a2729a83097b3b22476f951d123',1,'spvec::data_ptr()'],['../classspvec.html#a7f8a727e3c10b29dca2ed37bad8bdd40',1,'spvec::data_ptr() const']]],
+  ['dense',['dense',['../namespacespar_1_1reduce.html#a309615c90bc4233e1d493d3702e8e7f3',1,'spar::reduce']]],
+  ['densify',['densify',['../classspvec.html#af19f83080ee90c17b6db3b123ef500e2',1,'spvec']]],
+  ['density',['density',['../classspmat.html#a383c471af6f833467a9d36f62330c690',1,'spmat']]],
+  ['dvec',['dvec',['../classdvec.html#a7c8d698561468056556203cccb6f11e8',1,'dvec']]]
 ];

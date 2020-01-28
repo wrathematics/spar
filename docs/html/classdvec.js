@@ -7,6 +7,7 @@ var classdvec =
     [ "data_ptr", "classdvec.html#a74bba6d0631656e3f4d37372521071c1", null ],
     [ "get_len", "classdvec.html#adf2e106c600c162802339f623a7f579a", null ],
     [ "get_nnz", "classdvec.html#ae5489cdfd262e14e4fcdaaeb32bf46a9", null ],
+    [ "info", "classdvec.html#aa095940206e95504abc3242a2e32d830", null ],
     [ "insert", "classdvec.html#aad91c893e0f01cd74a2f48f3230d8db5", null ],
     [ "operator[]", "classdvec.html#ad5fb77bc3cdc0fea4aa92e78680b1174", null ],
     [ "operator[]", "classdvec.html#a6c8200852a7890215ad3f74910c3fceb", null ],

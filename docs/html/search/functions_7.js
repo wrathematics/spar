@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['sparsity',['sparsity',['../classspmat.html#a2c3229d8fe824d3d25f491baf8522221',1,'spmat']]],
-  ['spmat',['spmat',['../classspmat.html#a1a0d14768ddb8a07f111d711b8410e42',1,'spmat']]]
+  ['operator_5b_5d',['operator[]',['../classdvec.html#ad5fb77bc3cdc0fea4aa92e78680b1174',1,'dvec::operator[](INDEX i) const'],['../classdvec.html#a6c8200852a7890215ad3f74910c3fceb',1,'dvec::operator[](INDEX i)']]]
 ];
