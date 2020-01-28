@@ -128,7 +128,7 @@ spmat<INDEX, SCALAR>::~spmat()
 // ----------------------------------------------------------------------------
 
 /**
-  @brief Constructor.
+  @brief Resize the internal storage.
   
   @param[in] len_ The new amount of internal storage to use (elements, not
   bytes).
