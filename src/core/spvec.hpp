@@ -40,6 +40,7 @@ class spvec
     SCALAR get(const INDEX ind) const;
     
     void print(bool actual=false) const;
+    void info() const;
     
     INDEX add(const spvec &x);
     INDEX add(const SCALAR *x, const INDEX xlen);
@@ -304,8 +305,6 @@ SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::print(bool actual) const
 {
-  printf("## Length %d sparse vector with nnz=%d\n", len, nnz);
-  
   if (actual)
   {
     printf("I: ");
@@ -336,6 +335,19 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
     
     std::cout << std::endl;
   }
+}
+
+
+
+/// Print some quick info about the sparse vector.
+template <typename INDEX, typename SCALAR>
+void spvec<INDEX, SCALAR>::info() const
+{
+  printf("# spvec");
+  printf(" %d", len);
+  printf(" with nnz=%d", nnz);
+  printf(" (index=%s scalar=%s)", typeid(INDEX).name(), typeid(SCALAR).name());
+  printf("\n");
 }
 
 
