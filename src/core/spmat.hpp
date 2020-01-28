@@ -32,7 +32,7 @@ class spmat
     
     void resize(INDEX len_);
     void zero();
-    int insertable(const spvec<INDEX, SCALAR> &x);
+    INDEX insertable(const spvec<INDEX, SCALAR> &x);
     void insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
     void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
@@ -179,12 +179,12 @@ void spmat<INDEX, SCALAR>::zero()
   capacity (0 if the vector fits).
  */
 template <typename INDEX, typename SCALAR>
-int spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
+INDEX spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
 {
   if (x.get_nnz() > len - nnz)
     return x.get_nnz() - (len - nnz);
   else
-    return 0;
+    return (INDEX) 0;
 }
 
 
