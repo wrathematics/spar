@@ -15,6 +15,13 @@
 template <typename INDEX, typename SCALAR>
 class dvec;
 
+/**
+  @brief Basic sparse vector class.
+  
+  @tparam INDEX should be some kind of fundamental indexing type, like `int`
+  or `uint16_t`.
+  @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+ */
 template <typename INDEX, typename SCALAR>
 class spvec
 {
@@ -38,11 +45,17 @@ class spvec
     
     void densify(dvec<INDEX, SCALAR> &d) const;
     
+    /// Number of non-zero elements.
     INDEX get_nnz() const {return nnz;};
+    /// Length of the index and data arrays.
     INDEX get_len() const {return len;};
+    /// Return a pointer to the index array `I`.
     INDEX* index_ptr() {return I;};
+    /// \overload
     INDEX* index_ptr() const {return I;};
+    /// Return a pointer to the data array `X`.
     SCALAR* data_ptr() {return X;};
+    /// \overload
     SCALAR* data_ptr() const {return X;};
   
   protected:
@@ -62,6 +75,9 @@ class spvec
 // constructor/destructor
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Default constructor.
+ */
 template <typename INDEX, typename SCALAR>
 spvec<INDEX, SCALAR>::spvec()
 {
@@ -74,6 +90,16 @@ spvec<INDEX, SCALAR>::spvec()
 
 
 
+/**
+  @brief Constructor.
+  
+  @param[in] len_ The amount of storage to initially allocate (elements, not
+  bytes).
+  
+  @allocs Two internal arrays are allocated.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 spvec<INDEX, SCALAR>::spvec(INDEX len_)
 {
@@ -100,6 +126,16 @@ spvec<INDEX, SCALAR>::~spvec()
 // object management
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Resize the internal storage.
+  
+  @param[in] len_ The new amount of internal storage to use (elements, not
+  bytes).
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::resize(INDEX len_)
 {
@@ -122,6 +158,7 @@ void spvec<INDEX, SCALAR>::resize(INDEX len_)
 
 
 
+/// Zero all data in the sparse matrix. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::zero()
 {
@@ -136,6 +173,16 @@ void spvec<INDEX, SCALAR>::zero()
 
 
 
+/**
+  @brief Insert a value at the specified index.
+  
+  @param[in] i The index.
+  @param[in] s The input value.
+  
+  @allocs The internal arrays will resize themselves as needed.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 INDEX spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
@@ -200,6 +247,13 @@ void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
 
 
 
+/**
+  @brief Retrieve the specified column as a sparse vector.
+  
+  @param[in] ind The index.
+  @return The scalar value at position `ind`. Will return 0 if no non-zero value
+  is stored at that index.
+ */
 template <typename INDEX, typename SCALAR>
 SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
 {
@@ -223,6 +277,12 @@ SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
 // printer
 // ----------------------------------------------------------------------------
 
+/**
+  @brief Print the matrix.
+  
+  @param[in] actual Should the actual/literal storage (some arrays) be printed?
+  Otherwise, the conceptual dense matrix will be printed.
+ */
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::print(bool actual) const
 {
