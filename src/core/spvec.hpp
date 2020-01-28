@@ -32,7 +32,8 @@ class spvec
     
     void resize(INDEX len_);
     void zero();
-    INDEX insert(const INDEX i, const SCALAR s);
+    INDEX insertable() const;
+    void insert(const INDEX i, const SCALAR s);
     template <typename INDEX_SRC, typename SCALAR_SRC>
     void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
     void set(const dvec<INDEX, SCALAR> &d);
@@ -174,6 +175,24 @@ void spvec<INDEX, SCALAR>::zero()
 
 
 /**
+  @brief Check if the vector has enough storage capacity to hold an additional
+  scalar.
+  
+  @return The number of additional elements the internal vector storage needs
+  to store an additional scalar: 0 or 1.
+ */
+template <typename INDEX, typename SCALAR>
+INDEX spvec<INDEX, SCALAR>::insertable() const
+{
+  if (nnz == len)
+    return (INDEX) 1;
+  else
+    return (INDEX) 0;
+}
+
+
+
+/**
   @brief Insert a value at the specified index.
   
   @param[in] i The index.
@@ -184,10 +203,10 @@ void spvec<INDEX, SCALAR>::zero()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-INDEX spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
+void spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
   if (nnz == len)
-    return 1;
+    resize(len + 1);
   
   INDEX insertion_ind;
   for (insertion_ind=0; insertion_ind<nnz; insertion_ind++)
@@ -197,7 +216,6 @@ INDEX spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
   }
   
   insert_from_ind(insertion_ind, i, s);
-  return 0;
 }
 
 
