@@ -25,21 +25,26 @@ class dvec
     
     void resize(INDEX len_);
     void zero();
-    SCALAR sum() const;
     void insert(const INDEX i, const SCALAR s);
     void update_nnz();
+    
+    void print() const;
+    
+    SCALAR sum() const;
+    const SCALAR operator[](INDEX i) const; // getter
+    SCALAR& operator[](INDEX i); // setter
+    
     template <typename INDEX_SRC, typename SCALAR_SRC>
     void set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
     void set(const spvec<INDEX, SCALAR> &x);
     
-    void print() const;
-    
-    const SCALAR operator[](INDEX i) const; // getter
-    SCALAR& operator[](INDEX i); // setter
-    
+    /// Number of non-zero elements.
     INDEX get_nnz() const {return nnz;};
+    /// Length of the index and data arrays.
     INDEX get_len() const {return len;};
+    /// Return a pointer to the data array `X`.
     SCALAR* data_ptr() {return X;};
+    /// \overload
     SCALAR* data_ptr() const {return X;};
   
   protected:
@@ -123,19 +128,6 @@ void dvec<INDEX, SCALAR>::zero()
 
 
 template <typename INDEX, typename SCALAR>
-SCALAR dvec<INDEX, SCALAR>::sum() const
-{
-  SCALAR s = 0;
-  #pragma omp simd reduction(+:s)
-  for (INDEX i=0; i<len; i++)
-    s += X[i];
-  
-  return s;
-}
-
-
-
-template <typename INDEX, typename SCALAR>
 void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
   if (X[i] == 0)
@@ -161,30 +153,6 @@ void dvec<INDEX, SCALAR>::update_nnz()
 
 
 
-template <typename INDEX, typename SCALAR>
-template <typename INDEX_SRC, typename SCALAR_SRC>
-void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
-{
-  zero();
-  
-  INDEX_SRC top = I_[nnz_-1];
-  if (top > len)
-    resize(top + 1);
-  
-  for (INDEX_SRC i=0; i<nnz_; i++)
-    X[I_[i]] = X_[i];
-  
-  nnz = nnz_;
-}
-
-template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
-{
-  set(x.get_nnz(), x.index_ptr(), x.data_ptr());
-}
-
-
-
 // ----------------------------------------------------------------------------
 // printer
 // ----------------------------------------------------------------------------
@@ -204,15 +172,60 @@ void dvec<INDEX, SCALAR>::print() const
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
+SCALAR dvec<INDEX, SCALAR>::sum() const
+{
+  SCALAR s = 0;
+  #pragma omp simd reduction(+:s)
+  for (INDEX i=0; i<len; i++)
+    s += X[i];
+  
+  return s;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
 const SCALAR dvec<INDEX, SCALAR>::operator[](INDEX i) const
 {
   return X[i];
 }
 
+
+
 template <typename INDEX, typename SCALAR>
 SCALAR& dvec<INDEX, SCALAR>::operator[](INDEX i)
 {
   return X[i];
+}
+
+
+
+// ----------------------------------------------------------------------------
+// converters
+// ----------------------------------------------------------------------------
+
+template <typename INDEX, typename SCALAR>
+template <typename INDEX_SRC, typename SCALAR_SRC>
+void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
+{
+  zero();
+  
+  INDEX_SRC top = I_[nnz_-1];
+  if (top > len)
+    resize(top + 1);
+  
+  for (INDEX_SRC i=0; i<nnz_; i++)
+    X[I_[i]] = X_[i];
+  
+  nnz = nnz_;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
+{
+  set(x.get_nnz(), x.index_ptr(), x.data_ptr());
 }
 
 
