@@ -26,11 +26,35 @@ namespace spar
 {
   namespace conv
   {
+    /**
+      @brief Shorthand for supported Eigen sparse matrix type.
+      
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <typename INDEX, typename SCALAR>
     using eigen_t = Eigen::SparseMatrix<SCALAR, Eigen::StorageOptions::ColMajor, INDEX>;
     
     
     
+    /**
+      @brief Convert an `spmat` object into an `Eigen::SparseMatrix` object.
+      
+      @param[in] s The input `spmat` object.
+      
+      @return The return sparse matrix.
+      
+      @allocs The return object is roughly of size:
+      `sizeof(INDEX)*(2 + nnz + (n+1)) + sizeof(SCALAR)*nnz`.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown.
+      
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <typename INDEX, typename SCALAR>
     static inline eigen_t<INDEX, SCALAR> spmat_to_eigen(const spmat<INDEX, SCALAR> &x)
     {
@@ -51,6 +75,23 @@ namespace spar
     
     
     
+    /**
+      @brief Convert an `Eigen::SparseMatrix` object into an `spmat` object.
+      
+      @param[in] s The input `Eigen::SparseMatrix` object.
+      
+      @return The return sparse matrix.
+      
+      @allocs The return object is roughly of size:
+      `sizeof(INDEX)*(2 + nnz + (n+1)) + sizeof(SCALAR)*nnz`.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown.
+      
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> eigen_to_spmat(const eigen_t<INDEX, SCALAR> &s)
     {
@@ -70,6 +111,25 @@ namespace spar
     
     
     
+    /**
+      @brief Convert a column of an `Eigen::SparseMatrix` object into a dense
+      `dvec` object.
+      
+      @param[in] col The desired column.
+      @param[in] s The input `Eigen::SparseMatrix` object.
+      
+      @return The return dense vector.
+      
+      @allocs The return object is allocated to as many elements as the number
+      of rows in the sparse matrix.
+      
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown.
+      
+      @tparam INDEX should be some kind of fundamental indexing type, like `int`
+      or `uint16_t`.
+      @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+     */
     template <typename INDEX, typename SCALAR>
     static inline dvec<INDEX, SCALAR> eigen_to_dvec(const INDEX col, const eigen_t<INDEX, SCALAR> &s)
     {
