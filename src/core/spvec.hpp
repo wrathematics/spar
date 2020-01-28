@@ -157,7 +157,7 @@ void spvec<INDEX, SCALAR>::resize(INDEX len_)
 
 
 
-/// Zero all data in the sparse matrix. Performs no allocations or resizing.
+/// Zero all data in the sparse vector. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
 void spvec<INDEX, SCALAR>::zero()
 {
