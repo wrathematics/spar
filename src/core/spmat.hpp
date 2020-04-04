@@ -34,6 +34,7 @@ class spmat
     void zero();
     INDEX insertable(const spvec<INDEX, SCALAR> &x);
     void insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
+    void update_nnz();
     void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
     
     void print(bool actual=false);
@@ -207,6 +208,25 @@ void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x
     resize((len + needed_space) * spar::internal::defs::MEM_FUDGE_ELT_FAC);
   
   insert_spvec(col, x);
+}
+
+
+
+/**
+  @brief Updates the internal "number non-zero" count. Useful if operating
+  directly on the internal arrays.
+ */
+template <typename INDEX, typename SCALAR>
+void spmat<INDEX, SCALAR>::update_nnz()
+{
+  nnz = 0;
+  for (INDEX i=0; i<len; i++)
+  {
+    if (X[i])
+      nnz++;
+    else
+      break;
+  }
 }
 
 

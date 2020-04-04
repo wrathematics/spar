@@ -34,6 +34,7 @@ class spvec
     void zero();
     INDEX insertable() const;
     void insert(const INDEX i, const SCALAR s);
+    void update_nnz();
     SCALAR get(const INDEX ind) const;
     
     void print(bool actual=false) const;
@@ -214,6 +215,25 @@ void spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
   }
   
   insert_from_ind(insertion_ind, i, s);
+}
+
+
+
+/**
+  @brief Updates the internal "number non-zero" count. Useful if operating
+  directly on the internal arrays.
+ */
+template <typename INDEX, typename SCALAR>
+void spvec<INDEX, SCALAR>::update_nnz()
+{
+  nnz = 0;
+  for (INDEX i=0; i<len; i++)
+  {
+    if (X[i])
+      nnz++;
+    else
+      break;
+  }
 }
 
 
