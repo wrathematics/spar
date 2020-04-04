@@ -48,10 +48,12 @@ namespace spar
       
       @allocs The return matrix is allocated/resized as necessary.
       
-      @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+      @except If a memory allocation fails, a `bad_alloc` exception will be
+      thrown.
      */
     template <typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> bandish(const uint32_t seed, const INDEX nrows, const INDEX ncols)
+    static inline spmat<INDEX, SCALAR> bandish(const uint32_t seed,
+      const INDEX nrows, const INDEX ncols)
     {
       const INDEX slen = (INDEX) nrows/2;
       spvec<INDEX, SCALAR> s(slen);
@@ -82,7 +84,8 @@ namespace spar
     
     /// \overload
     template <typename INDEX, typename SCALAR>
-    static inline spmat<INDEX, SCALAR> bandish(const INDEX nrows, const INDEX ncols)
+    static inline spmat<INDEX, SCALAR> bandish(const INDEX nrows,
+      const INDEX ncols)
     {
       const uint32_t seed = spar::internals::rand::get_seed();
       return bandish<INDEX, SCALAR>(seed, nrows, ncols);
