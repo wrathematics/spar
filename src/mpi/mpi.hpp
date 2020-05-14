@@ -18,25 +18,29 @@ namespace spar
   {
     static inline void init()
     {
-      MPI_Init(NULL, NULL);
+      int ret = MPI_Init(NULL, NULL);
+      err::check_ret(ret);
     }
     
     static inline void finalize()
     {
-      MPI_Finalize();
+      int ret = MPI_Finalize();
+      err::check_ret(ret);
     }
     
     static inline int get_rank(MPI_Comm comm=MPI_COMM_WORLD)
     {
       int r;
-      MPI_Comm_rank(comm, &r);
+      int ret = MPI_Comm_rank(comm, &r);
+      err::check_ret(ret);
       return r;
     }
     
     static inline int get_size(MPI_Comm comm=MPI_COMM_WORLD)
     {
       int s;
-      MPI_Comm_size(comm, &s);
+      int ret = MPI_Comm_size(comm, &s);
+      err::check_ret(ret);
       return s;
     }
     
