@@ -269,7 +269,7 @@ void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) con
 template <typename INDEX, typename SCALAR>
 float spmat<INDEX, SCALAR>::sparsity() const
 {
-  return (float)nnz/m/n;
+  return 1.f - (float)nnz/m/n;
 }
 
 
