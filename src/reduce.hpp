@@ -72,7 +72,7 @@ namespace spar
       
       spmat<INDEX, SCALAR> s(m, n, 0);
       if (receiving)
-        s.resize(n*len);
+        s.resize(len);
       
       
       // allreduce column-by-column
@@ -170,7 +170,7 @@ namespace spar
       
       if (receiving)
       {
-        s.resize(n*len);
+        s.resize(len);
         
         indices.resize(len);
         values.resize(len);
