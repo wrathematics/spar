@@ -15,6 +15,20 @@
 
 namespace spar
 {
+  namespace internal
+  {
+    template <class SPMAT, typename INDEX, typename SCALAR>
+    static inline INDEX get_initial_len(const SPMAT &x)
+    {
+      INDEX len = std::max(
+        (INDEX) 32,
+        (INDEX) (spar::internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::internal::defs::MEM_FUDGE_ELT_FAC)
+      );
+      
+      return len;
+    }
+  }
+  
   /// @brief Reducers
   namespace reduce
   {
@@ -66,7 +80,7 @@ namespace spar
       internal::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::internal::defs::MEM_FUDGE_ELT_FAC;
+      const INDEX len = spar::internal::get_initial_len<SPMAT, INDEX, SCALAR>(x);
       spvec<INDEX, SCALAR> a(len);
       dvec<INDEX, SCALAR> d(m);
       
@@ -152,10 +166,9 @@ namespace spar
       internal::get::dim<INDEX, SCALAR>(x, &m, &n);
       
       // setup
-      const INDEX len = internal::get::max_col_nnz<INDEX, SCALAR>(x) * spar::internal::defs::MEM_FUDGE_ELT_FAC;
+      const INDEX len = spar::internal::get_initial_len<SPMAT, INDEX, SCALAR>(x);
       spvec<INDEX, SCALAR> a(len);
       spmat<INDEX, SCALAR> s(m, n, 0);
-      
       
       int size = mpi::get_size(comm);
       dvec<int, int> counts(size);
