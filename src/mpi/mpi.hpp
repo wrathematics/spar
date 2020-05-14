@@ -46,6 +46,14 @@ namespace spar
     
     
     
+    static inline void barrier(MPI_Comm comm=MPI_COMM_WORLD)
+    {
+      int ret = MPI_Barrier(comm);
+      err::check_ret(ret);
+    }
+    
+    
+    
     template <typename T>
     void reduce(int root, void *sendbuf, T *recvbuf, int count, MPI_Op op,
       MPI_Comm comm=MPI_COMM_WORLD)
