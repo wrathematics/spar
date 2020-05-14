@@ -61,7 +61,6 @@ namespace spar
       }
     }
     
-    
     /**
       @brief Generate a sparse matrix whose entries are randomly
       TODO
@@ -136,16 +135,6 @@ namespace spar
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     namespace internals
     {
       template <typename INDEX>
@@ -155,8 +144,6 @@ namespace spar
         return std::max(1.f - 2.f*a - ((float)2/n), 0.f);
       }
     }
-    
-    
     
     /**
       @brief Generate a banded-like matrix. Non-zero values are generated at
