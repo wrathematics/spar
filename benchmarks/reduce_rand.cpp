@@ -16,30 +16,34 @@ using MAT = spmat<INDEX, SCALAR>;
 
 typedef struct opts_t
 { 
-  bool d;
-  int r;
+  bool print_header;
+  bool approx;
+  bool allreduce;
   INDEX n;
-  float p;
+  float prop_dense;
 } opts_t;
 
 static inline int process_flags(int rank, int argc, char **argv, opts_t *opts)
 {
   char c;
-  opts->d = false;
-  opts->r = 0;
+  opts->print_header = false;
+  opts->approx = false;
+  opts->allreduce = 0;
   opts->n = 5000;
-  opts->p = 0.001;
+  opts->prop_dense = 0.001;
   
-  while ((c = getopt(argc, argv, "dr:n:p:h")) != -1)
+  while ((c = getopt(argc, argv, "dar:n:p:h")) != -1)
   {
     if (c == 'd')
-      opts->d = true;
-    if (c == 'r')
-      opts->r = atoi(optarg);
+      opts->print_header = true;
+    else if (c == 'a')
+      opts->approx = true;
+    else if (c == 'r')
+      opts->allreduce = atoi(optarg);
     else if (c == 'n')
       opts->n = atoi(optarg);
     else if (c == 'p')
-      opts->p = atof(optarg);
+      opts->prop_dense = atof(optarg);
     else if (c == 'h')
     {
       if (rank == 0)
@@ -79,11 +83,11 @@ int main(int argc, char **argv)
   
   const uint32_t seed = 1234 + rank;
   
-  int root = opts.r;
+  int root = opts.allreduce ? spar::mpi::REDUCE_TO_ALL : 0;
   INDEX n = opts.n;
-  float prop_dense = opts.p;
+  float prop_dense = opts.prop_dense;
   
-  if (opts.d && rank == 0)
+  if (opts.print_header && rank == 0)
   {
     printf("seed,root,n,prop_dense,bytes_index,bytes_scalar,");
     printf("nnz_local,len_local,time_gen,");
@@ -94,7 +98,7 @@ int main(int argc, char **argv)
     printf("%d,%d,%d,%f,%d,%d,", seed, root, n, prop_dense, (int)sizeof(INDEX), (int)sizeof(SCALAR));
   
   t.start();
-  auto x = spar::gen::rand<INDEX, SCALAR>(seed, prop_dense, n, n, true);
+  auto x = spar::gen::rand<INDEX, SCALAR>(seed, prop_dense, n, n, !opts.approx);
   t.stop();
   spar::mpi::barrier();
   if (rank == 0)
