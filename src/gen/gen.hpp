@@ -45,7 +45,6 @@ namespace spar
         
         std::mt19937 mt(seed);
         
-        #pragma omp for simd
         for (INDEX i=len; i<n; i++)
         {
           std::uniform_int_distribution<INDEX> dist(0, i);
