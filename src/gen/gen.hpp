@@ -58,17 +58,108 @@ namespace spar
         
         return x;
       }
+      
+      
+      
+      template <typename INDEX, typename SCALAR>
+      static inline void rand_fill_exact(const uint32_t seed, const INDEX nnz,
+        spmat<INDEX, SCALAR> &x)
+      {
+        const INDEX nrows = x.nrows();
+        const INDEX ncols = x.ncols();
+        
+        INDEX *I = x.index_ptr();
+        INDEX *P = x.col_ptr();
+        SCALAR *X = x.data_ptr();
+        
+        const INDEX plen = ncols + 1;
+        
+        std::vector<INDEX> indices = internals::res_sampler(seed, nrows*ncols, nnz);
+        INDEX col = 0;
+        for (INDEX ind=0; ind<nnz; ind++)
+        {
+          INDEX i = indices[ind] % nrows;
+          INDEX j = (indices[ind] - i) / nrows;
+          
+          I[ind] = i;
+          X[ind] = 1;
+          
+          if (col == j)
+          {
+            P[col] = ind;
+            col++;
+          }
+          
+          while (col < j)
+          {
+            P[col] = ind;
+            col++;
+          }
+        }
+        
+        for (INDEX ind=col; ind<plen; ind++)
+          P[ind] += nnz;
+        
+        x.update_nnz();
+      }
+      
+      
+      
+      template <typename INDEX, typename SCALAR>
+      static inline void rand_fill_approx(const uint32_t seed,
+        const float prop_dense, const INDEX nnz, spmat<INDEX, SCALAR> &x)
+      {
+        const INDEX nrows = x.nrows();
+        const INDEX ncols = x.ncols();
+        
+        INDEX *I = x.index_ptr();
+        INDEX *P = x.col_ptr();
+        SCALAR *X = x.data_ptr();
+        
+        const INDEX plen = ncols + 1;
+        
+        std::mt19937 mt(seed);
+        std::bernoulli_distribution dist(prop_dense);
+        
+        INDEX ind = 0;
+        for (INDEX j=0; j<ncols; j++)
+        {
+          for (INDEX i=0; i<nrows; i++)
+          {
+            auto p = dist(mt);
+            if (p)
+            {
+              I[ind] = i;
+              X[ind] = 1;
+              ind++;
+            }
+            
+            if (ind >= nnz)
+              break;
+          }
+          
+          P[j] = ind;
+        }
+        
+        for (INDEX col=ind; col<plen; col++)
+          P[col] += nnz;
+        
+        x.update_nnz();
+      }
     }
     
     /**
-      @brief Generate a sparse matrix whose entries are randomly
-      TODO
+      @brief Generate a sparse matrix whose entries are randomly 
       
       @param[in] seed Random seed.
       @param[in] prop_dense Proportion of density. Should be a number between
       0 and 1. Other numbers will be truncated to 0 (those less than 0) or 1
       (those greater than 1).
       @param[in] nrows,ncols The dimensions of the return.
+      @param[in] exact Should the number of non-zero entries exactly match the
+      `prop_dense` parameter? If `true`, a reservoir sampelr will be used.
+      Otherwise each of the `nrows*ncols` entries will be treated as an
+      independent Bernoulli trial.
       
       @return A sparse matrix.
       
@@ -79,46 +170,18 @@ namespace spar
      */
     template <typename INDEX, typename SCALAR>
     static inline spmat<INDEX, SCALAR> rand(const uint32_t seed,
-      const float prop_dense, const INDEX nrows, const INDEX ncols)
+      const float prop_dense, const INDEX nrows, const INDEX ncols,
+      const bool exact=true)
     {
       const INDEX nnz = (INDEX) (std::min(std::max(prop_dense, 0.f), 1.f) * nrows*ncols);
       spmat<INDEX, SCALAR> x(nrows, ncols, nnz);
       if (nnz == 0)
         return x;
       
-      INDEX *I = x.index_ptr();
-      INDEX *P = x.col_ptr();
-      SCALAR *X = x.data_ptr();
-      
-      const INDEX plen = ncols + 1;
-      
-      std::vector<INDEX> indices = internals::res_sampler(seed, nrows*ncols, nnz);
-      INDEX col = 0;
-      for (INDEX ind=0; ind<nnz; ind++)
-      {
-        INDEX i = indices[ind] % nrows;
-        INDEX j = (indices[ind] - i) / nrows;
-        
-        I[ind] = i;
-        X[ind] = 1;
-        
-        if (col == j)
-        {
-          P[col] = ind;
-          col++;
-        }
-        
-        while (col < j)
-        {
-          P[col] = ind;
-          col++;
-        }
-      }
-      
-      for (INDEX ind=col; ind<plen; ind++)
-        P[ind] += nnz;
-      
-      x.update_nnz();
+      if (exact)
+        internals::rand_fill_exact(seed, nnz, x);
+      else
+        internals::rand_fill_approx(seed, prop_dense, nnz, x);
       
       return x;
     }
