@@ -116,8 +116,6 @@ namespace spar
         INDEX *P = x.col_ptr();
         SCALAR *X = x.data_ptr();
         
-        const INDEX plen = ncols + 1;
-        
         std::mt19937 mt(seed);
         std::bernoulli_distribution dist(prop_dense);
         
@@ -141,8 +139,7 @@ namespace spar
           P[j] = ind;
         }
         
-        for (INDEX col=ind; col<plen; col++)
-          P[col] += nnz;
+        P[ncols] = P[ncols-1];
         
         x.update_nnz();
       }
