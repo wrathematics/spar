@@ -1,4 +1,5 @@
 #include <string>
+#include <typeinfo>
 
 #include <gen/gen.hpp>
 #include <spar.hpp>
@@ -72,6 +73,7 @@ int main(int argc, char **argv)
   
   spar::mpi::init();
   int rank = spar::mpi::get_rank();
+  int size = spar::mpi::get_size();
   
   int check = process_flags(rank, argc, argv, &opts);
   if (check == EARLY_EXIT || check == BAD_FLAG)
@@ -89,13 +91,13 @@ int main(int argc, char **argv)
   
   if (opts.print_header && rank == 0)
   {
-    printf("seed,root,n,prop_dense,bytes_index,bytes_scalar,");
+    printf("size,seed,root,n,prop_dense,bytes_index,bytes_scalar,");
     printf("nnz_local,len_local,time_gen,");
     printf("nnz,len,time_reduce\n");
   }
   
   if (rank == 0)
-    printf("%d,%d,%d,%f,%d,%d,", seed, root, n, prop_dense, (int)sizeof(INDEX), (int)sizeof(SCALAR));
+    printf("%d,%d,%d,%d,%f,%d,%d,", size, seed, root, n, prop_dense, (int)sizeof(INDEX), (int)sizeof(SCALAR));
   
   t.start();
   auto x = spar::gen::rand<INDEX, SCALAR>(seed, prop_dense, n, n, !opts.approx);
