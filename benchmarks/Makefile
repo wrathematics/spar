@@ -1,11 +1,16 @@
 -include make.inc
 CPPFLAGS = -I../src
+#DEBUGFLAGS = -g
 
 
-all: clean reduce_rand
+all: reduce_rand reduce_bandish
 
 reduce_rand: $(OBJS)
-	$(CXX) -g $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) reduce_rand.cpp -o reduce_rand
+	$(CXX) $(DEBUGFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) reduce_rand.cpp -o reduce_rand
+
+reduce_bandish: $(OBJS)
+	$(CXX) $(DEBUGFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) reduce_bandish.cpp -o reduce_bandish
+
 
 clean:
-	rm -rf reduce_rand
+	rm -rf reduce_rand reduce_bandish
