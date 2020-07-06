@@ -2,7 +2,6 @@
 -include ../common.inc
 MPICXX = mpicxx
 OMPI_CXX = $(CXX)
-CPPFLAGS = -I../../src -I../
 
 
 all: mpi
