@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['resize',['resize',['../classdvec.html#a15909e60fc825d1212b85d781eab51c9',1,'dvec::resize()'],['../classspmat.html#afa549cee6035b128079e080e1121ea8d',1,'spmat::resize()'],['../classspvec.html#a68b3d4e3cde4adac314c770772b17cd2',1,'spvec::resize()']]]
+  ['operator_3d_28',['operator=',['../classspar_1_1spmat.html#a1183799eeed33eb12ee67a55635c3cdb',1,'spar::spmat']]],
+  ['operator_5b_5d_29',['operator[]',['../classspar_1_1dvec.html#a312040d98f14c30d34d219695dd1d472',1,'spar::dvec::operator[](INDEX i) const'],['../classspar_1_1dvec.html#abaa797f36fecde7d38d5f6f3ec8d29d1',1,'spar::dvec::operator[](INDEX i)']]]
 ];

@@ -1,11 +1,12 @@
 var indexSectionsWithContent =
 {
-  0: "abcdeginoprsuz",
+  0: "abcdegilmnoprsuxz",
   1: "ds",
   2: "s",
   3: "abcdeginoprsuz",
-  4: "e",
-  5: "ns"
+  4: "ilmnpx",
+  5: "e",
+  6: "rs"
 };
 
 var indexSectionNames =
@@ -14,8 +15,9 @@ var indexSectionNames =
   1: "classes",
   2: "namespaces",
   3: "functions",
-  4: "typedefs",
-  5: "pages"
+  4: "variables",
+  5: "typedefs",
+  6: "pages"
 };
 
 var indexSectionLabels =
@@ -24,7 +26,8 @@ var indexSectionLabels =
   1: "Classes",
   2: "Namespaces",
   3: "Functions",
-  4: "Typedefs",
-  5: "Pages"
+  4: "Variables",
+  5: "Typedefs",
+  6: "Pages"
 };
 

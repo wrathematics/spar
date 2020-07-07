@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['news',['NEWS',['../md__n_e_w_s.html',1,'']]],
-  ['ncols',['ncols',['../classspmat.html#af5dcebea7b3d907ef1739720956cb01d',1,'spmat']]],
-  ['nrows',['nrows',['../classspmat.html#a9ea0365fbd1be3667dcc72151c0f51c3',1,'spmat']]]
+  ['len_22',['len',['../classspar_1_1dvec.html#aa5bf9a4570f1b515291a4fef9ca12317',1,'spar::dvec::len()'],['../classspar_1_1spmat.html#a9d3f0bcc8fb6240ab749bafa23b64b3b',1,'spar::spmat::len()'],['../classspar_1_1spvec.html#adca526e1321b26adf9fff07a5dff8b53',1,'spar::spvec::len()']]]
 ];

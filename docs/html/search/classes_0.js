@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dvec',['dvec',['../classdvec.html',1,'']]]
+  ['dvec_51',['dvec',['../classspar_1_1dvec.html',1,'spar']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['col_5fptr',['col_ptr',['../classspmat.html#a783b2254abe88b394cb46b3af50fa86b',1,'spmat::col_ptr()'],['../classspmat.html#a55e0e437101c5a7e23b05dffedf6e6c7',1,'spmat::col_ptr() const']]]
+  ['col_5fptr_60',['col_ptr',['../classspar_1_1spmat.html#a214e5f8e6752f7a1a8b0ed41be9d7e3d',1,'spar::spmat::col_ptr()'],['../classspar_1_1spmat.html#a0ad508ae75bec279702ef9235e2af070',1,'spar::spmat::col_ptr() const']]]
 ];

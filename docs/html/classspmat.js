@@ -1,6 +1,8 @@
 var classspmat =
 [
+    [ "spmat", "classspmat.html#a82b241aadb6dc32c9db4246ef6075025", null ],
     [ "spmat", "classspmat.html#a1a0d14768ddb8a07f111d711b8410e42", null ],
+    [ "spmat", "classspmat.html#a2adc3740877126afdc4138f8634211c7", null ],
     [ "~spmat", "classspmat.html#a77d6f3f0a44f86a1fa3ac2252bb837f5", null ],
     [ "col_ptr", "classspmat.html#a783b2254abe88b394cb46b3af50fa86b", null ],
     [ "col_ptr", "classspmat.html#a55e0e437101c5a7e23b05dffedf6e6c7", null ],
@@ -17,9 +19,11 @@ var classspmat =
     [ "insertable", "classspmat.html#a77b41e04cefbbac88d6ea5a9f2beeeb0", null ],
     [ "ncols", "classspmat.html#af5dcebea7b3d907ef1739720956cb01d", null ],
     [ "nrows", "classspmat.html#a9ea0365fbd1be3667dcc72151c0f51c3", null ],
+    [ "operator=", "classspmat.html#a99b1c84f54ac7f52dba7cb3195cb4af0", null ],
     [ "print", "classspmat.html#aa9aae930350522d2de69a6d277c54a48", null ],
     [ "resize", "classspmat.html#afa549cee6035b128079e080e1121ea8d", null ],
     [ "sparsity", "classspmat.html#a2c3229d8fe824d3d25f491baf8522221", null ],
+    [ "update_nnz", "classspmat.html#ac4efe46d409c3d775f8a6a6dd980b4a8", null ],
     [ "zero", "classspmat.html#ab08b5cf4e68526e57ccbbafc1d31d72a", null ],
     [ "I", "classspmat.html#a6be7bc2b38b4b5d78a2c1670e4a59bc4", null ],
     [ "len", "classspmat.html#aed01142ae79c25d54ad0ea89bdaf31e3", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zero',['zero',['../classdvec.html#abd19cbe3164729b0ba20aa899816219f',1,'dvec::zero()'],['../classspmat.html#ab08b5cf4e68526e57ccbbafc1d31d72a',1,'spmat::zero()'],['../classspvec.html#a6ba2767571c7d7554d72254bcbb2aead',1,'spvec::zero()']]]
+  ['zero_93',['zero',['../classspar_1_1dvec.html#a96b2db26f6f90a52d18fc260ea5e5a8e',1,'spar::dvec::zero()'],['../classspar_1_1spmat.html#a3ac9aeea23b5b23dda54e6d051b9ffcf',1,'spar::spmat::zero()'],['../classspar_1_1spvec.html#a14f980d320037167896da4ccbe19f143',1,'spar::spvec::zero()']]]
 ];

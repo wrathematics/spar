@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_5b_5d',['operator[]',['../classdvec.html#ad5fb77bc3cdc0fea4aa92e78680b1174',1,'dvec::operator[](INDEX i) const'],['../classdvec.html#a6c8200852a7890215ad3f74910c3fceb',1,'dvec::operator[](INDEX i)']]]
+  ['m_23',['m',['../classspar_1_1spmat.html#a344cf7352b25e0f2614df8246883bb9f',1,'spar::spmat']]]
 ];
