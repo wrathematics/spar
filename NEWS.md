@@ -24,7 +24,9 @@ Bug Fixes:
 
 Documentation:
   * Fixed documentation generation for spar::gen.
-  * Fixed some minor discrepancies in spvec documentation.
+  * Fixed some minor problems with spvec documentation.
+  * Fixed some miscellaneous documentation issues.
+  * Added documentation for protected class members.
 
 
 
