@@ -1,6 +1,6 @@
 # spar
 
-* **Version:** 0.1-1
+* **Version:** 0.2-0
 * **Status:** [![Build Status](https://travis-ci.org/wrathematics/spar.png)](https://travis-ci.org/wrathematics/spar)
 * **License:** [BSL-1.0](http://opensource.org/licenses/BSL-1.0)
 * **Project home**: https://github.com/wrathematics/spar
@@ -15,9 +15,21 @@ A sparse allreduce is different from the addition of two distributed, sparse mat
 
 
 
-## Dependencies and Tests
+## Installation and Other Software
 
-If you want to use the actual reducers, you will need an installation of MPI.
+The library is header-only so no installation is strictly necessary. You can just include a copy/submodule in your project. However, if you want some analogue of `make install`, then you could do something like:
+
+```bash
+ln -s ./src/spar /usr/include/
+```
+
+Stable releases are posted [on GitHub](https://github.com/wrathematics/spar/releases). Additionally, you can download the development version via:
+
+```
+git clone --recurse-submodules https://github.com/wrathematics/spar.git
+```
+
+To use the reducers, you will need an installation of MPI.
 
 Tests use [catch2](https://github.com/catchorg/Catch2), a copy of which is included under `tests/catch`. To build the tests, modify `tests/make.inc` as appropriate and type `make`.
 
