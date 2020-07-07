@@ -1,8 +1,8 @@
 -include ../make.inc
 -include ../common.inc
+
 MPICXX = mpicxx
 OMPI_CXX = $(CXX)
-CPPFLAGS = -I../../src
 EIGEN_CPPFLAGS = -I/usr/include/eigen3/
 
 

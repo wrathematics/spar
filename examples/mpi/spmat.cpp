@@ -12,7 +12,7 @@ int main()
   using SCALAR = int;
   const uint32_t seed = 1234;
   
-  auto x = spar::gen::gen<INDEX, SCALAR>(seed + rank, 10, 8);
+  auto x = spar::gen::rand<INDEX, SCALAR>(seed + rank, 10, 8);
   if (rank == 0)
     x.print();
   

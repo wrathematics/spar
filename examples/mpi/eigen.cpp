@@ -13,7 +13,7 @@ int main()
   using SCALAR = double;
   const uint32_t seed = 1234;
   
-  auto x_spmat = spar::gen::gen<INDEX, SCALAR>(seed + rank, 10, 8);
+  auto x_spmat = spar::gen::rand<INDEX, SCALAR>(seed + rank, 10, 8);
   auto x = spar::conv::spmat_to_eigen(x_spmat);
   if (rank == 0)
     std::cout << Eigen::MatrixXd(x) << std::endl;

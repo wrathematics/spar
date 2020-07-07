@@ -1,8 +1,6 @@
 -include ../make.inc
 -include ../common.inc
 
-CPPFLAGS = -I../../src
-
 
 all: clean gen spmat spvec
 
