@@ -4,8 +4,17 @@ New:
   * Added to spar::gen namespace
     - rand() for uniform random sparse matrices
     - banded() for banded sparse matrices
+  * Added two benchmarks to the `benchmarks/` tree.
 
-API Changes: None
+API Changes:
+  * All headers are now contained in the `spar/` tree.
+      - `src/spar.hpp` becomes `src/spar/spar.hpp`
+      - `src/reduce.hpp` becomes `src/spar/reduce.hpp`
+      - etc.
+  * All classes are now in the spar namespace.
+      - `spmat<int, float>` becomes `spar::spmat<int, float>`
+      - `spvec<int, float>` becomes `spar::spvec<int, float>`
+      - etc.
 
 Bug Fixes:
   * Fixed sparsity/density lookup (was backwards).
