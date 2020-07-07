@@ -20,12 +20,16 @@ template <typename INDEX>
 struct opts_t
 { 
   bool print_header;
-  bool approx;
-  bool allreduce;
+  
   bool densevec;
+  bool allreduce;
   INDEX n;
-  float prop_dense;
   uint32_t seed;
+  
+  bool approx;
+  float prop_dense;
+  
+  INDEX band;
 };
 
 
@@ -35,14 +39,18 @@ static inline int process_flags(int rank, int argc, char **argv, opts_t<INDEX> *
 {
   char c;
   opts->print_header = false;
-  opts->approx = false;
+  
   opts->densevec = false;
-  opts->allreduce = 0;
+  opts->allreduce = false;
   opts->n = 5000;
-  opts->prop_dense = 0.001;
   opts->seed = 1234;
   
-  while ((c = getopt(argc, argv, "davr:n:p:s:h")) != -1)
+  opts->approx = false;
+  opts->prop_dense = 0.001;
+  
+  opts->band = 1;
+  
+  while ((c = getopt(argc, argv, "davrn:p:s:b:h")) != -1)
   {
     if (c == 'd')
       opts->print_header = true;
@@ -51,21 +59,23 @@ static inline int process_flags(int rank, int argc, char **argv, opts_t<INDEX> *
     else if (c == 'v')
       opts->densevec = true;
     else if (c == 'r')
-      opts->allreduce = atoi(optarg);
+      opts->allreduce = true;
     else if (c == 'n')
       opts->n = atoi(optarg);
     else if (c == 'p')
       opts->prop_dense = atof(optarg);
     else if (c == 's')
       opts->seed = atof(optarg) + rank;
+    else if (c == 'b')
+      opts->band = atof(optarg);
     else if (c == 'h')
     {
       if (rank == 0)
       {
         printf("Usage\n");
         printf("  mpirun -np $NRANKS ./reduce_rand\n");
-        printf("Options:\n");
-        printf("  -r\tTODO...\n");
+        // printf("Options:\n");
+        // printf("  -r\tTODO...\n");
       }
       
       return EARLY_EXIT;

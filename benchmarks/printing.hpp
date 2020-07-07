@@ -22,7 +22,7 @@ static inline void print_header(const int rank, const opts_t<INDEX> *opts)
     printf("size,");
     printf("seed,");
     printf("densevec,");
-    printf("root,");
+    printf("allreduce,");
     printf("n,");
     printf("prop_dense,");
     printf("bytes_index,");
@@ -39,7 +39,7 @@ static inline void print_header(const int rank, const opts_t<INDEX> *opts)
 
 
 template <typename INDEX, typename SCALAR>
-static inline void print_setup(const int rank, const int size, const int root, const char *benchmark, const opts_t<INDEX> *opts)
+static inline void print_setup(const int rank, const int size, const char *benchmark, const opts_t<INDEX> *opts)
 {
   if (rank == 0)
   {
@@ -47,7 +47,7 @@ static inline void print_setup(const int rank, const int size, const int root, c
     printf("%d,", size);
     printf("%d,", opts->seed);
     printf("%d,", opts->densevec);
-    printf("%d,", root);
+    printf("%d,", opts->allreduce);
     printf("%d,", opts->n);
     printf("%f,", opts->prop_dense);
     printf("%d,", (int)sizeof(INDEX));

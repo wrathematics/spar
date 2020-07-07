@@ -28,7 +28,7 @@ int main(int argc, char **argv)
   INDEX n = opts.n;
   
   print_header(rank, &opts);
-  print_setup<INDEX, SCALAR>(rank, size, root, BENCHMARK, &opts);
+  print_setup<INDEX, SCALAR>(rank, size, BENCHMARK, &opts);
   
   // generation
   t.start();

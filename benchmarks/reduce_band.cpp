@@ -28,12 +28,15 @@ int main(int argc, char **argv)
   INDEX n = opts.n;
   
   print_header(rank, &opts);
-  print_setup<INDEX, SCALAR>(rank, size, root, BENCHMARK, &opts);
+  print_setup<INDEX, SCALAR>(rank, size, BENCHMARK, &opts);
   
   // generation
+  MAT x;
   t.start();
-  auto x = spar::gen::bandish<INDEX, SCALAR>(opts.seed, n, n);
-  // auto x = spar::gen::banded<INDEX, SCALAR>(1, n, n);
+  if (opts.approx)
+    x = spar::gen::bandish<INDEX, SCALAR>(opts.seed, n, n);
+  else
+    x = spar::gen::banded<INDEX, SCALAR>(opts.band, n, n);
   t.stop();
   
   print_time(rank, x, t);

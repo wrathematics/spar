@@ -15,14 +15,14 @@ CXXFLAGS += -march=native
 endif
 
 
-all: reduce_rand reduce_bandish
+all: reduce_rand reduce_band
 
 reduce_rand: $(OBJS)
 	$(MPICXX) $(DEBUGFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) reduce_rand.cpp -o reduce_rand
 
-reduce_bandish: $(OBJS)
-	$(MPICXX) $(DEBUGFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) reduce_bandish.cpp -o reduce_bandish
+reduce_band: $(OBJS)
+	$(MPICXX) $(DEBUGFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(WARNFLAGS) $(OMPFLAGS) reduce_band.cpp -o reduce_band
 
 
 clean:
-	rm -rf reduce_rand reduce_bandish
+	rm -rf reduce_rand reduce_band

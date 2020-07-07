@@ -1,7 +1,10 @@
 # spar Benchmarks
 
-* `reduce_bandish` - 
-* `reduce_rand` - 
+Some spar reducer benchmarks.
+
+* `reduce_band` - (all)reduce with banded/bandish matrices.
+* `reduce_rand` - (all)reduce with random matrices.
+
 
 
 ## Compiling
@@ -9,23 +12,31 @@
 `make`
 
 
+
 ## Flags
 
 All benchmarks
 
-* `-d` - print header
-* `-r rank`
-    - rank to reduce to (-1 for allreduce)
-    - default 0
+* `-d` - print header (default no)
+* `-r` - reduce to rank 0 (default allreduce)
 * `-n order`
     - the number of rows/cols
     - default 5000
+* `-s seed`
+    - random seed
+    - default is 1234 (each rank will use `seed + rank` for its local seed)
 
-`reduce_bandish`:
+`reduce_band`:
+
+* `-a` - Approximately banded ("bandish"; default no)
+* `-b band`
+    - band width (`band` argument to `spar::gen::banded()`)
+    - ignored if `-a` active
+    - default is 1
 
 `reduce_rand`:
 
-* `-a` - Should the approx (see )
+* `-a` - Use approximate generation (default no; `exact` argument to `spar::gen::rand()`)
 * `-p prop`
     - proportion dense
     - default 0.001
