@@ -13,7 +13,7 @@
 
 using INDEX = uint32_t;
 using SCALAR = int;
-using MAT = spmat<INDEX, SCALAR>;
+using MAT = spar::spmat<INDEX, SCALAR>;
 
 
 #endif

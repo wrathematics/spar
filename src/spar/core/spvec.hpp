@@ -12,65 +12,68 @@
 #include "../arraytools/src/arraytools.hpp"
 
 
-template <typename INDEX, typename SCALAR>
-class dvec;
-
-/**
-  @brief Basic sparse vector class.
-  
-  @tparam INDEX should be some kind of fundamental indexing type, like `int`
-  or `uint16_t`.
-  @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
- */
-template <typename INDEX, typename SCALAR>
-class spvec
+namespace spar
 {
-  public:
-    spvec();
-    spvec(INDEX len_);
-    ~spvec();
-    
-    void resize(INDEX len_);
-    void zero();
-    INDEX insertable() const;
-    void insert(const INDEX i, const SCALAR s);
-    void update_nnz();
-    SCALAR get(const INDEX ind) const;
-    
-    void print(bool actual=false) const;
-    void info() const;
-    
-    INDEX add(const spvec &x);
-    INDEX add(const SCALAR *x, const INDEX xlen);
-    
-    void densify(dvec<INDEX, SCALAR> &d) const;
-    template <typename INDEX_SRC, typename SCALAR_SRC>
-    void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
-    void set(const dvec<INDEX, SCALAR> &d);
-    
-    /// Number of non-zero elements.
-    INDEX get_nnz() const {return nnz;};
-    /// Length of the index and data arrays.
-    INDEX get_len() const {return len;};
-    /// Return a pointer to the index array `I`.
-    INDEX* index_ptr() {return I;};
-    /// \overload
-    INDEX* index_ptr() const {return I;};
-    /// Return a pointer to the data array `X`.
-    SCALAR* data_ptr() {return X;};
-    /// \overload
-    SCALAR* data_ptr() const {return X;};
+  template <typename INDEX, typename SCALAR>
+  class dvec;
   
-  protected:
-    INDEX nnz;
-    INDEX len;
-    INDEX *I;
-    SCALAR *X;
-  
-  private:
-    void cleanup();
-    void insert_from_ind(const INDEX insertion_ind, const INDEX i, const SCALAR s);
-};
+  /**
+    @brief Basic sparse vector class.
+    
+    @tparam INDEX should be some kind of fundamental indexing type, like `int`
+    or `uint16_t`.
+    @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+   */
+  template <typename INDEX, typename SCALAR>
+  class spvec
+  {
+    public:
+      spvec();
+      spvec(INDEX len_);
+      ~spvec();
+      
+      void resize(INDEX len_);
+      void zero();
+      INDEX insertable() const;
+      void insert(const INDEX i, const SCALAR s);
+      void update_nnz();
+      SCALAR get(const INDEX ind) const;
+      
+      void print(bool actual=false) const;
+      void info() const;
+      
+      INDEX add(const spvec &x);
+      INDEX add(const SCALAR *x, const INDEX xlen);
+      
+      void densify(dvec<INDEX, SCALAR> &d) const;
+      template <typename INDEX_SRC, typename SCALAR_SRC>
+      void set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
+      void set(const dvec<INDEX, SCALAR> &d);
+      
+      /// Number of non-zero elements.
+      INDEX get_nnz() const {return nnz;};
+      /// Length of the index and data arrays.
+      INDEX get_len() const {return len;};
+      /// Return a pointer to the index array `I`.
+      INDEX* index_ptr() {return I;};
+      /// \overload
+      INDEX* index_ptr() const {return I;};
+      /// Return a pointer to the data array `X`.
+      SCALAR* data_ptr() {return X;};
+      /// \overload
+      SCALAR* data_ptr() const {return X;};
+    
+    protected:
+      INDEX nnz;
+      INDEX len;
+      INDEX *I;
+      SCALAR *X;
+    
+    private:
+      void cleanup();
+      void insert_from_ind(const INDEX insertion_ind, const INDEX i, const SCALAR s);
+  };
+}
 
 
 
@@ -79,7 +82,7 @@ class spvec
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-spvec<INDEX, SCALAR>::spvec()
+spar::spvec<INDEX, SCALAR>::spvec()
 {
   I = NULL;
   X = NULL;
@@ -101,7 +104,7 @@ spvec<INDEX, SCALAR>::spvec()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-spvec<INDEX, SCALAR>::spvec(INDEX len_)
+spar::spvec<INDEX, SCALAR>::spvec(INDEX len_)
 {
   arraytools::zero_alloc(len_, &I);
   arraytools::zero_alloc(len_, &X);
@@ -115,7 +118,7 @@ spvec<INDEX, SCALAR>::spvec(INDEX len_)
 
 
 template <typename INDEX, typename SCALAR>
-spvec<INDEX, SCALAR>::~spvec()
+spar::spvec<INDEX, SCALAR>::~spvec()
 {
   cleanup();
 }
@@ -137,7 +140,7 @@ spvec<INDEX, SCALAR>::~spvec()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::resize(INDEX len_)
+void spar::spvec<INDEX, SCALAR>::resize(INDEX len_)
 {
   if (len == len_)
     return;
@@ -160,7 +163,7 @@ void spvec<INDEX, SCALAR>::resize(INDEX len_)
 
 /// Zero all data in the sparse vector. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::zero()
+void spar::spvec<INDEX, SCALAR>::zero()
 {
   if (nnz > 0)
   {
@@ -181,7 +184,7 @@ void spvec<INDEX, SCALAR>::zero()
   to store an additional scalar: 0 or 1.
  */
 template <typename INDEX, typename SCALAR>
-INDEX spvec<INDEX, SCALAR>::insertable() const
+INDEX spar::spvec<INDEX, SCALAR>::insertable() const
 {
   if (nnz == len)
     return (INDEX) 1;
@@ -202,7 +205,7 @@ INDEX spvec<INDEX, SCALAR>::insertable() const
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
+void spar::spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
   if (nnz == len)
     resize(len + 1);
@@ -224,7 +227,7 @@ void spvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
   directly on the internal arrays.
  */
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::update_nnz()
+void spar::spvec<INDEX, SCALAR>::update_nnz()
 {
   nnz = 0;
   for (INDEX i=0; i<len; i++)
@@ -246,7 +249,7 @@ void spvec<INDEX, SCALAR>::update_nnz()
   is stored at that index.
  */
 template <typename INDEX, typename SCALAR>
-SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
+SCALAR spar::spvec<INDEX, SCALAR>::get(const INDEX ind) const
 {
   SCALAR val = 0;
   
@@ -275,7 +278,7 @@ SCALAR spvec<INDEX, SCALAR>::get(const INDEX ind) const
   Otherwise, the conceptual dense vector will be printed.
  */
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::print(bool actual) const
+void spar::spvec<INDEX, SCALAR>::print(bool actual) const
 {
   if (actual)
   {
@@ -313,7 +316,7 @@ void spvec<INDEX, SCALAR>::print(bool actual) const
 
 /// Print some quick info about the sparse vector.
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::info() const
+void spar::spvec<INDEX, SCALAR>::info() const
 {
   printf("# spvec");
   printf(" %d", len);
@@ -336,7 +339,7 @@ void spvec<INDEX, SCALAR>::info() const
   @return Returns the needed size of realloc.
  */
 template <typename INDEX, typename SCALAR>
-INDEX spvec<INDEX, SCALAR>::add(const spvec &x)
+INDEX spar::spvec<INDEX, SCALAR>::add(const spvec &x)
 {
   const INDEX *xI = x.index_ptr();
   const SCALAR *xX = x.data_ptr();
@@ -378,7 +381,7 @@ INDEX spvec<INDEX, SCALAR>::add(const spvec &x)
 
 /// \overload
 template <typename INDEX, typename SCALAR>
-INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
+INDEX spar::spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
 {
   INDEX ind = 0;
   
@@ -434,7 +437,7 @@ INDEX spvec<INDEX, SCALAR>::add(const SCALAR *x, const INDEX xlen)
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
+void spar::spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
 {
   if (nnz && I[nnz-1] > d.get_len())
     throw std::logic_error("dense array not large enough to store sparse vector");
@@ -459,7 +462,7 @@ void spvec<INDEX, SCALAR>::densify(dvec<INDEX, SCALAR> &d) const
  */
 template <typename INDEX, typename SCALAR>
 template <typename INDEX_SRC, typename SCALAR_SRC>
-void spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
+void spar::spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
 {
   if (len < nnz_)
     resize(nnz_);
@@ -479,7 +482,7 @@ void spvec<INDEX, SCALAR>::set(const INDEX nnz_, const INDEX_SRC *I_, const SCAL
 
 /// \overload
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
+void spar::spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
 {
   INDEX dnnz = d.get_nnz();
   if (dnnz > len)
@@ -508,7 +511,7 @@ void spvec<INDEX, SCALAR>::set(const dvec<INDEX, SCALAR> &d)
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::cleanup()
+void spar::spvec<INDEX, SCALAR>::cleanup()
 {
   arraytools::free(I);
   I = NULL;
@@ -523,7 +526,7 @@ void spvec<INDEX, SCALAR>::cleanup()
 
 
 template <typename INDEX, typename SCALAR>
-void spvec<INDEX, SCALAR>::insert_from_ind(const INDEX insertion_ind,
+void spar::spvec<INDEX, SCALAR>::insert_from_ind(const INDEX insertion_ind,
   const INDEX i, const SCALAR s)
 {
   for (INDEX ind=nnz; ind>insertion_ind; ind--)

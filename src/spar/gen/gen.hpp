@@ -15,15 +15,15 @@
 
 #include "rand.hpp"
 
-template <typename INDEX, typename SCALAR>
-class spvec;
-
-template <typename INDEX, typename SCALAR>
-class spmat;
-
 
 namespace spar
 {
+  template <typename INDEX, typename SCALAR>
+  class spvec;
+
+  template <typename INDEX, typename SCALAR>
+  class spmat;
+  
   /// @brief Random generators.
   namespace gen
   {

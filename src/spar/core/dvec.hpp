@@ -12,50 +12,53 @@
 #include "../arraytools/src/arraytools.hpp"
 
 
-template <typename INDEX, typename SCALAR>
-class spvec;
-
-template <typename INDEX, typename SCALAR>
-class dvec
+namespace spar
 {
-  public:
-    dvec();
-    dvec(INDEX len_);
-    ~dvec();
-    
-    void resize(INDEX len_);
-    void zero();
-    void insert(const INDEX i, const SCALAR s);
-    void update_nnz();
-    
-    void print() const;
-    void info() const;
-    
-    SCALAR sum() const;
-    const SCALAR operator[](INDEX i) const; // getter
-    SCALAR& operator[](INDEX i); // setter
-    
-    template <typename INDEX_SRC, typename SCALAR_SRC>
-    void set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
-    void set(const spvec<INDEX, SCALAR> &x);
-    
-    /// Number of non-zero elements.
-    INDEX get_nnz() const {return nnz;};
-    /// Length of the index and data arrays.
-    INDEX get_len() const {return len;};
-    /// Return a pointer to the data array `X`.
-    SCALAR* data_ptr() {return X;};
-    /// \overload
-    SCALAR* data_ptr() const {return X;};
+  template <typename INDEX, typename SCALAR>
+  class spvec;
   
-  protected:
-    INDEX nnz;
-    INDEX len;
-    SCALAR *X;
-  
-  private:
-    void cleanup();
-};
+  template <typename INDEX, typename SCALAR>
+  class dvec
+  {
+    public:
+      dvec();
+      dvec(INDEX len_);
+      ~dvec();
+      
+      void resize(INDEX len_);
+      void zero();
+      void insert(const INDEX i, const SCALAR s);
+      void update_nnz();
+      
+      void print() const;
+      void info() const;
+      
+      SCALAR sum() const;
+      const SCALAR operator[](INDEX i) const; // getter
+      SCALAR& operator[](INDEX i); // setter
+      
+      template <typename INDEX_SRC, typename SCALAR_SRC>
+      void set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_);
+      void set(const spvec<INDEX, SCALAR> &x);
+      
+      /// Number of non-zero elements.
+      INDEX get_nnz() const {return nnz;};
+      /// Length of the index and data arrays.
+      INDEX get_len() const {return len;};
+      /// Return a pointer to the data array `X`.
+      SCALAR* data_ptr() {return X;};
+      /// \overload
+      SCALAR* data_ptr() const {return X;};
+    
+    protected:
+      INDEX nnz;
+      INDEX len;
+      SCALAR *X;
+    
+    private:
+      void cleanup();
+  };
+}
 
 
 
@@ -64,7 +67,7 @@ class dvec
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-dvec<INDEX, SCALAR>::dvec()
+spar::dvec<INDEX, SCALAR>::dvec()
 {
   X = NULL;
   
@@ -84,7 +87,7 @@ dvec<INDEX, SCALAR>::dvec()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-dvec<INDEX, SCALAR>::dvec(INDEX len_)
+spar::dvec<INDEX, SCALAR>::dvec(INDEX len_)
 {
   arraytools::zero_alloc(len_, &X);
   arraytools::check_allocs(X);
@@ -96,7 +99,7 @@ dvec<INDEX, SCALAR>::dvec(INDEX len_)
 
 
 template <typename INDEX, typename SCALAR>
-dvec<INDEX, SCALAR>::~dvec()
+spar::dvec<INDEX, SCALAR>::~dvec()
 {
   cleanup();
 }
@@ -118,7 +121,7 @@ dvec<INDEX, SCALAR>::~dvec()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::resize(INDEX len_)
+void spar::dvec<INDEX, SCALAR>::resize(INDEX len_)
 {
   if (len == len_)
     return;
@@ -136,7 +139,7 @@ void dvec<INDEX, SCALAR>::resize(INDEX len_)
 
 /// Zero all data in the dense vector. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::zero()
+void spar::dvec<INDEX, SCALAR>::zero()
 {
   if (nnz > 0)
   {
@@ -155,7 +158,7 @@ void dvec<INDEX, SCALAR>::zero()
   @param[in] s The input value.
  */
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
+void spar::dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
 {
   if (X[i] == 0)
     nnz++;
@@ -172,7 +175,7 @@ void dvec<INDEX, SCALAR>::insert(const INDEX i, const SCALAR s)
   directly on the array.
  */
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::update_nnz()
+void spar::dvec<INDEX, SCALAR>::update_nnz()
 {
   nnz = 0;
   for (INDEX i=0; i<len; i++)
@@ -190,7 +193,7 @@ void dvec<INDEX, SCALAR>::update_nnz()
 
 /// Print the vector.
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::print() const
+void spar::dvec<INDEX, SCALAR>::print() const
 {
   for (INDEX i=0; i<len; i++)
     printf("%f\n", (float) X[i]);
@@ -200,7 +203,7 @@ void dvec<INDEX, SCALAR>::print() const
 
 /// Print some quick info about the sparse vector.
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::info() const
+void spar::dvec<INDEX, SCALAR>::info() const
 {
   printf("# dvec");
   printf(" %d", len);
@@ -221,7 +224,7 @@ void dvec<INDEX, SCALAR>::info() const
   @return The sum of the vector elements.
  */
 template <typename INDEX, typename SCALAR>
-SCALAR dvec<INDEX, SCALAR>::sum() const
+SCALAR spar::dvec<INDEX, SCALAR>::sum() const
 {
   SCALAR s = 0;
   #pragma omp simd reduction(+:s)
@@ -241,7 +244,7 @@ SCALAR dvec<INDEX, SCALAR>::sum() const
   @return Returns the scalar at index `i`.
  */
 template <typename INDEX, typename SCALAR>
-const SCALAR dvec<INDEX, SCALAR>::operator[](INDEX i) const
+const SCALAR spar::dvec<INDEX, SCALAR>::operator[](INDEX i) const
 {
   return X[i];
 }
@@ -254,7 +257,7 @@ const SCALAR dvec<INDEX, SCALAR>::operator[](INDEX i) const
   @param[in] i Desired index.
  */
 template <typename INDEX, typename SCALAR>
-SCALAR& dvec<INDEX, SCALAR>::operator[](INDEX i)
+SCALAR& spar::dvec<INDEX, SCALAR>::operator[](INDEX i)
 {
   return X[i];
 }
@@ -278,7 +281,7 @@ SCALAR& dvec<INDEX, SCALAR>::operator[](INDEX i)
  */
 template <typename INDEX, typename SCALAR>
 template <typename INDEX_SRC, typename SCALAR_SRC>
-void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
+void spar::dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const SCALAR_SRC *X_)
 {
   zero();
   
@@ -296,7 +299,7 @@ void dvec<INDEX, SCALAR>::set(const INDEX_SRC nnz_, const INDEX_SRC *I_, const S
 
 /// \overload
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
+void spar::dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
 {
   set(x.get_nnz(), x.index_ptr(), x.data_ptr());
 }
@@ -308,7 +311,7 @@ void dvec<INDEX, SCALAR>::set(const spvec<INDEX, SCALAR> &x)
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void dvec<INDEX, SCALAR>::cleanup()
+void spar::dvec<INDEX, SCALAR>::cleanup()
 {
   arraytools::free(X);
   X = NULL;

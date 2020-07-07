@@ -2,7 +2,7 @@
 #include <spar.hpp>
 
 
-TEMPLATE_PRODUCT_TEST_CASE("construct", "[spmat]", spmat, (
+TEMPLATE_PRODUCT_TEST_CASE("construct", "[spmat]", spar::spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -24,7 +24,7 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[spmat]", spmat, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
+TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spar::spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -39,7 +39,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
   using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
-  spvec<INDEX, SCALAR> s(3);
+  spar::spvec<INDEX, SCALAR> s(3);
   s.insert(3, 1);
   s.insert(1, 2);
   
@@ -54,7 +54,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spmat]", spmat, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
+TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spar::spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -69,7 +69,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
   using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
-  spvec<INDEX, SCALAR> s(3);
+  spar::spvec<INDEX, SCALAR> s(3);
   s.insert(3, 1);
   s.insert(1, 2);
   
@@ -88,7 +88,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[spmat]", spmat, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
+TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spar::spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -103,7 +103,7 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
   using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
-  spvec<INDEX, SCALAR> s(3);
+  spar::spvec<INDEX, SCALAR> s(3);
   s.insert(1, 1);
   x.insert(2, s);
   
@@ -118,7 +118,7 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spmat]", spmat, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("get_col", "[spmat]", spmat, (
+TEMPLATE_PRODUCT_TEST_CASE("get_col", "[spmat]", spar::spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -132,7 +132,7 @@ TEMPLATE_PRODUCT_TEST_CASE("get_col", "[spmat]", spmat, (
   using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
-  spvec<INDEX, SCALAR> s(8);
+  spar::spvec<INDEX, SCALAR> s(8);
   
   s.insert(1, 1);
   s.insert(4, 2);

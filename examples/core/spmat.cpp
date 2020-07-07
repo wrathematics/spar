@@ -4,11 +4,11 @@
 int main()
 {
   const int len = 5;
-  spvec<int, int> v(len);
+  spar::spvec<int, int> v(len);
   v.insert(3, 1);
   v.insert(1, 2);
   
-  spmat<int, int> x(10, 3, len);
+  spar::spmat<int, int> x(10, 3, len);
   x.insert(0, v);
   
   v.zero();

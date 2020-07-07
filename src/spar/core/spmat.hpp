@@ -13,75 +13,78 @@
 #include "defs.hpp"
 
 
-template <typename INDEX, typename SCALAR>
-class spvec;
-
-/**
-  @brief Basic sparse matrix class in CSC format.
-  
-  @tparam INDEX should be some kind of fundamental indexing type, like `int`
-  or `uint16_t`.
-  @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
- */
-template <typename INDEX, typename SCALAR>
-class spmat
+namespace spar
 {
-  public:
-    spmat();
-    spmat(INDEX nrows_, INDEX ncols_, INDEX len_);
-    spmat(const spmat<INDEX, SCALAR> &x);
-    spmat& operator=(const spmat<INDEX, SCALAR>& x);
-    ~spmat();
-    
-    void resize(INDEX len_);
-    void zero();
-    INDEX insertable(const spvec<INDEX, SCALAR> &x);
-    void insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
-    void update_nnz();
-    void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
-    
-    void print(bool actual=false);
-    void info() const;
-    
-    float sparsity() const;
-    float density() const;
-    
-    /// Number of rows.
-    INDEX nrows() const {return m;};
-    /// Number of columns.
-    INDEX ncols() const {return n;};
-    /// Number of non-zero elements.
-    INDEX get_nnz() const {return nnz;};
-    /// Length of the index and data arrays.
-    INDEX get_len() const {return len;};
-    /// Return a pointer to the index array `I`.
-    INDEX* index_ptr() {return I;};
-    /// \overload
-    INDEX* index_ptr() const {return I;};
-    /// Return a pointer to the column array `P`.
-    INDEX* col_ptr() {return P;};
-    /// \overload
-    INDEX* col_ptr() const {return P;};
-    /// Return a pointer to the data array `X`.
-    SCALAR* data_ptr() {return X;};
-    /// \overload
-    SCALAR* data_ptr() const {return X;};
+  template <typename INDEX, typename SCALAR>
+  class spvec;
   
-  protected:
-    INDEX m;
-    INDEX n;
-    INDEX nnz;
-    INDEX len;
-    INDEX plen;
-    INDEX *I;
-    INDEX *P;
-    SCALAR *X;
-  
-  private:
-    void cleanup();
-    INDEX* csc2coo();
-    void insert_spvec(const INDEX col, const spvec<INDEX, SCALAR> &x);
-};
+  /**
+    @brief Basic sparse matrix class in CSC format.
+    
+    @tparam INDEX should be some kind of fundamental indexing type, like `int`
+    or `uint16_t`.
+    @tparam SCALAR should be a fundamental numeric type like `int` or `float`.
+   */
+  template <typename INDEX, typename SCALAR>
+  class spmat
+  {
+    public:
+      spmat();
+      spmat(INDEX nrows_, INDEX ncols_, INDEX len_);
+      spmat(const spmat<INDEX, SCALAR> &x);
+      spmat& operator=(const spmat<INDEX, SCALAR>& x);
+      ~spmat();
+      
+      void resize(INDEX len_);
+      void zero();
+      INDEX insertable(const spvec<INDEX, SCALAR> &x);
+      void insert(const INDEX col, const spvec<INDEX, SCALAR> &x);
+      void update_nnz();
+      void get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const;
+      
+      void print(bool actual=false);
+      void info() const;
+      
+      float sparsity() const;
+      float density() const;
+      
+      /// Number of rows.
+      INDEX nrows() const {return m;};
+      /// Number of columns.
+      INDEX ncols() const {return n;};
+      /// Number of non-zero elements.
+      INDEX get_nnz() const {return nnz;};
+      /// Length of the index and data arrays.
+      INDEX get_len() const {return len;};
+      /// Return a pointer to the index array `I`.
+      INDEX* index_ptr() {return I;};
+      /// \overload
+      INDEX* index_ptr() const {return I;};
+      /// Return a pointer to the column array `P`.
+      INDEX* col_ptr() {return P;};
+      /// \overload
+      INDEX* col_ptr() const {return P;};
+      /// Return a pointer to the data array `X`.
+      SCALAR* data_ptr() {return X;};
+      /// \overload
+      SCALAR* data_ptr() const {return X;};
+    
+    protected:
+      INDEX m;
+      INDEX n;
+      INDEX nnz;
+      INDEX len;
+      INDEX plen;
+      INDEX *I;
+      INDEX *P;
+      SCALAR *X;
+    
+    private:
+      void cleanup();
+      INDEX* csc2coo();
+      void insert_spvec(const INDEX col, const spvec<INDEX, SCALAR> &x);
+  };
+}
 
 
 
@@ -91,7 +94,7 @@ class spmat
 
 
 template <typename INDEX, typename SCALAR>
-spmat<INDEX, SCALAR>::spmat()
+spar::spmat<INDEX, SCALAR>::spmat()
 {
   I = NULL;
   P = NULL;
@@ -119,7 +122,7 @@ spmat<INDEX, SCALAR>::spmat()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
+spar::spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
 {
   arraytools::zero_alloc(len_, &I);
   arraytools::zero_alloc(ncols_+1, &P);
@@ -138,7 +141,7 @@ spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
 
 
 template <typename INDEX, typename SCALAR>
-spmat<INDEX, SCALAR>::spmat(const spmat<INDEX, SCALAR> &x)
+spar::spmat<INDEX, SCALAR>::spmat(const spar::spmat<INDEX, SCALAR> &x)
 {
   *this = x;
 }
@@ -146,7 +149,7 @@ spmat<INDEX, SCALAR>::spmat(const spmat<INDEX, SCALAR> &x)
 
 
 template <typename INDEX, typename SCALAR>
-spmat<INDEX, SCALAR>& spmat<INDEX, SCALAR>::operator=(const spmat<INDEX, SCALAR>& x)
+spar::spmat<INDEX, SCALAR>& spar::spmat<INDEX, SCALAR>::operator=(const spmat<INDEX, SCALAR>& x)
 {
   this->cleanup();
   
@@ -175,7 +178,7 @@ spmat<INDEX, SCALAR>& spmat<INDEX, SCALAR>::operator=(const spmat<INDEX, SCALAR>
 
 
 template <typename INDEX, typename SCALAR>
-spmat<INDEX, SCALAR>::~spmat()
+spar::spmat<INDEX, SCALAR>::~spmat()
 {
   cleanup();
 }
@@ -197,7 +200,7 @@ spmat<INDEX, SCALAR>::~spmat()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::resize(INDEX len_)
+void spar::spmat<INDEX, SCALAR>::resize(INDEX len_)
 {
   if (len == len_)
     return;
@@ -214,7 +217,7 @@ void spmat<INDEX, SCALAR>::resize(INDEX len_)
 
 /// Zero all data in the sparse matrix. Performs no allocations or resizing.
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::zero()
+void spar::spmat<INDEX, SCALAR>::zero()
 {
   if (nnz > 0)
   {
@@ -238,7 +241,7 @@ void spmat<INDEX, SCALAR>::zero()
   capacity (0 if the vector fits).
  */
 template <typename INDEX, typename SCALAR>
-INDEX spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
+INDEX spar::spmat<INDEX, SCALAR>::insertable(const spar::spvec<INDEX, SCALAR> &x)
 {
   if (x.get_nnz() > len - nnz)
     return x.get_nnz() - (len - nnz);
@@ -259,7 +262,7 @@ INDEX spmat<INDEX, SCALAR>::insertable(const spvec<INDEX, SCALAR> &x)
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x)
+void spar::spmat<INDEX, SCALAR>::insert(const INDEX col, const spar::spvec<INDEX, SCALAR> &x)
 {
   INDEX needed_space = len - nnz;
   if (x.get_nnz() > needed_space)
@@ -275,7 +278,7 @@ void spmat<INDEX, SCALAR>::insert(const INDEX col, const spvec<INDEX, SCALAR> &x
   directly on the internal arrays.
  */
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::update_nnz()
+void spar::spmat<INDEX, SCALAR>::update_nnz()
 {
   nnz = 0;
   for (INDEX i=0; i<len; i++)
@@ -300,7 +303,7 @@ void spmat<INDEX, SCALAR>::update_nnz()
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) const
+void spar::spmat<INDEX, SCALAR>::get_col(const INDEX col, spar::spvec<INDEX, SCALAR> &x) const
 {
   const INDEX ind = P[col];
   if (P[col + 1] == ind)
@@ -325,7 +328,7 @@ void spmat<INDEX, SCALAR>::get_col(const INDEX col, spvec<INDEX, SCALAR> &x) con
   @return The non-zero elements divided by the matrix dimensions.
  */
 template <typename INDEX, typename SCALAR>
-float spmat<INDEX, SCALAR>::sparsity() const
+float spar::spmat<INDEX, SCALAR>::sparsity() const
 {
   return 1.f - (float)nnz/m/n;
 }
@@ -339,7 +342,7 @@ float spmat<INDEX, SCALAR>::sparsity() const
   matrix dimensions from one (i.e., 1 minus the sparsity).
  */
 template <typename INDEX, typename SCALAR>
-float spmat<INDEX, SCALAR>::density() const
+float spar::spmat<INDEX, SCALAR>::density() const
 {
   return 1.f - sparsity();
 }
@@ -363,7 +366,7 @@ float spmat<INDEX, SCALAR>::density() const
   @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
  */
 template <typename INDEX, typename SCALAR> // NOTE to self: don't set this method const
-void spmat<INDEX, SCALAR>::print(bool actual)
+void spar::spmat<INDEX, SCALAR>::print(bool actual)
 {
   if (actual)
   {
@@ -426,7 +429,7 @@ void spmat<INDEX, SCALAR>::print(bool actual)
 
 /// Print some quick info about the sparse matrix.
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::info() const
+void spar::spmat<INDEX, SCALAR>::info() const
 {
   printf("# spmat");
   printf(" %dx%d", m, n);
@@ -443,7 +446,7 @@ void spmat<INDEX, SCALAR>::info() const
 // ----------------------------------------------------------------------------
 
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::cleanup()
+void spar::spmat<INDEX, SCALAR>::cleanup()
 {
   if (len == 0)
     return;
@@ -468,7 +471,7 @@ void spmat<INDEX, SCALAR>::cleanup()
 
 // convert "column pointer" P into column index
 template <typename INDEX, typename SCALAR>
-INDEX* spmat<INDEX, SCALAR>::csc2coo()
+INDEX* spar::spmat<INDEX, SCALAR>::csc2coo()
 {
   INDEX j = 0;
   INDEX ind = 0;
@@ -502,7 +505,7 @@ INDEX* spmat<INDEX, SCALAR>::csc2coo()
 
 
 template <typename INDEX, typename SCALAR>
-void spmat<INDEX, SCALAR>::insert_spvec(const INDEX col, const spvec<INDEX, SCALAR> &x)
+void spar::spmat<INDEX, SCALAR>::insert_spvec(const INDEX col, const spar::spvec<INDEX, SCALAR> &x)
 {
   const INDEX *xI = x.index_ptr();
   const SCALAR *xX = x.data_ptr();

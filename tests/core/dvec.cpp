@@ -2,7 +2,7 @@
 #include <spar.hpp>
 
 
-TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", spar::dvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -20,7 +20,7 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[dvec]", dvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("insert", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("insert", "[dvec]", spar::dvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -44,7 +44,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[dvec]", dvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", spar::dvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -70,7 +70,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[dvec]", dvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", spar::dvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -98,7 +98,7 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[dvec]", dvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("set", "[dpvec]", dvec, (
+TEMPLATE_PRODUCT_TEST_CASE("set", "[dpvec]", spar::dvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -111,7 +111,7 @@ TEMPLATE_PRODUCT_TEST_CASE("set", "[dpvec]", dvec, (
   using INDEX = decltype(x.get_nnz());
   using SCALAR = decltype(+*x.data_ptr());
   
-  spvec<INDEX, SCALAR> s(3);
+  spar::spvec<INDEX, SCALAR> s(3);
   s.insert(1, 1);
   s.insert(3, 1);
   

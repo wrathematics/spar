@@ -4,9 +4,9 @@
 
 
 template <typename INDEX, typename SCALAR>
-static inline void fill_sparse_mat(spmat<INDEX, SCALAR> &x)
+static inline void fill_sparse_mat(spar::spmat<INDEX, SCALAR> &x)
 {
-  spvec<INDEX, SCALAR> s(3);
+  spar::spvec<INDEX, SCALAR> s(3);
   
   s.zero();
   s.insert(0, 1);

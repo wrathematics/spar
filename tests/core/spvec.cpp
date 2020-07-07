@@ -2,7 +2,7 @@
 #include <spar.hpp>
 
 
-TEMPLATE_PRODUCT_TEST_CASE("construct", "[spvec]", spvec, (
+TEMPLATE_PRODUCT_TEST_CASE("construct", "[spvec]", spar::spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -20,7 +20,7 @@ TEMPLATE_PRODUCT_TEST_CASE("construct", "[spvec]", spvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
+TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spar::spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -48,7 +48,7 @@ TEMPLATE_PRODUCT_TEST_CASE("insert", "[spvec]", spvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("get", "[spvec]", spvec, (
+TEMPLATE_PRODUCT_TEST_CASE("get", "[spvec]", spar::spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -70,7 +70,7 @@ TEMPLATE_PRODUCT_TEST_CASE("get", "[spvec]", spvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spvec, (
+TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spar::spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -96,7 +96,7 @@ TEMPLATE_PRODUCT_TEST_CASE("zero", "[spvec]", spvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spvec, (
+TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spar::spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -128,7 +128,7 @@ TEMPLATE_PRODUCT_TEST_CASE("resize", "[spvec]", spvec, (
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("set", "[spvec]", spvec, (
+TEMPLATE_PRODUCT_TEST_CASE("set", "[spvec]", spar::spvec, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),

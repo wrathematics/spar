@@ -16,7 +16,7 @@ int main()
   if (rank == 0)
     x.print();
   
-  auto y = spar::reduce::gather<spmat<INDEX, SCALAR>, INDEX, SCALAR>(0, x);
+  auto y = spar::reduce::gather<spar::spmat<INDEX, SCALAR>, INDEX, SCALAR>(0, x);
   if (rank == 0)
     y.print();
   

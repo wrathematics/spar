@@ -13,14 +13,15 @@
 #undef nrows
 #undef ncols
 
-template <typename INDEX, typename SCALAR>
-class spvec;
-
-template <typename INDEX, typename SCALAR>
-class spmat;
 
 namespace spar
 {
+  template <typename INDEX, typename SCALAR>
+  class spvec;
+
+  template <typename INDEX, typename SCALAR>
+  class spmat;
+  
   namespace internal
   {
     namespace sexp

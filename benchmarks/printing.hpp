@@ -58,7 +58,7 @@ static inline void print_setup(const int rank, const int size, const int root, c
 
 
 template <typename INDEX, typename SCALAR>
-static inline void print_time(const int rank, const spmat<INDEX, SCALAR> &x, const timer &t)
+static inline void print_time(const int rank, const spar::spmat<INDEX, SCALAR> &x, const timer &t)
 {
   if (rank == 0)
   {

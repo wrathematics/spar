@@ -9,7 +9,7 @@ extern int size;
 
 
 
-TEMPLATE_PRODUCT_TEST_CASE("reduce_gather", "[spmat]", spmat, (
+TEMPLATE_PRODUCT_TEST_CASE("reduce_gather", "[spmat]", spar::spmat, (
   (int, int),      (int, uint32_t),      (int, double),
   (uint32_t, int), (uint32_t, uint32_t), (uint32_t, double),
   (int16_t, int),  (int16_t, uint32_t),  (int16_t, double),
@@ -26,11 +26,11 @@ TEMPLATE_PRODUCT_TEST_CASE("reduce_gather", "[spmat]", spmat, (
   
   fill_sparse_mat(x);
   
-  auto y = spar::reduce::gather<spmat<INDEX, SCALAR>, INDEX, SCALAR>(spar::mpi::REDUCE_TO_ALL, x);
+  auto y = spar::reduce::gather<spar::spmat<INDEX, SCALAR>, INDEX, SCALAR>(spar::mpi::REDUCE_TO_ALL, x);
   REQUIRE( y.nrows() == m );
   REQUIRE( y.ncols() == n );
   
-  spvec<INDEX, SCALAR> s(3);
+  spar::spvec<INDEX, SCALAR> s(3);
   y.get_col(2, s);
   REQUIRE( s.get(1) == (SCALAR)2*size );
   REQUIRE( s.get(3) == (SCALAR)1*size );
