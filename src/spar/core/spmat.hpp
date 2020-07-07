@@ -27,7 +27,10 @@ template <typename INDEX, typename SCALAR>
 class spmat
 {
   public:
+    spmat();
     spmat(INDEX nrows_, INDEX ncols_, INDEX len_);
+    spmat(const spmat<INDEX, SCALAR> &x);
+    spmat& operator=(const spmat<INDEX, SCALAR>& x);
     ~spmat();
     
     void resize(INDEX len_);
@@ -86,6 +89,24 @@ class spmat
 // constructor/destructor
 // ----------------------------------------------------------------------------
 
+
+template <typename INDEX, typename SCALAR>
+spmat<INDEX, SCALAR>::spmat()
+{
+  I = NULL;
+  P = NULL;
+  X = NULL;
+  
+  m = 0;
+  n = 0;
+  
+  nnz = 0;
+  len = 0;
+  plen = 0;
+}
+
+
+
 /**
   @brief Constructor.
   
@@ -112,6 +133,43 @@ spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
   nnz = 0;
   len = len_;
   plen = ncols_ + 1;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+spmat<INDEX, SCALAR>::spmat(const spmat<INDEX, SCALAR> &x)
+{
+  *this = x;
+}
+
+
+
+template <typename INDEX, typename SCALAR>
+spmat<INDEX, SCALAR>& spmat<INDEX, SCALAR>::operator=(const spmat<INDEX, SCALAR>& x)
+{
+  this->cleanup();
+  
+  m = x.nrows();
+  n = x.ncols();
+  
+  nnz = x.get_nnz();
+  len = x.get_len();
+  plen = n + 1;
+  
+  if (len == 0)
+    return *this;
+  
+  arraytools::alloc(len, &I);
+  arraytools::alloc(n+1, &P);
+  arraytools::alloc(len, &X);
+  arraytools::check_allocs(I, P, X);
+  
+  arraytools::copy(len, x.index_ptr(), I);
+  arraytools::copy(n+1, x.col_ptr(), P);
+  arraytools::copy(len, x.data_ptr(), X);
+  
+  return *this;
 }
 
 
@@ -387,6 +445,9 @@ void spmat<INDEX, SCALAR>::info() const
 template <typename INDEX, typename SCALAR>
 void spmat<INDEX, SCALAR>::cleanup()
 {
+  if (len == 0)
+    return;
+  
   arraytools::free(I);
   I = NULL;
   
