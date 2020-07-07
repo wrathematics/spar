@@ -1,4 +1,4 @@
-# Release 0.2-0 (//):
+# Release 0.2-0 (7/7/2020):
 
 New:
   * Added to spar::gen namespace
