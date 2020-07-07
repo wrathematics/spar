@@ -15,6 +15,7 @@ int main(int argc, char **argv)
   spar::mpi::init();
   int rank = spar::mpi::get_rank();
   int size = spar::mpi::get_size();
+  spar::mpi::err::check_size(MPI_COMM_WORLD);
   
   int check = process_flags(rank, argc, argv, &opts);
   if (check == EARLY_EXIT || check == BAD_FLAG)
