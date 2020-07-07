@@ -44,7 +44,7 @@ static inline void print_setup(const int rank, const int size, const int root, c
   if (rank == 0)
   {
     printf("%s,", benchmark);
-    printf("%d", size);
+    printf("%d,", size);
     printf("%d,", opts->seed);
     printf("%d,", opts->densevec);
     printf("%d,", root);
