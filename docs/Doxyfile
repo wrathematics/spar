@@ -6,7 +6,7 @@ DOXYFILE_ENCODING      = UTF-8
 # project
 #---------------------------------------------------------------------------
 
-PROJECT_NUMBER         = 0.1-0
+PROJECT_NUMBER         = 0.2-0
 
 PROJECT_NAME           = spar
 PROJECT_BRIEF          = "Sparse Allreduce"
@@ -62,10 +62,10 @@ EXTRA_PACKAGES         =
 # Project related configuration options
 #---------------------------------------------------------------------------
 
-ALIASES += impl="\par Implementation Details\n"
-ALIASES += comm="\par Communication Details\n"
-ALIASES += except="\par Exceptions\n"
-ALIASES += allocs="\par Memory Allocations\n"
+ALIASES += impl="<b>Implementation Details</b>\n"
+ALIASES += comm="<b>Communication Details</b>\n"
+ALIASES += except="<b>Exceptions</b>\n"
+ALIASES += allocs="<b>Memory Allocations</b>\n"
 
 # If the SHORT_NAMES tag is set to YES, doxygen will generate much shorter (but
 # less readable) file names. This can be useful is your file systems doesn't
