@@ -42,7 +42,7 @@ namespace spar
     /**
       @brief Convert an `spmat` object into an `Eigen::SparseMatrix` object.
       
-      @param[in] s The input `spmat` object.
+      @param[in] x The input `spmat` object.
       
       @return The return sparse matrix.
       

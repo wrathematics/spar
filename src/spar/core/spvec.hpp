@@ -64,9 +64,13 @@ namespace spar
       SCALAR* data_ptr() const {return X;};
     
     protected:
+      /// Number non-zero.
       INDEX nnz;
+      /// Length of internal row/data arrays.
       INDEX len;
+      /// Index array.
       INDEX *I;
+      /// Data array.
       SCALAR *X;
     
     private:

@@ -70,13 +70,21 @@ namespace spar
       SCALAR* data_ptr() const {return X;};
     
     protected:
+      /// Number of rows.
       INDEX m;
+      /// Number of cols.
       INDEX n;
+      /// Number non-zero.
       INDEX nnz;
+      /// Length of internal row/data arrays.
       INDEX len;
+      /// Length of column array (n+1).
       INDEX plen;
+      /// Index array.
       INDEX *I;
+      /// Column pointer array.
       INDEX *P;
+      /// Data array.
       SCALAR *X;
     
     private:
@@ -92,7 +100,9 @@ namespace spar
 // constructor/destructor
 // ----------------------------------------------------------------------------
 
-
+/**
+  @brief Constructor.
+ */
 template <typename INDEX, typename SCALAR>
 spar::spmat<INDEX, SCALAR>::spmat()
 {
@@ -140,6 +150,15 @@ spar::spmat<INDEX, SCALAR>::spmat(INDEX nrows_, INDEX ncols_, INDEX len_)
 
 
 
+/**
+  @brief Copy constructor.
+  
+  @param[in] x The input.
+  
+  @allocs Three internal arrays are allocated.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 spar::spmat<INDEX, SCALAR>::spmat(const spar::spmat<INDEX, SCALAR> &x)
 {
@@ -148,6 +167,15 @@ spar::spmat<INDEX, SCALAR>::spmat(const spar::spmat<INDEX, SCALAR> &x)
 
 
 
+/**
+  @brief Assignment operator.
+  
+  @param[in] x The input.
+  
+  @allocs Three internal arrays are allocated.
+  
+  @except If a memory allocation fails, a `bad_alloc` exception will be thrown.
+ */
 template <typename INDEX, typename SCALAR>
 spar::spmat<INDEX, SCALAR>& spar::spmat<INDEX, SCALAR>::operator=(const spmat<INDEX, SCALAR>& x)
 {
