@@ -1,6 +1,10 @@
-#ifndef TIMER_HPP
-#define TIMER_HPP
+// This file is part of spar which is released under the Boost Software
+// License, Version 1.0. See accompanying file LICENSE or copy at
+// https://www.boost.org/LICENSE_1_0.txt
 
+#ifndef SPAR_BENCHMARKS_TIMER_HPP
+#define SPAR_BENCHMARKS_TIMER_HPP
+#pragma once
 
 #include <chrono>
 #include <climits>
